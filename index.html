@@ -3384,6 +3384,21 @@ function confirmarPedidoCotacao(pais, numPedido, cip) {
 }
 
 
+
+const ALERTAS_KEY = 'cf_alertas_resolvidos';
+function salvarAlertasResolvidos(){
+  const r=alertaData.map((a,i)=>({i,teal:a.tipo==='teal',titulo:a.titulo})).filter(x=>x.teal).map(x=>({i:x.i,titulo:x.titulo}));
+  localStorage.setItem(ALERTAS_KEY,JSON.stringify(r));
+}
+function carregarAlertasResolvidos(){
+  try{
+    JSON.parse(localStorage.getItem(ALERTAS_KEY)||'[]').forEach(({i,titulo})=>{
+      const a=alertaData[i];
+      if(a&&a.tipo!=='teal'){a.tipo='teal';a.titulo=titulo||('✅ '+a.titulo.replace(/^[🚨🔴⚠️⏳✅\s]+/,''));a.prazo=null;a.cascata=null;a.acao='Concluído';}
+    });
+  }catch(e){}
+}
+function limparAlertasResolvidos(){localStorage.removeItem(ALERTAS_KEY);location.reload();}
 function resolverAlerta(idx) {
   // idx refere-se ao alertaData original (não ao enriched reordenado)
   const a = alertaData[idx];
@@ -3391,8 +3406,10 @@ function resolverAlerta(idx) {
   a.tipo = 'teal';
   a.titulo = '✅ ' + a.titulo.replace(/^[🚨🔴⚠️⏳✅\s]+/,'');
   a.prazo = null; a.cascata = null; a.acao = 'Concluído';
+  salvarAlertasResolvidos();
+  addLogEntry('alerta',`Alerta resolvido: ${a.titulo.substring(0,60)}`);
   renderAlertas();
-  showToast('Alerta marcado como resolvido ✓','green',2500);
+  showToast('Alerta resolvido e salvo ✓','green',2500);
 }
 
 function resolverAlertaPorTitulo(titulo) {
@@ -3672,10 +3689,15 @@ function renderProximosPassos() {
   if(!el) return;
 
   const hoje = new Date(); hoje.setHours(0,0,0,0);
-  const envio003 = new Date('2026-04-08');
-  const envio005 = new Date('2026-04-28');
-  const diasAte003 = Math.ceil((envio003 - hoje) / (1000*60*60*24));
-  const diasAte005 = Math.ceil((envio005 - hoje) / (1000*60*60*24));
+  const etdToDate=etd=>{if(!etd)return null;const p=etd.split('/');return p.length===3?new Date(`${p[2]}-${p[1]}-${p[0]}`):null;};
+  const dAte=d=>d?Math.ceil((d-hoje)/86400000):null;
+  const p003=PEDIDOS_DATA.e003,p005=PEDIDOS_DATA.e005,p006=PEDIDOS_DATA.e006;
+  const diasAte003=dAte(etdToDate(p003?.etd))??'?';
+  const diasAte005=dAte(etdToDate(p005?.etd))??'?';
+  const diasAte006=dAte(etdToDate(p006?.etd))??'?';
+  const bl003=(p003?.bloqueios||[]).filter(b=>!b.done);
+  const bl005=(p005?.bloqueios||[]).filter(b=>!b.done);
+  const bl006=(p006?.bloqueios||[]).filter(b=>!b.done);
 
   const limRot003 = new Date('2026-03-24');
   const limSup003 = new Date('2026-03-29');
@@ -3697,7 +3719,9 @@ function renderProximosPassos() {
     // ── IMPORTANTE ──
     {id:'lote-newlas',  p:'importante', icon:'🏷', acao:'Lote PER definido: VVNDPER3/2026 — NEWLAS 10K 003.2026 PER',
       detalhe:'Lote PER definido: VVNDPER3/2026 (Lote BR: VVND5/2026). MAR/26 | VENC MAR/28 | COA 13/03/2028.', nav:'envio'},
-    {id:'disp-005',     p:'importante', icon:'📦', acao:'Confirmar disponibilidades para 005.2026 PER',
+    {id:'disp-006', p:'atencao', icon:'🇧🇴', acao:`Acompanhar — ${p006?.num||'006.2026 BOL'}`,
+      detalhe:`ETD ${p006?.etd||'21/04'} (${diasAte006}d). ${bl006.length?bl006.map(b=>b.txt).slice(0,2).join('; '):'Pedido em cotação.'}`, nav:'envio'},
+    {id:'disp-005', p:'importante', icon:'📦', acao:'Confirmar disponibilidades para 005.2026 PER',
       detalhe:`Envio em ${diasAte005} dias (28/04). Newlas 1K, 5K e Sinuvac aguardando resposta da Produção. Imuplex 2K: Disponível.`, nav:'envio'},
     // ── INFORMATIVO / ALERTA RESOLVIDO ──
     {id:'rinovac-ok',   p:'info',  icon:'✅', acao:'RINOVAC (003.2026 PER) — Disponibilidade confirmada',
@@ -3761,6 +3785,33 @@ function setPassoStatus(id, status) {
   renderProximosPassos();
 }
 
+
+const ESTADO_KEYS=['cf_pedidos_data','cf_alertas_resolvidos','cf_passos','cf_financeiro_2026','cf_awbs'];
+function exportarEstado(){
+  const est={versao:'2026.03',data:new Date().toISOString()};
+  ESTADO_KEYS.forEach(k=>{const v=localStorage.getItem(k);if(v)est[k]=JSON.parse(v);});
+  const blob=new Blob([JSON.stringify(est,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;
+  a.download=`comexflow_estado_${new Date().toISOString().split('T')[0]}.json`;
+  a.click();URL.revokeObjectURL(url);
+  addLogEntry('auto','Estado exportado como JSON');showToast('Estado exportado ✓','green',2500);
+}
+function importarEstado(){
+  const inp=document.createElement('input');inp.type='file';inp.accept='.json';
+  inp.onchange=e=>{
+    const file=e.target.files[0];if(!file)return;
+    const r=new FileReader();
+    r.onload=ev=>{
+      try{
+        const est=JSON.parse(ev.target.result);
+        ESTADO_KEYS.forEach(k=>{if(est[k])localStorage.setItem(k,JSON.stringify(est[k]));});
+        showToast('Estado importado! Recarregando...','green',2000);
+        setTimeout(()=>location.reload(),2000);
+      }catch(err){showToast('Erro ao importar: '+err.message,'red',4000);}
+    };r.readAsText(file);
+  };inp.click();
+}
 function limparPassos() {
   localStorage.removeItem('cf_passos');
   renderProximosPassos();
@@ -4297,7 +4348,7 @@ function renderAlertas(){
           ${prazoBadge}
           <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
           <button class="btn btn-sm" style="font-size:11px" onclick="navegarAlerta('${a.acao}','${a.titulo}')">${a.acao} ↗</button>
-          ${a.tipo!=='teal'?`<button onclick="resolverAlerta(${a.originalIdx})" style="font-size:9px;padding:2px 8px;border-radius:6px;background:none;border:1px solid #d1d5db;color:#6b7280;cursor:pointer;font-family:inherit">✓ Resolver</button>`:''}
+          ${a.tipo!=='teal'?`<button onclick="resolverAlerta(${a.originalIdx})" style="font-size:9px;padding:2px 8px;border-radius:6px;background:none;border:1px solid #d1d5db;color:#6b7280;cursor:pointer;font-family:inherit">${a.titulo.includes('[REUNIÃO]')?'📅 Arquivar':'✓ Resolver'}</button>`:''}
         </div>
         </div>
       </div>
@@ -5114,66 +5165,84 @@ function gerarPrioridadesDia(){
     (p.pendencias||[]).filter(pd=>!pd.done).map(pd=>`${p.num}: ${pd.txt}`)
   );
 
-  const contexto = `Hoje é ${hoje}.
+  // Engine local de prioridades — 100% baseado nos dados do sistema
+  const candidatos = [];
+  const hoje_dt = new Date(); hoje_dt.setHours(0,0,0,0);
 
-PEDIDOS EM PREPARO:
-${pedidosAtivos.map(p=>`- ${p.num} (ETD ${p.etd}) — ${p.bloqueios.filter(b=>!b.done).length} bloqueio(s) pendente(s)`).join('\n')}
-
-BLOQUEIOS PENDENTES:
-${bloqueiosPend.slice(0,8).join('\n')}
-
-ALERTAS ATIVOS (não resolvidos):
-${alertasPendentes.slice(0,6).map(a=>`- [${a.pais}] ${a.titulo}`).join('\n')}
-
-Com base nesses dados, liste EXATAMENTE 3 prioridades para hoje, no formato JSON:
-[
-  {"titulo":"ação concreta em até 8 palavras","detalhe":"por que é urgente (1 frase)","tipo":"urgente|importante|planejamento"},
-  {"titulo":"...","detalhe":"...","tipo":"..."},
-  {"titulo":"...","detalhe":"...","tipo":"..."}
-]
-Responda APENAS com o JSON, sem texto adicional.`;
-
-  fetch('https://api.anthropic.com/v1/messages', {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({
-      model:'claude-sonnet-4-20250514',
-      max_tokens:400,
-      messages:[{role:'user', content:contexto}]
-    })
-  })
-  .then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
-  .then(data=>{
-    if(data.error) throw new Error(data.error.message||'API error');
-    const text = (data.content||[]).map(b=>b.text||'').join('').trim();
-    const jsonMatch = text.match(/\[[\s\S]*\]/);
-    if(!jsonMatch) throw new Error('No JSON in response');
-    const items = JSON.parse(jsonMatch[0]);
-    const cores = {urgente:'#dc2626', importante:'#d97706', planejamento:'#2563eb'};
-    const icons = {urgente:'🔴', importante:'⚠️', planejamento:'📋'};
-    lista.innerHTML = items.map((it,i)=>`
-      <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 12px;
-        background:var(--card);border:1px solid var(--gray-border);
-        border-left:3px solid ${cores[it.tipo]||'#6b7280'};
-        border-radius:var(--radius);cursor:pointer"
-        onclick="nav('alertas',document.querySelector('[onclick*=\'alertas\']'))">
-        <span style="font-size:16px;flex-shrink:0;margin-top:1px">${icons[it.tipo]||'•'}</span>
-        <div>
-          <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:2px">
-            ${i+1}. ${it.titulo}
-          </div>
-          <div style="font-size:11px;color:var(--text-muted)">${it.detalhe}</div>
-        </div>
-      </div>`).join('');
-    btn.textContent = '⚡ Atualizar';
-    btn.disabled = false;
-  })
-  .catch(e=>{
-    lista.innerHTML = `<div style="color:var(--text-muted);font-size:12px;padding:12px">
-      Não foi possível gerar as prioridades. Verifique a conexão e tente novamente.</div>`;
-    btn.textContent = '⚡ Atualizar';
-    btn.disabled = false;
+  // Regra 1: alertas vermelhos/urgentes com prazo próximo
+  alertasPendentes.filter(a=>a.tipo==='vermelho'||a.tipo==='red').forEach(a=>{
+    const dp = a.prazo ? Math.ceil((new Date(a.prazo)-hoje_dt)/(864e5)) : 999;
+    candidatos.push({tipo:'urgente', peso:100-Math.min(dp,30),
+      titulo:a.titulo.replace(/^✅\s*/,'').substring(0,65),
+      detalhe:(a.cascata||a.detalhe||'').substring(0,110), aba:'alertas'});
   });
+
+  // Regra 2: embarques com ETD ≤ 10d e bloqueios abertos
+  pedidosAtivos.forEach(p=>{
+    if(!p.etd) return;
+    const pts = p.etd.split('/');
+    if(pts.length!==3) return;
+    const etdD = new Date(`${pts[2]}-${pts[1]}-${pts[0]}`);
+    const dEtd = Math.ceil((etdD-hoje_dt)/(864e5));
+    const bl = (p.bloqueios||[]).filter(b=>!b.done);
+    if(dEtd<=10 && bl.length>0)
+      candidatos.push({tipo:'urgente', peso:90-dEtd,
+        titulo:`Resolver bloqueios ${p.num} — ETD em ${dEtd}d`,
+        detalhe:bl[0].txt.substring(0,110), aba:'envio'});
+    else if(dEtd<=21 && bl.length>0)
+      candidatos.push({tipo:'importante', peso:60-dEtd,
+        titulo:`${bl.length} bloqueio(s) pendentes — ${p.num}`,
+        detalhe:bl[0].txt.substring(0,110), aba:'envio'});
+  });
+
+  // Regra 3: alertas âmbar com prazo ≤ 5 dias
+  alertasPendentes.filter(a=>a.tipo==='amber'&&a.prazo).forEach(a=>{
+    const dp = Math.ceil((new Date(a.prazo)-hoje_dt)/(864e5));
+    if(dp<=5) candidatos.push({tipo:'importante', peso:50-dp,
+      titulo:a.titulo.substring(0,65),
+      detalhe:`Prazo: ${new Date(a.prazo).toLocaleDateString('pt-BR')}${a.cascata?' — '+a.cascata.substring(0,70):''}`,
+      aba:'alertas'});
+  });
+
+  // Regra 4: pedidos em cotação sem bloqueios prontos para confirmar
+  Object.values(PEDIDOS_DATA).filter(p=>p.status==='cotacao'&&bloqueiosPendentes(p).length===0)
+    .forEach(p=>candidatos.push({tipo:'planejamento', peso:30,
+      titulo:`Confirmar pedido ${p.num} — pronto`,
+      detalhe:'Todos os bloqueios resolvidos — pode avançar para Em Preparo.', aba:'envio'}));
+
+  // Regra 5: faturas próximas do vencimento
+  const fin = getFinanceiro();
+  faturas.filter(f=>!fin[f.num]?.brl).forEach(f=>{
+    const dv = Math.ceil((new Date(f.venc)-hoje_dt)/(864e5));
+    if(dv>0&&dv<=30) candidatos.push({tipo:'importante', peso:40-dv,
+      titulo:`Fatura ${f.num} vence em ${dv} dias`,
+      detalhe:`$${f.cip.toLocaleString('en',{minimumFractionDigits:2})} — verificar recebimento.`, aba:'financas'});
+  });
+
+  candidatos.sort((a,b)=>b.peso-a.peso);
+  const top3 = candidatos.slice(0,3);
+  if(!top3.length) top3.push({tipo:'planejamento',
+    titulo:'Nenhuma prioridade urgente hoje',
+    detalhe:'Todos os pedidos e alertas estão sob controle.', aba:'painel'});
+  while(top3.length<3) top3.push({tipo:'planejamento',
+    titulo:'Revisar previsões de embarque',
+    detalhe:'Conferir ETDs e disponibilidade de lotes com PCP.', aba:'envio'});
+
+  const cores={urgente:'#dc2626',importante:'#d97706',planejamento:'#2563eb'};
+  const icons={urgente:'🔴',importante:'⚠️',planejamento:'📋'};
+  lista.innerHTML = top3.map((it,i)=>`
+    <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 12px;
+      background:var(--card);border:1px solid var(--gray-border);
+      border-left:3px solid ${cores[it.tipo]||'#6b7280'};border-radius:var(--radius);cursor:pointer"
+      onclick="nav('${it.aba||'alertas'}',document.querySelector('[onclick*=\'${it.aba||'alertas'}\']'))">
+      <span style="font-size:15px;flex-shrink:0;margin-top:1px">${icons[it.tipo]||'•'}</span>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:2px">${i+1}. ${it.titulo}</div>
+        <div style="font-size:11px;color:var(--text-muted);line-height:1.4">${it.detalhe}</div>
+      </div>
+    </div>`).join('');
+  btn.textContent='⚡ Atualizar';
+  btn.disabled=false;
 }
 function gerarInvoiceDePedido(pedidoId){
   const p = PEDIDOS_DATA[pedidoId];
