@@ -336,6 +336,7 @@ select option{background:#fff;color:#111827}
   <div class="nav-tab global" onclick="nav('envio',this)">✈️ Envios</div>
   <div class="nav-tab global" onclick="nav('insumos',this)">📦 Insumos <span class="dot"></span></div>
   <div class="nav-tab global" onclick="nav('financas',this)">💹 Finanças &amp; Dashboard</div>
+  <div class="nav-tab global" onclick="nav('regulatorio',this)">🔬 Regulatório</div>
   <!-- SEPARADOR -->
   <div class="nav-separator"></div>
   <span class="nav-dynamic-label" id="nav-pais-label">🌎 Global</span>
@@ -1159,13 +1160,13 @@ select option{background:#fff;color:#111827}
         <div class="form-group"><label>Teléfono</label><input id="inv-tel" value="" oninput="updateInvoice()"/></div>
         <div class="form-group"><label>Email</label><input id="inv-email" value="" oninput="updateInvoice()"/></div>
         <div class="form-group"><label>Nº caixas térmicas</label><input id="inv-caixas" type="number" value="11" oninput="updateInvoice()"/></div>
-        <div class="form-group"><label>Peso Neto (kg)</label><input id="inv-pn" type="number" step="0.1" value="104.9" oninput="updateInvoice()"/></div>
-        <div class="form-group"><label>Peso Bruto (kg)</label><input id="inv-pb" type="number" step="0.1" value="183.3" oninput="updateInvoice()"/></div>
+        <div class="form-group"><label>Peso Neto (kg) <span style="font-size:9px;color:var(--teal)">(auto)</span></label><input id="inv-pn" type="number" step="0.1" readonly style="background:var(--gray-light);cursor:default" title="Calculado automaticamente pela soma dos itens"/></div>
+        <div class="form-group"><label>Peso Bruto (kg) <span style="font-size:9px;color:var(--teal)">(auto)</span></label><input id="inv-pb" type="number" step="0.1" readonly style="background:var(--gray-light);cursor:default" title="Calculado automaticamente pela soma dos itens"/></div>
         <div class="form-group" style="display:flex;align-items:flex-end"><button class="btn btn-sm btn-primary" onclick="calcularPesosInvoice()" style="width:100%">⚖️ Calcular pesos auto</button></div>
-        <div class="form-group"><label>Flete Local (USD)</label><input id="inv-fl" type="number" step="0.01" value="503.56" oninput="updateInvoice()"/></div>
-        <div class="form-group"><label>Flete Internacional (USD)</label><input id="inv-fi" type="number" step="0.01" value="807.75" oninput="updateInvoice()"/></div>
-        <div class="form-group"><label>Seguro (USD)</label><input id="inv-sg" type="number" step="0.01" value="30.75" oninput="updateInvoice()"/></div>
-        <div class="form-group"><label>Custos Bancários (USD)</label><input id="inv-bc" type="number" step="0.01" value="120.00" oninput="updateInvoice()"/></div>
+        <div class="form-group"><label>Flete Local (USD)</label><input id="inv-fl" type="number" step="0.01" value="" oninput="updateInvoice()"/></div>
+        <div class="form-group"><label>Flete Internacional (USD)</label><input id="inv-fi" type="number" step="0.01" value="" oninput="updateInvoice()"/></div>
+        <div class="form-group"><label>Seguro (USD)</label><input id="inv-sg" type="number" step="0.01" value="" oninput="updateInvoice()"/></div>
+        <div class="form-group"><label>Custos Bancários (USD)</label><input id="inv-bc" type="number" step="0.01" value="" oninput="updateInvoice()"/></div>
       </div>
       <div class="form-group" style="margin-bottom:12px"><label>Notas adicionais</label><textarea id="inv-notas" rows="2" oninput="updateInvoice()">11 cajas térmicas - 52,2 cm D x 44 cm W x 59 cm H</textarea></div>
 
@@ -1196,8 +1197,8 @@ select option{background:#fff;color:#111827}
         <div id="inv-imp-end">Calle Dos Nº 199, Urbanización Córpac, San Isidro, Lima Perú</div>
         <div id="inv-imp-nit">RUC: 20100331285</div>
         <div style="margin-top:8px">
-          <div class="inv-label">Responsable</div><div class="inv-val" id="prev-resp">Marlon Soto</div>
-          <div class="inv-label" style="margin-top:4px">Teléfono</div><div class="inv-val" id="prev-tel">C+51 946 001 761</div>
+          <div class="inv-label">Responsable</div><div class="inv-val" id="prev-resp">—</div>
+          <div class="inv-label" style="margin-top:4px">Teléfono</div><div class="inv-val" id="prev-tel">—</div>
           <div class="inv-label" style="margin-top:4px">Email</div><div class="inv-val" id="prev-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1d706e7269725d7471787379786f7e726f6d337e7270">[email&#160;protected]</a></div>
         </div>
         <div style="margin-top:8px">
@@ -1234,7 +1235,7 @@ select option{background:#fff;color:#111827}
         </div>
         <div class="inv-notes" id="prev-notas"></div>
         <div style="font-size:9px;color:#6b7280;margin-top:8px;line-height:1.6">
-          EL ORDENANTE DE LA ORDEN DE PAGO DEBERÁ SER ILENDER PERÚ S.A<br>
+          EL ORDENANTE DE LA ORDEN DE PAGO DEBERÁ SER <span id="inv-pay-nome">ILENDER PERÚ S.A</span><br>
           LOS PAGOS REALIZADOS A TRAVÉS DE JPMORGAN BANK INCURRIRÁN EN UN ENCARGO DE <strong>$120</strong> EN EL PEDIDO<br>
           LA ORDEN DEBERÁ SER ENVIADA AL NOMBRE DE INATA PRODUTOS BIOLÓGICOS LTDA
         </div>
@@ -1245,7 +1246,7 @@ select option{background:#fff;color:#111827}
         <tr><td>Flete Internacional $</td><td style="text-align:right" id="prev-fi">807.75</td></tr>
         <tr><td>Seguro $</td><td style="text-align:right" id="prev-sg">30.75</td></tr>
         <tr><td>Costos bancarios $</td><td style="text-align:right" id="prev-bc">120.00</td></tr>
-        <tr class="inv-grand"><td>CIP - Lima-Peru $</td><td style="text-align:right" id="prev-total">0.00</td></tr>
+        <tr class="inv-grand"><td id="prev-cip-label">CIP - Lima - Perú $</td><td style="text-align:right" id="prev-total">0.00</td></tr>
       </table>
     </div>
     <div style="margin-top:12px;font-size:9px;color:#6b7280;border-top:1px solid #e5e7eb;padding-top:8px">Certificamos que esta factura presenta el precio de mercado para las vacunas descritas. Ninguna otra factura ha sido o será emitida y todos los detalles son verdaderos y correctos.</div>
@@ -1919,6 +1920,54 @@ select option{background:#fff;color:#111827}
 </div><!-- hist-uae-content -->
 
 </div>
+<div id="v-regulatorio" class="view">
+  <div class="section-hd">
+    <span class="section-title">🔬 Regulatório</span>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <select id="reg-filtro-pais" onchange="renderRegulatorio()"
+        style="font-size:12px;padding:4px 8px;border:1px solid var(--gray-border);border-radius:var(--radius);background:var(--card);color:var(--text)">
+        <option value="">🌎 Todos os países</option>
+        <option value="Peru">🇵🇪 Peru</option>
+        <option value="Bolívia">🇧🇴 Bolívia</option>
+        <option value="Equador">🇪🇨 Equador</option>
+        <option value="Rep. Dominicana">🇩🇴 Rep. Dominicana</option>
+        <option value="Emirados Árabes Unidos">🇦🇪 EAU</option>
+        <option value="Arábia Saudita">🇸🇦 Arábia Saudita</option>
+      </select>
+      <select id="reg-filtro-status" onchange="renderRegulatorio()"
+        style="font-size:12px;padding:4px 8px;border:1px solid var(--gray-border);border-radius:var(--radius);background:var(--card);color:var(--text)">
+        <option value="">Todos os status</option>
+        <option value="elaboracao">📝 Elaboração</option>
+        <option value="protocolo">📨 Protocolo</option>
+        <option value="exigencia">🔴 Exigência</option>
+        <option value="aprovado">✅ Aprovado</option>
+        <option value="em_correcao">🔧 Em correção</option>
+        <option value="suspenso">⏸ Suspenso</option>
+      </select>
+      <button class="btn btn-sm btn-primary" onclick="abrirModalNovoProcesso()" id="btn-novo-proc"
+        style="font-size:11px">+ Novo processo</button>
+    </div>
+  </div>
+
+  <!-- ALERTAS REGULATÓRIOS -->
+  <div id="reg-alertas" style="margin-bottom:16px"></div>
+
+  <!-- MÉTRICAS RÁPIDAS -->
+  <div id="reg-metricas" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:16px"></div>
+
+  <!-- TABELA PRINCIPAL -->
+  <div class="card">
+    <div class="card-head" style="display:flex;justify-content:space-between;align-items:center">
+      <span>Processos Regulatórios</span>
+      <span id="reg-count" style="font-size:11px;color:var(--text-muted)"></span>
+    </div>
+    <div class="card-body" style="padding:0">
+      <div id="reg-lista"></div>
+    </div>
+  </div>
+</div>
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
 // ===== ENVIO PEDIDOS =====
@@ -3010,11 +3059,11 @@ const alertaData=[
    prazo:null, cascata:null,
    acao:'Aguardar entrega'},
 
-  {tipo:'amber', pais:'🇵🇪 Peru',
-   titulo:'Enviar lote/fab/venc ao Gustavo (Compras) — suportes SOLCOM-14701',
-   detalhe:'A impressão do lote, fabricação e vencimento nos suportes de blíster é feita pelo fornecedor. Passar para o Gustavo (setor Compras) as informações: Rinovac VVPNEUMPER1/2026 FAB:OUT/25 VENC:OUT/27 · Newlas VVNDPER3/2026 FAB:MAR/26 VENC:MAR/28 · Reovac VVREOPER1/2026 FAB:AGO/25 VENC:AGO/27 · Imuplex VVIBDPER1/2026 FAB:DEZ/25 VENC:DEZ/27.',
-   prazo:'2026-03-22', cascata:'Suportes produzidos sem lote/fab/venc → inutilizáveis → recompra urgente → atraso no embarque 08/04.',
-   acao:'Contatar Gustavo'},
+  {tipo:'teal', pais:'🇵🇪 Peru',
+   titulo:'✅ Informações de lote/fab/venc enviadas ao Gustavo (Compras) — SOLCOM-14701',
+   detalhe:'Setor de Compras recebeu todas as informações para os suportes de blíster: Rinovac VVPNEUMPER1/2026 FAB:OUT/25 VENC:OUT/27 · Newlas VVNDPER3/2026 FAB:MAR/26 VENC:MAR/28 · Reovac VVREOPER1/2026 FAB:AGO/25 VENC:AGO/27 · Imuplex VVIBDPER1/2026 FAB:DEZ/25 VENC:DEZ/27.',
+   prazo:null, cascata:null,
+   acao:'Concluído'},
 
   {tipo:'amber', pais:'🇵🇪 Peru',
    titulo:'Suportes de blíster — Checar lote/fab/venc com PCP',
@@ -3028,11 +3077,11 @@ const alertaData=[
    prazo:null, cascata:null,
    acao:'Concluído'},
 
-  {tipo:'amber', pais:'🇧🇴 Bolívia',
-   titulo:'SOLCOM-14689 — Rótulos ALEVAC 6 BOL — Aguardando arte (Maks)',
-   detalhe:'Pedido *006.2026 · ILENDER BOLIVIA S.A. · SOLCOM-14689 aberta — aguardando arte de rótulo (Maks).',
-   prazo:null, cascata:'Sem arte aprovada → sem compra → atraso na cotação e envio Bolívia.',
-   acao:'Aguardar Maks'},
+  {tipo:'teal', pais:'🇧🇴 Bolívia',
+   titulo:'✅ SOLCOM-14689 — Rótulos ALEVAC 6 BOL — Arte aprovada (Maks)',
+   detalhe:'Arte dos rótulos de Alevac 6 Bolívia confirmada pelo Maks. SOLCOM-14689 solicitada.',
+   prazo:null, cascata:null,
+   acao:'Concluído'},
 
   {tipo:'amber', pais:'🇧🇴 Bolívia',
    titulo:'Cotação CIP — ALEVAC 6 (300 fr) · Pedido 006.26',
@@ -3060,9 +3109,9 @@ const alertaData=[
 
   // ── RESOLVIDOS ──
   {tipo:'teal', pais:'🇵🇪 Peru',
-   titulo:'✅ Divergência Salmovac SE+SG e Sinuvac — em análise QC',
-   detalhe:'Rótulos coletados pelo QC em 20/03/2026. Aguardando laudo final.',
-   prazo:null, cascata:null, acao:'Monitorar'},
+   titulo:'✅ Rótulos SALMOVAC SE+SG PER — Confirmados pelo QC',
+   detalhe:'Rótulos de Salmovac SE+SG Perú confirmados pelo CQ. Estoque: 700 unidades — cobre a necessidade do pedido 003.2026 PER (610 fr).',
+   prazo:null, cascata:null, acao:'Concluído'},
 
   {tipo:'teal', pais:'🇵🇪 Peru',
    titulo:'✅ NEWLAS 10K — Lote VVNDPER3/2026 e insumos concluídos',
@@ -3102,18 +3151,36 @@ const alertaData=[
 // ===== INVOICE =====
 let invItems=[
   // 003.2026 PER — envio 08/04/2026
-  {cod:'6LVCPER',desc:'ALEVAC 6 INATA - Vacuna inactivada contra la Bronquitis Infecciosa, la Newcastle, Sindrome de Baja Puesta, y la Coriza Infecciosa - 1.000 dosis',lote:'002/26',venc:'03/02/2028',pn:4.0,pb:6.5,qty:120,preco:42.10},
+  {cod:'6LVCPER',desc:'ALEVAC 6 INATA - Vacuna inactivada contra la Bronquitis Infecciosa, la Newcastle, Sindrome de Baja Puesta, y la Coriza Infecciosa - 1.000 dosis',lote:'002/26',venc:'03/02/2028',pn:61.2,pb:89.2,qty:120,preco:42.10},
   // SALMOVAC — dois lotes BR distintos: linha separada para cada
-  {cod:'VASESGPER',desc:'SALMOVAC SE+SG INATA - Vacuna inactivada oleosa contra salmonelosis aviar cepas SE y SG - 1.000 dosis',lote:'003/26',venc:'28/01/2028',pn:110.5,pb:182.0,qty:603,preco:44.47},
-  {cod:'VASESGPER',desc:'SALMOVAC SE+SG INATA - Vacuna inactivada oleosa contra salmonelosis aviar cepas SE y SG - 1.000 dosis',lote:'004/26',venc:'29/01/2028',pn:1.3,pb:2.1,qty:7,preco:44.47},
-  {cod:'VVREOPER',desc:'REOVAC INATA - Vacuna viva liofilizada contra la reovirus aviar - cepa S1133 - 5.000 dosis',lote:'001/26',venc:'15/08/2027',pn:3.4,pb:5.6,qty:180,preco:8.76},
-  {cod:'VVIBDPER',desc:'IMUPLEX INATA - Vacuna inactivada oleosa contra la bursitis infecciosa (Gumboro) - 2.000 dosis',lote:'001/26',venc:'01/12/2027',pn:9.0,pb:14.8,qty:490,preco:3.79},
+  {cod:'VASESGPER',desc:'SALMOVAC SE+SG INATA - Vacuna inactivada oleosa contra salmonelosis aviar cepas SE y SG - 1.000 dosis',lote:'003/26',venc:'28/01/2028',pn:307.5,pb:448.0,qty:603,preco:44.47},
+  {cod:'VASESGPER',desc:'SALMOVAC SE+SG INATA - Vacuna inactivada oleosa contra salmonelosis aviar cepas SE y SG - 1.000 dosis',lote:'004/26',venc:'29/01/2028',pn:3.6,pb:5.2,qty:7,preco:44.47},
+  {cod:'VVREOPER',desc:'REOVAC INATA - Vacuna viva liofilizada contra la reovirus aviar - cepa S1133 - 5.000 dosis',lote:'001/26',venc:'15/08/2027',pn:3.3,pb:5.6,qty:180,preco:8.76},
+  {cod:'VVIBDPER',desc:'IMUPLEX INATA - Vacuna inactivada oleosa contra la bursitis infecciosa (Gumboro) - 2.000 dosis',lote:'001/26',venc:'01/12/2027',pn:9.1,pb:15.2,qty:490,preco:3.79},
   // SINUVAC — dois lotes BR distintos: linha separada para cada
-  {cod:'SNVPER',desc:'SINUVAC INATA - Vacuna inactivada oleosa contra la Rinotraqueitis aviar (ART/TRT) - 1.000 dosis',lote:'003/26',venc:'20/02/2028',pn:12.4,pb:20.4,qty:604,preco:19.20},
-  {cod:'SNVPER',desc:'SINUVAC INATA - Vacuna inactivada oleosa contra la Rinotraqueitis aviar (ART/TRT) - 1.000 dosis',lote:'004/26',venc:'19/02/2028',pn:7.8,pb:12.8,qty:380,preco:19.20},
+  {cod:'SNVPER',desc:'SINUVAC INATA - Vacuna inactivada oleosa contra la Rinotraqueitis aviar (ART/TRT) - 1.000 dosis',lote:'003/26',venc:'20/02/2028',pn:308.0,pb:448.8,qty:604,preco:19.20},
+  {cod:'SNVPER',desc:'SINUVAC INATA - Vacuna inactivada oleosa contra la Rinotraqueitis aviar (ART/TRT) - 1.000 dosis',lote:'004/26',venc:'19/02/2028',pn:193.8,pb:282.3,qty:380,preco:19.20},
   {cod:'VVPNEUBPER',desc:'RINOVAC INATA - Vacuna viva liofilizada contra la pneumovirosis aviar - metapneumovirus Tipo B - 1.000 dosis',lote:'001/26',venc:'28/10/2027',pn:2.0,pb:3.4,qty:110,preco:7.30},
-  {cod:'VVNDPER',desc:'NEWLAS INATA - Vacuna viva liofilizada contra la enfermedad de Newcastle cepa La Sota - 10.000 dosis',lote:'003/26',venc:'13/03/2028',pn:11.4,pb:18.7,qty:6000,preco:6.09},
+  {cod:'VVNDPER',desc:'NEWLAS INATA - Vacuna viva liofilizada contra la enfermedad de Newcastle cepa La Sota - 10.000 dosis',lote:'003/26',venc:'13/03/2028',pn:111.0,pb:186.0,qty:6000,preco:6.09},
 ];
+
+// Recalcula PN e PB automaticamente quando qty ou tipo muda no formulário de invoice
+function recalcPesos(itemIdx){
+  const qtyEl = document.getElementById('inv-qty-'+itemIdx);
+  const pnEl  = document.getElementById('inv-pn-'+itemIdx);
+  const pbEl  = document.getElementById('inv-pb-'+itemIdx);
+  const codEl = document.getElementById('inv-cod-'+itemIdx);
+  if(!qtyEl || !pnEl || !pbEl) return;
+  const qty = parseFloat(qtyEl.value) || 0;
+  if(!qty) return;
+  // Determinar tipo pelo cod
+  const cod  = codEl ? codEl.value : '';
+  const tipo = TIPO_VACINA[cod] || 'VIVA';
+  const pw   = PESOS_UNIT[tipo];
+  pnEl.value = (qty * pw.pn).toFixed(1);
+  pbEl.value = (qty * pw.pb).toFixed(1);
+  updateInvoice();
+}
 function buildInvForm(){
   const c=document.getElementById('inv-itens-form');c.innerHTML='';
   invItems.forEach((item,i)=>{
@@ -3122,7 +3189,7 @@ function buildInvForm(){
     d.innerHTML=`<button onclick="removeInvItem(${i})" style="position:absolute;top:8px;right:8px;background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:14px">✕</button>
     <div class="form-grid g4" style="gap:8px;margin-bottom:8px">
       <div class="form-group"><label>Código</label><input value="${item.cod}" oninput="invItems[${i}].cod=this.value;updateInvoice()"/></div>
-      <div class="form-group"><label>QTY (frascos)</label><input type="number" value="${item.qty}" oninput="invItems[${i}].qty=+this.value;updateInvoice()"/></div>
+      <div class="form-group"><label>QTY (frascos)</label><input type="number" value="${item.qty}" oninput="invItems[${i}].qty=+this.value; const _tipo=TIPO_VACINA[invItems[${i}].cod]||invItems[${i}].tipo||'VIVA'; const _pw=PESOS_UNIT[_tipo]; invItems[${i}].pn=parseFloat((_pw.pn*+this.value).toFixed(1)); invItems[${i}].pb=parseFloat((_pw.pb*+this.value).toFixed(1)); buildInvForm(); updateInvoice();"/></div>
       <div class="form-group"><label>Unit Price (USD)</label><input type="number" step="0.01" value="${item.preco}" oninput="invItems[${i}].preco=+this.value;updateInvoice()"/></div>
       <div class="form-group"><label>Lote (formato NNN/AA)</label><input value="${item.lote}" placeholder="ex: 001/26" oninput="invItems[${i}].lote=this.value;updateInvoice()"/></div>
       <div class="form-group"><label>Vencimento</label><input value="${formatMesPais(item.venc, paisAtivo)}" oninput="invItems[${i}].venc=this.value;updateInvoice()"/></div>
@@ -3154,13 +3221,20 @@ function clearInvoice(){invItems=[];buildInvForm();updateInvoice();}
 function fmt(n){return parseFloat(n||0).toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2});}
 function updateInvoice(){
   const g=id=>document.getElementById(id);
+  const _dest=(PAISES[paisAtivo]||{}).dest||'Lima - Perú';
+  if(g('prev-cip-label'))g('prev-cip-label').textContent='CIP - '+_dest+' $';
   g('prev-num').textContent=g('inv-num').value||'___';
   g('prev-date').textContent=g('inv-date').value?new Date(g('inv-date').value).toLocaleDateString('pt-BR'):'__/__/____';
   g('prev-resp').textContent=g('inv-resp').value;
   g('prev-tel').textContent=g('inv-tel').value;
   g('prev-email').textContent=g('inv-email').value;
-  g('prev-pn').textContent=parseFloat(g('inv-pn').value||0).toFixed(1);
-  g('prev-pb').textContent=parseFloat(g('inv-pb').value||0).toFixed(1);
+  // PN e PB totais = soma de todos os itens (calculados pelos fatores fixos por tipo)
+  const _totalPN = invItems.reduce((s,it)=>s+(it.pn||0),0);
+  const _totalPB = invItems.reduce((s,it)=>s+(it.pb||0),0);
+  if(g('inv-pn')) g('inv-pn').value = _totalPN.toFixed(1);
+  if(g('inv-pb')) g('inv-pb').value = _totalPB.toFixed(1);
+  g('prev-pn').textContent = _totalPN.toFixed(1);
+  g('prev-pb').textContent = _totalPB.toFixed(1);
   g('prev-notas').textContent=g('inv-notas').value;
   const fl=parseFloat(g('inv-fl').value)||0,fi=parseFloat(g('inv-fi').value)||0,sg=parseFloat(g('inv-sg').value)||0,bc=parseFloat(g('inv-bc').value)||0;
   g('prev-fl').textContent=fmt(fl);g('prev-fi').textContent=fmt(fi);g('prev-sg').textContent=fmt(sg);g('prev-bc').textContent=fmt(bc);
@@ -3229,23 +3303,33 @@ function calcularCaixas(){
     else                vivaItems.push({...item, tipo:'VIVA'});
   });
 
-  // ── INATIVADAS: bin-packing em caixas de 30 — lotes diferentes podem compartilhar caixa ──
-  const inatPendentes = [];
-  inatItems.forEach(item => inatPendentes.push({desc:item.desc, lote:item.lote, rest:item.qty}));
+  // ── INATIVADAS: bin-packing de 30fr POR PRODUTO ──
+  // Lotes do mesmo produto podem compartilhar caixa (última caixa incompleta)
+  // Produtos DIFERENTES nunca se misturam na mesma caixa
+  const inatPorProduto = {};
+  inatItems.forEach(item => {
+    // Agrupa pelo código do produto (sem o lote) para bin-packing
+    const chave = item.cod || item.desc.substring(0,20);
+    if(!inatPorProduto[chave]) inatPorProduto[chave] = [];
+    inatPorProduto[chave].push({desc:item.desc, lote:item.lote, rest:item.qty});
+  });
 
-  while(inatPendentes.some(v => v.rest > 0)){
-    const linhas = [];
-    let espaco = CAP_INAT;
-    for(const ip of inatPendentes){
-      if(ip.rest <= 0 || espaco <= 0) continue;
-      const vol = Math.min(ip.rest, espaco);
-      linhas.push({vol:`${vol} fr`, desc:ip.desc, lote:ip.lote});
-      ip.rest -= vol;
-      espaco  -= vol;
+  Object.values(inatPorProduto).forEach(lotes => {
+    // Bin-pack os lotes deste produto em caixas de 30
+    while(lotes.some(v => v.rest > 0)){
+      const linhas = [];
+      let espaco = CAP_INAT;
+      for(const lote of lotes){
+        if(lote.rest <= 0 || espaco <= 0) continue;
+        const vol = Math.min(lote.rest, espaco);
+        linhas.push({vol:`${vol} fr`, desc:lote.desc, lote:lote.lote});
+        lote.rest -= vol;
+        espaco    -= vol;
+      }
+      if(linhas.length > 0) caixas.push({num:cxNum++, linhas});
+      else break;
     }
-    if(linhas.length > 0) caixas.push({num:cxNum++, linhas});
-    else break;
-  }
+  });
 
   // ── VIVAS: bin-packing em caixas de 550, misturando produtos ──
   // Expandir em frascos unitários por lote
@@ -3322,8 +3406,8 @@ function updatePL(){
   if(g('pl-resp'))g('pl-resp').textContent=g('inv-resp')?g('inv-resp').value:'Marlon Soto';
   if(g('pl-tel'))g('pl-tel').textContent=g('inv-tel')?g('inv-tel').value:'';
   if(g('pl-email'))g('pl-email').textContent=g('inv-email')?g('inv-email').value:'';
-  if(g('pl-pn'))g('pl-pn').textContent=g('inv-pn')?parseFloat(g('inv-pn').value||0).toFixed(1):'';
-  if(g('pl-pb'))g('pl-pb').textContent=g('inv-pb')?parseFloat(g('inv-pb').value||0).toFixed(1):'';
+  if(g('pl-pn'))g('pl-pn').textContent=invItems.reduce((s,it)=>s+(it.pn||0),0).toFixed(1);
+  if(g('pl-pb'))g('pl-pb').textContent=invItems.reduce((s,it)=>s+(it.pb||0),0).toFixed(1);
   const ncx=g('inv-caixas')?g('inv-caixas').value:'';
   const cxInfo=`${ncx} cajas térmicas - 52,2 cm D x 44 cm W x 59 cm H`;
   if(g('pl-caixas-info'))g('pl-caixas-info').textContent=cxInfo;
@@ -3786,7 +3870,7 @@ function setPassoStatus(id, status) {
 }
 
 
-const ESTADO_KEYS=['cf_pedidos_data','cf_alertas_resolvidos','cf_passos','cf_financeiro_2026','cf_awbs'];
+const ESTADO_KEYS=['cf_pedidos_data','cf_alertas_resolvidos','cf_passos','cf_financeiro_2026','cf_awbs','cf_reg_data'];
 function exportarEstado(){
   const est={versao:'2026.03',data:new Date().toISOString()};
   ESTADO_KEYS.forEach(k=>{const v=localStorage.getItem(k);if(v)est[k]=JSON.parse(v);});
@@ -4394,7 +4478,7 @@ function nav(name,tab){
   atualizarContextoPais(name);
 }
 
-const GLOBAL_VIEWS = ['painel','alertas','envio','insumos','financas'];
+const GLOBAL_VIEWS = ['painel','alertas','envio','insumos','financas','regulatorio'];
 
 function atualizarContextoPais(viewName) {
   const bar = document.getElementById('pais-context-bar');
@@ -5280,25 +5364,28 @@ function gerarInvoiceDePedido(pedidoId){
 
   // Pesos por frasco (kg) — baseado em invoices reais
   const PESOS_UNIT = {
-    '6LVCPER': {pn:0.0333, pb:0.0542},   // ALEVAC 6: 4.0kg PN / 6.5kg PB por 120fr
-    '6LVCBOL': {pn:0.0333, pb:0.0542},
-    'VASESGPER':{pn:0.1830, pb:0.3020},  // SALMOVAC: 110.5kg PN / 182kg PB por 603fr
-    'VVREOPER': {pn:0.0189, pb:0.0311},  // REOVAC: 3.4kg / 5.6kg por 180fr
-    'VVIBDPER': {pn:0.0184, pb:0.0302},  // IMUPLEX: 9.0kg / 14.8kg por 490fr
-    'SNVPER':   {pn:0.0205, pb:0.0338},  // SINUVAC: 12.4kg / 20.4kg por 604fr
-    'VVPNEUBPER':{pn:0.0150, pb:0.0250}, // RINOVAC: estimativa
-    'VVNDPER':  {pn:0.0150, pb:0.0250},  // NEWLAS: estimativa
-    'VADATEAU': {pn:0.5100, pb:0.9530},  // MATRIVAC ADENOASTRO: 165.24/324 = 0.51 PN
-  };
+  // ── 4 FATORES FIXOS — validados em 3 invoices reais (20 linhas, 598 frascos) ──
+  // PN/fr e PB/fr JÁ INCLUEM o gelo rateado (7 kg/cx distribuído por linha)
+  // PB sempre > PN: a diferença é embalagem + gelo rateado
+  //
+  // VIVA  (550 fr/cx) — Big Mass, Big BR, Newlas, Pulmovac B1, Imuplex, Reovac, Rinovac
+  // INAT  (30 fr/cx)  — Alevac 6/7/8/9, Salmovac SE+SG, Sinuvac, Matrivac
+  //
+  // Uso: pn = qty × PESOS_UNIT[tipo].pn
+  //      pb = qty × PESOS_UNIT[tipo].pb
+  VIVA: { pn: 0.0185, pb: 0.0310 },
+  INAT: { pn: 0.5100, pb: 0.7430 },
+};
   // Build invItems from pedido produtos
   const novosItens = p.produtos
     .filter(pr => pr.loteExp && pr.preco)  // só produtos com lote exportação definido
     .map(pr => {
       const qty  = pr.qtdLote || pr.qtd || 0;
-      const pw   = PESOS_UNIT[pr.cod] || {pn:0, pb:0};
+      const tipo = TIPO_VACINA[pr.cod] || pr.tipo || 'VIVA';
+      const pw   = PESOS_UNIT[tipo] || PESOS_UNIT.VIVA;
       return {
         cod:   pr.cod || '',
-        tipo:  TIPO_VACINA[pr.cod] || pr.tipo || 'VIVA',
+        tipo,
         desc:  descMap[pr.prod] || pr.prod,
         lote:  pr.loteExp || '',
         venc:  pr.coa || '',
@@ -5318,10 +5405,26 @@ function gerarInvoiceDePedido(pedidoId){
   invItems.length = 0;
   novosItens.forEach(item => invItems.push(item));
 
-  // Pre-fill header fields from pedido
-  const setField = (id, val) => { const el=document.getElementById(id); if(el&&val) el.value=val; };
-  setField('inv-num',  p.fatura || '');
-  setField('inv-date', p.etd ? (()=>{ const parts=p.etd.split('/'); return parts.length===3?`${parts[2]}-${parts[1]}-${parts[0]}`:''; })() : '');
+  // Pre-fill from pedido + PAISES
+  const setField = (id, val) => { const el=document.getElementById(id); if(el&&val!==undefined) el.value=val; };
+  const setInner = (id, val) => { const el=document.getElementById(id); if(el&&val) el.textContent=val; };
+  const paisKey  = Object.keys(PAISES).find(k=>PAISES[k].nome===p.pais)||'';
+  const paisData = PAISES[paisKey]||{};
+
+  setField('inv-num',  p.fatura||'');
+  setField('inv-date', p.etd?(()=>{const pts=p.etd.split('/');return pts.length===3?`${pts[2]}-${pts[1]}-${pts[0]}`:'';})()||'':'');
+  setField('inv-fl',   p.frete||'');
+  setField('inv-fi',   p.seguro||'');
+
+  setInner('inv-imp-nome', paisData.cliente||p.cliente||'');
+  setInner('inv-imp-end',  paisData.end||'');
+  setInner('inv-imp-nit',  paisData.nit||'');
+  setField('inv-resp',  paisData.contato||'');
+  setField('inv-tel',   paisData.tel||'');
+  setField('inv-email', paisData.email||'');
+
+  const _pn = document.getElementById('inv-pay-nome');
+  if(_pn) _pn.textContent = paisData.cliente||p.cliente||'ILENDER PERÚ S.A';
 
   // Navigate to invoice tab
   buildInvForm();
@@ -5348,7 +5451,7 @@ async function gerarResumoPDF(eid) {
         model: 'claude-sonnet-4-20250514',
         max_tokens: 1000,
         messages: [{ role: 'user', content:
-          `Generate a base64-encoded minimal PDF for shipment summary. Return ONLY a JSON object with key "html" containing clean HTML (no markdown) suitable for printing as PDF, in Spanish, for this shipment data: ${JSON.stringify(d)}. The HTML must have: logo text "INATA PRODUTOS BIOLÓGICOS LTDA" as header, shipment info box, clean product table with columns Descripción/Cantidad/Lote PER/FAB/VENC/VENC COA, prices table if available, footer note. Use inline styles, navy color #0C2340, teal #0d9488. No external resources.`
+          `Generate a base64-encoded minimal PDF for shipment summary. Return ONLY a JSON object with key "html" containing clean HTML (no markdown) suitable for printing as PDF, in Spanish, for this shipment data: ${JSON.stringify(d)}. The HTML must have: logo text "INATA PRODUTOS BIOLÓGICOS LTDA" as header, shipment info box, clean product table with columns Descripción/Cantidad/Lote PER/FAB/VENC/VENC COA, footer note. Do NOT include prices or values. Use inline styles, navy color #0C2340, teal #0d9488. No external resources.`
         }]
       })
     });
@@ -5500,25 +5603,28 @@ function gerarInvoiceDePedido(pedidoId){
 
   // Pesos por frasco (kg) — baseado em invoices reais
   const PESOS_UNIT = {
-    '6LVCPER': {pn:0.0333, pb:0.0542},   // ALEVAC 6: 4.0kg PN / 6.5kg PB por 120fr
-    '6LVCBOL': {pn:0.0333, pb:0.0542},
-    'VASESGPER':{pn:0.1830, pb:0.3020},  // SALMOVAC: 110.5kg PN / 182kg PB por 603fr
-    'VVREOPER': {pn:0.0189, pb:0.0311},  // REOVAC: 3.4kg / 5.6kg por 180fr
-    'VVIBDPER': {pn:0.0184, pb:0.0302},  // IMUPLEX: 9.0kg / 14.8kg por 490fr
-    'SNVPER':   {pn:0.0205, pb:0.0338},  // SINUVAC: 12.4kg / 20.4kg por 604fr
-    'VVPNEUBPER':{pn:0.0150, pb:0.0250}, // RINOVAC: estimativa
-    'VVNDPER':  {pn:0.0150, pb:0.0250},  // NEWLAS: estimativa
-    'VADATEAU': {pn:0.5100, pb:0.9530},  // MATRIVAC ADENOASTRO: 165.24/324 = 0.51 PN
-  };
+  // ── 4 FATORES FIXOS — validados em 3 invoices reais (20 linhas, 598 frascos) ──
+  // PN/fr e PB/fr JÁ INCLUEM o gelo rateado (7 kg/cx distribuído por linha)
+  // PB sempre > PN: a diferença é embalagem + gelo rateado
+  //
+  // VIVA  (550 fr/cx) — Big Mass, Big BR, Newlas, Pulmovac B1, Imuplex, Reovac, Rinovac
+  // INAT  (30 fr/cx)  — Alevac 6/7/8/9, Salmovac SE+SG, Sinuvac, Matrivac
+  //
+  // Uso: pn = qty × PESOS_UNIT[tipo].pn
+  //      pb = qty × PESOS_UNIT[tipo].pb
+  VIVA: { pn: 0.0185, pb: 0.0310 },
+  INAT: { pn: 0.5100, pb: 0.7430 },
+};
   // Build invItems from pedido produtos
   const novosItens = p.produtos
     .filter(pr => pr.loteExp && pr.preco)  // só produtos com lote exportação definido
     .map(pr => {
       const qty  = pr.qtdLote || pr.qtd || 0;
-      const pw   = PESOS_UNIT[pr.cod] || {pn:0, pb:0};
+      const tipo = TIPO_VACINA[pr.cod] || pr.tipo || 'VIVA';
+      const pw   = PESOS_UNIT[tipo] || PESOS_UNIT.VIVA;
       return {
         cod:   pr.cod || '',
-        tipo:  TIPO_VACINA[pr.cod] || pr.tipo || 'VIVA',
+        tipo,
         desc:  descMap[pr.prod] || pr.prod,
         lote:  pr.loteExp || '',
         venc:  pr.coa || '',
@@ -5552,8 +5658,6 @@ function gerarInvoiceDePedido(pedidoId){
   showToast(`✅ Invoice pré-preenchida com ${novosItens.length} produto(s) do pedido ${p.num}. Revise pesos e valores antes de imprimir.`, 'green', 5000);
 }
 function gerarResumoPDFFallback(d) {
-  const fmtCIP = (n) => n > 0 ? `$ ${n.toLocaleString('en',{minimumFractionDigits:2})}` : '—';
-  const subtotal = (d.preco_items||[]).reduce((s,p)=>s+p.qty_num*p.preco, 0);
 
   const prodRows = (d.produtos||[]).map((p,i) => `
     <tr style="background:${i%2===0?'#fff':'#f9fafb'}">
@@ -5565,13 +5669,6 @@ function gerarResumoPDFFallback(d) {
       <td style="padding:5px 7px;border:1px solid #e5e7eb;text-align:center">${p.venc_coa}</td>
     </tr>`).join('');
 
-  const precoRows = (d.preco_items||[]).map((p,i) => `
-    <tr style="background:${i%2===0?'#fff':'#f9fafb'}">
-      <td style="padding:5px 7px;border:1px solid #e5e7eb">${p.nome}</td>
-      <td style="padding:5px 7px;border:1px solid #e5e7eb;text-align:center">${p.qty}</td>
-      <td style="padding:5px 7px;border:1px solid #e5e7eb;text-align:right">$ ${p.preco.toFixed(2)}</td>
-      <td style="padding:5px 7px;border:1px solid #e5e7eb;text-align:right;font-weight:700">$ ${(p.qty_num*p.preco).toLocaleString('en',{minimumFractionDigits:2})}</td>
-    </tr>`).join('');
 
   const html = `
     <div style="max-width:800px;margin:0 auto">
@@ -5618,26 +5715,7 @@ function gerarResumoPDFFallback(d) {
         ${prodRows}
       </table>
 
-      ${d.preco_items && d.preco_items.length > 0 ? `
-      <!-- PREÇOS -->
-      <div style="font-size:10px;font-weight:700;color:#0C2340;text-transform:uppercase;margin-bottom:5px;letter-spacing:.5px">Valores</div>
-      <table width="100%" style="border-collapse:collapse;margin-bottom:14px;font-size:11px">
-        <tr style="background:#0d9488">
-          <th style="padding:5px 7px;color:#fff;text-align:left;border:1px solid #0d9488">Producto</th>
-          <th style="padding:5px 7px;color:#fff;text-align:center;border:1px solid #0d9488">Cantidad</th>
-          <th style="padding:5px 7px;color:#fff;text-align:right;border:1px solid #0d9488">Precio Unit. (USD)</th>
-          <th style="padding:5px 7px;color:#fff;text-align:right;border:1px solid #0d9488">Subtotal (USD)</th>
-        </tr>
-        ${precoRows}
-        <tr style="background:#f0fdf4">
-          <td colspan="3" style="padding:6px 7px;border:1px solid #e5e7eb;text-align:right;font-weight:700;color:#0C2340">
-            ${d.cip > 0 ? 'CIP Lima-Perú $' : 'Subtotal $'}
-          </td>
-          <td style="padding:6px 7px;border:1px solid #e5e7eb;text-align:right;font-weight:800;font-size:13px;color:#0d9488">
-            ${d.cip > 0 ? fmtCIP(d.cip) : '$ '+subtotal.toLocaleString('en',{minimumFractionDigits:2})}
-          </td>
-        </tr>
-      </table>` : ''}
+
 
       <!-- RODAPÉ -->
       <hr style="border:none;border-top:0.5px solid #e5e7eb;margin:12px 0 8px"/>
@@ -6296,13 +6374,13 @@ function gerarQRLote(lotePer, pedido) {
 // ===== ITEM 1: SELETOR DE PAÍSES =====
 // TERMINOLOGIA: "cliente" = distribuidor (ILENDER, GAH, etc.) | "cliente final" = cliente do distribuidor no país
 const PAISES = {
-  peru:       { nome:'Peru',             flag:'🇵🇪', cliente:'ILENDER PERÚ S.A.',    status:'ativo',    regiao:'América do Sul', lang:'es' },
-  bolivia:    { nome:'Bolívia',          flag:'🇧🇴', cliente:'ILENDER BOLIVIA S.A.', status:'ativo',    regiao:'América do Sul', lang:'es', nit:'1023307023', end:'km10, Carretera al Norte Urb. Las Misiones UV. 346, Santa Cruz, Bolivia', contato:'Maria del Carmen Milla', email:'mmillab@ilendercorp.com', tel:'+591 62238124' },
-  equador:    { nome:'Equador',          flag:'🇪🇨', cliente:'NUTRISALMINSA',        status:'ativo',    regiao:'América do Sul', lang:'es' },
-  dominicana: { nome:'Rep. Dominicana',  flag:'🇩🇴', cliente:'DOPHARMA DOMINICANA', status:'ativo',    regiao:'Caribe', lang:'es' },
-  colombia:   { nome:'Colômbia',         flag:'🇨🇴', cliente:'ILENDER COLOMBIA',    status:'ativo',    regiao:'América do Sul', lang:'es' },
-  emirados:   { nome:'Emirados Árabes Unidos',  flag:'🇦🇪', cliente:'GAH',                 status:'ativo',    regiao:'Oriente Médio', lang:'en' },
-  arabia:     { nome:'Arábia Saudita',   flag:'🇸🇦', cliente:'GAH',                 status:'ativo',    regiao:'Oriente Médio', lang:'en' },
+  peru:       { nome:'Peru',             flag:'🇵🇪', cliente:'ILENDER PERÚ S.A.',    status:'ativo',    regiao:'América do Sul', lang:'es', dest:'Lima - Perú', end:'Calle Dos Nº 199, Urbanización Córpac, San Isidro, Lima, Perú', nit:'RUC: 20100331285', contato:'Marlon Soto', tel:'+51 946 001 761', email:'msoto@ilendercorp.com', shipTo:'Av. Francisco Bolognesi 148, Ate Lima' },
+  bolivia:    { nome:'Bolívia',          flag:'🇧🇴', cliente:'ILENDER BOLIVIA S.A.', status:'ativo',    regiao:'América do Sul', lang:'es', dest:'Santa Cruz de la Sierra - Bolivia', nit:'1023307023', end:'km10, Carretera al Norte Urb. Las Misiones UV. 346, Santa Cruz, Bolivia', contato:'Maria del Carmen Milla', email:'mmillab@ilendercorp.com', tel:'+591 62238124' },
+  equador:    { nome:'Equador',          flag:'🇪🇨', cliente:'NUTRISALMINSA',        status:'ativo',    regiao:'América do Sul', lang:'es', dest:'Guayaquil - Ecuador' },
+  dominicana: { nome:'Rep. Dominicana',  flag:'🇩🇴', cliente:'DOPHARMA DOMINICANA', status:'ativo',    regiao:'Caribe', lang:'es', dest:'Santo Domingo - Rep. Dominicana', end:'Av. Sarasota 20, Torre Empresarial, Santo Domingo, Rep. Dominicana', nit:'RNC: —', contato:'Aura Estela Cruz', tel:'+1 (809) 580 9707', email:'acruz@dopharma.com', shipTo:'Av. Sarasota 20, Santo Domingo' },
+  colombia:   { nome:'Colômbia',         flag:'🇨🇴', cliente:'ILENDER COLOMBIA',    status:'ativo',    regiao:'América do Sul', lang:'es', dest:'Bogotá - Colombia' },
+  emirados:   { nome:'Emirados Árabes Unidos',  flag:'🇦🇪', cliente:'GAH',                 status:'ativo',    regiao:'Oriente Médio', lang:'en', dest:'Dubai - UAE' },
+  arabia:     { nome:'Arábia Saudita',   flag:'🇸🇦', cliente:'GAH',                 status:'ativo',    regiao:'Oriente Médio', lang:'en', dest:'Riyadh - Saudi Arabia' },
   argentina:  { nome:'Argentina',        flag:'🇦🇷', cliente:'BIMEX',               status:'registro', regiao:'América do Sul', lang:'es' },
   jordania:   { nome:'Jordânia',         flag:'🇯🇴', cliente:'— a definir —',       status:'registro', regiao:'Oriente Médio',   lang:'en' },
   mexico:     { nome:'México',           flag:'🇲🇽', cliente:'ILENDER MÉXICO',       status:'registro', regiao:'América Central', lang:'es' },
@@ -7017,8 +7095,8 @@ buildInvForm();calcularCaixas();
 (function(){const _e=document.getElementById('inv-num');if(_e)_e.value='003/2026';})();
 (function(){const _e=document.getElementById('inv-pn');if(_e)_e.value='178.0';})();
 (function(){const _e=document.getElementById('inv-pb');if(_e)_e.value='292.3';})();
-(function(){const _e=document.getElementById('inv-fl');if(_e)_e.value='503.56';})();
-(function(){const _e=document.getElementById('inv-fi');if(_e)_e.value='807.75';})();
+
+
 (function(){const _e=document.getElementById('inv-sg');if(_e)_e.value='30.75';})();
 (function(){const _e=document.getElementById('inv-bc');if(_e)_e.value='120.00';})();
 updateInvoice();updatePL();updateInsumoForm();
@@ -7126,11 +7204,11 @@ const USUARIOS = {
 
 // Abas visíveis por perfil (nav target names)
 const PERFIL_ABAS = {
-  admin:       ['painel','alertas','envio','oc','insumos','invoice','financas','historico','precos'],
+  admin:       ['painel','alertas','envio','oc','insumos','invoice','financas','historico','precos','regulatorio'],
   operacional: ['painel','envio','invoice','insumos','oc'],
   qualidade:   ['painel','insumos','alertas'],
-  regulatorio: ['painel','insumos','alertas','oc'],
-  diretoria:   ['painel','alertas','envio','oc','insumos','invoice','financas','historico','precos'],
+  regulatorio: ['painel','insumos','alertas','oc','regulatorio'],
+  diretoria:   ['painel','alertas','envio','oc','insumos','invoice','financas','historico','precos','regulatorio'],
   pcp:         ['painel','alertas','envio','insumos','oc','historico'],
 };
 
@@ -7144,6 +7222,567 @@ let usuarioAtivo = null;
 async function sha256(msg) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg));
   return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+
+// ══════════════════════════════════════════════════════════════
+// MÓDULO REGULATÓRIO
+// ══════════════════════════════════════════════════════════════
+
+const REG_KEY = 'cf_reg_data';
+
+// Órgãos regulatórios por país
+const REG_ORGAOS = {
+  'Peru':                  'SENASA',
+  'Bolívia':               'SENASAG',
+  'Equador':               'AGROCALIDAD',
+  'Rep. Dominicana':       'MIDA',
+  'Emirados Árabes Unidos':'MOCCAE',
+  'Arábia Saudita':        'SFDA',
+  'Colômbia':              'ICA',
+};
+
+const REG_STATUS_CFG = {
+  elaboracao:   { label:'📝 Elaboração',    cor:'#3b82f6', bg:'#eff6ff', border:'#bfdbfe' },
+  protocolo:    { label:'📨 Protocolo',     cor:'#8b5cf6', bg:'#f5f3ff', border:'#ddd6fe' },
+  exigencia:    { label:'🔴 Exigência',     cor:'#dc2626', bg:'#fef2f2', border:'#fecaca' },
+  em_correcao:  { label:'🔧 Em correção',   cor:'#d97706', bg:'#fffbeb', border:'#fde68a' },
+  aprovado:     { label:'✅ Aprovado',      cor:'#059669', bg:'#f0fdf4', border:'#bbf7d0' },
+  suspenso:     { label:'⏸ Suspenso',      cor:'#6b7280', bg:'#f9fafb', border:'#e5e7eb' },
+};
+
+const REG_TIPOS = {
+  registro_novo: 'Registro Novo',
+  renovacao:     'Renovação',
+  extensao:      'Extensão de linha',
+  variacao:      'Variação',
+  vigilancia:    'Vigilância pós-registro',
+};
+
+
+// Templates de checklist de documentos por país + tipo de processo
+// Baseado no dossiê real AGROCALIDAD (Equador) — thread NEWLAS 2025
+const REG_TEMPLATES = {
+  'Equador|registro_novo': [
+    'CLV (Certificado de Libre Venta)',
+    'Carta de autorización firmada',
+    'Partida arancelaria',
+    'Certificado de composición con base (firmado)',
+    'Definición de la línea biológica',
+    'Elaboración y flujograma de producción',
+    'Certificado de análisis (CoA) — modelo firmado',
+    'Análisis biológico (identidad/esterilidad)',
+    'Análisis físico-químico',
+    'Pruebas de inocuidad',
+    'Control de inactivación o modificación antigénica',
+    'Control de eficacia inmunológica y potencia',
+    'Control de adyuvantes y diluyentes',
+    'Estudio de estabilidad',
+    'Ficha técnica de envases (vacuna y diluyente)',
+    'Sustento bibliográfico (traducido al español)',
+    'Etiquetas — vacuna y diluyente (con lote, fab, venc)',
+    'Hoja técnica del producto',
+    'Documentos de diluyente ocular',
+    'Documentos de diluyente en spray',
+  ],
+  'Equador|renovacao': [
+    'CLV actualizado',
+    'Solicitud de renovación',
+    'Comprobante de pago de tasas',
+    'Etiquetas actualizadas',
+    'Memoria técnica de cambios (si aplica)',
+  ],
+  'Peru|registro_novo': [
+    'Expediente técnico completo',
+    'CLV Brasil (MAPA)',
+    'Certificado de origen',
+    'Etiquetas en español',
+    'CoA — modelo de lote',
+    'Estudio de estabilidad',
+    'Protocolo de producción',
+    'Solicitud formal SENASA',
+    'Comprobante de pago de derecho de trámite',
+  ],
+  'Peru|renovacao': [
+    'Solicitud de renovación SENASA',
+    'CLV vigente',
+    'Comprobante de pago',
+    'Etiquetas actualizadas',
+  ],
+  'Bolívia|registro_novo': [
+    'CLV Brasil',
+    'Solicitud formal SENASAG',
+    'Expediente técnico',
+    'Etiquetas en español',
+    'CoA — modelo de lote',
+    'Protocolo de producción',
+    'Comprobante de pago',
+  ],
+  'default|registro_novo': [
+    'CLV (Certificado de Libre Venta)',
+    'Solicitud formal ao órgão',
+    'Expediente técnico / dossiê',
+    'Etiquetas no idioma local',
+    'CoA — modelo de lote',
+    'Estudio de estabilidad',
+    'Comprobante de pago de tasas',
+  ],
+};
+
+function getTemplate(pais, tipo){
+  return REG_TEMPLATES[`${pais}|${tipo}`]
+    || REG_TEMPLATES[`default|${tipo}`]
+    || REG_TEMPLATES['default|registro_novo']
+    || [];
+}
+
+// ── Persistência ──
+function getRegData(){ try{ return JSON.parse(localStorage.getItem(REG_KEY)||'[]'); }catch(e){return[];} }
+function saveRegData(data){ localStorage.setItem(REG_KEY, JSON.stringify(data)); }
+
+function nextRegId(){
+  const data = getRegData();
+  const nums = data.map(p=>parseInt((p.id||'reg-000').split('-').pop())||0);
+  return 'reg-' + String(Math.max(0,...nums)+1).padStart(3,'0');
+}
+
+// ── Render principal ──
+function renderRegulatorio(){
+  const data    = getRegData();
+  const filPais = (document.getElementById('reg-filtro-pais')||{}).value||'';
+  const filStat = (document.getElementById('reg-filtro-status')||{}).value||'';
+  const isAdmin = true;  // visão unificada — todos podem editar
+  const isReg   = true;
+
+  // Botão novo processo — visível para todos (admin, reg, diretoria)
+  // Permissão de edição controlada pelo canEdit abaixo
+
+  // Filtrar
+  const filtrado = data.filter(p=>
+    (!filPais   || p.pais===filPais) &&
+    (!filStat   || p.status===filStat)
+  );
+
+  // ── Métricas ──
+  const tot   = data.length;
+  const exig  = data.filter(p=>p.status==='exigencia').length;
+  const prot  = data.filter(p=>p.status==='protocolo').length;
+  const aprov = data.filter(p=>p.status==='aprovado').length;
+  const elab  = data.filter(p=>p.status==='elaboracao').length;
+
+  const metrEl = document.getElementById('reg-metricas');
+  if(metrEl) metrEl.innerHTML = [
+    {label:'Total',       val:tot,   cor:'var(--teal)'},
+    {label:'Elaboração',  val:elab,  cor:'#3b82f6'},
+    {label:'Protocolo',   val:prot,  cor:'#8b5cf6'},
+    {label:'Exigência',   val:exig,  cor:'#dc2626'},
+    {label:'Aprovados',   val:aprov, cor:'#059669'},
+  ].map(m=>`
+    <div style="background:var(--card);border:1px solid var(--gray-border);border-radius:var(--radius);
+      padding:10px 14px;text-align:center">
+      <div style="font-size:22px;font-weight:800;color:${m.cor}">${m.val}</div>
+      <div style="font-size:10px;color:var(--text-muted);margin-top:2px">${m.label}</div>
+    </div>`).join('');
+
+  // ── Alertas ──
+  const hoje = new Date(); hoje.setHours(0,0,0,0);
+  const alertas = [];
+  data.forEach(p=>{
+    if(p.status==='exigencia' && p.prazoOrgao){
+      const [d,mo,y] = p.prazoOrgao.split('/');
+      const dt = new Date(`${y}-${mo}-${d}`);
+      const dias = Math.ceil((dt-hoje)/86400000);
+      if(dias<=30) alertas.push({tipo:'red', msg:`🔴 Exigência <strong>${p.produto}</strong> (${p.pais}) — prazo em ${dias<=0?'<strong>VENCIDO</strong>':`<strong>${dias}d</strong>`}`, id:p.id});
+    }
+    if(p.vencimentoReg){
+      const [d,mo,y] = p.vencimentoReg.split('/');
+      const dt = new Date(`${y}-${mo}-${d}`);
+      const dias = Math.ceil((dt-hoje)/86400000);
+      if(dias>0 && dias<=180) alertas.push({tipo:'amber', msg:`⚠️ Registro <strong>${p.produto}</strong> (${p.pais}) vence em <strong>${dias}d</strong> — ${p.vencimentoReg}`, id:p.id});
+    }
+  });
+
+  const alertEl = document.getElementById('reg-alertas');
+  if(alertEl) alertEl.innerHTML = alertas.length ? `
+    <div style="display:flex;flex-direction:column;gap:6px">
+      ${alertas.map(a=>`
+        <div style="padding:8px 14px;border-radius:var(--radius);font-size:12px;cursor:pointer;
+          background:${a.tipo==='red'?'#fef2f2':'#fffbeb'};
+          border:1px solid ${a.tipo==='red'?'#fecaca':'#fde68a'};
+          border-left:4px solid ${a.tipo==='red'?'#dc2626':'#f59e0b'}"
+          onclick="abrirFichaProcesso('${a.id}')">
+          ${a.msg}
+        </div>`).join('')}
+    </div>` : '';
+
+  // ── Contador ──
+  const countEl = document.getElementById('reg-count');
+  if(countEl) countEl.textContent = `${filtrado.length} processo(s)`;
+
+  // ── Lista por país ──
+  const listaEl = document.getElementById('reg-lista');
+  if(!listaEl) return;
+
+  if(filtrado.length===0){
+    listaEl.innerHTML = `
+      <div style="text-align:center;padding:48px;color:var(--text-muted)">
+        <div style="font-size:32px;margin-bottom:8px">🔬</div>
+        <div style="font-size:14px;font-weight:600;margin-bottom:4px">Nenhum processo cadastrado</div>
+        <div style="font-size:12px">Clique em "+ Novo processo" para começar</div>
+      </div>`;
+    return;
+  }
+
+  // Agrupar por país
+  const porPais = {};
+  filtrado.forEach(p=>{ if(!porPais[p.pais]) porPais[p.pais]=[];  porPais[p.pais].push(p); });
+
+  listaEl.innerHTML = Object.entries(porPais).map(([pais, procs])=>{
+    const flag = Object.values(PAISES).find(p=>p.nome===pais)?.flag || '🌎';
+    const rows = procs.map(p=>{
+      const sc  = REG_STATUS_CFG[p.status]||REG_STATUS_CFG.elaboracao;
+      const tot = (p.etapas||[]).length;
+      const ok  = (p.etapas||[]).filter(e=>e.done).length;
+      const pct = tot>0 ? Math.round(ok/tot*100) : 0;
+      const prazoStr = p.prazoOrgao ? `<span style="font-size:10px;color:${p.status==='exigencia'?'#dc2626':'var(--text-muted)'}">⏱ ${p.prazoOrgao}</span>` : '';
+      const vencStr  = p.vencimentoReg ? `<span style="font-size:10px;color:var(--text-muted)">📅 vence ${p.vencimentoReg}</span>` : '';
+      const canEdit  = isAdmin || isReg;
+      return `
+        <tr style="border-bottom:1px solid var(--gray-border);cursor:pointer" onclick="abrirFichaProcesso('${p.id}')">
+          <td style="padding:10px 14px;font-size:12px">
+            <strong>${p.produto}</strong>
+            ${p.obs?`<div style="font-size:10px;color:var(--text-muted);margin-top:2px">${p.obs}</div>`:''}
+          </td>
+          <td style="padding:10px 8px;font-size:11px;color:var(--text-muted)">${REG_TIPOS[p.tipo]||p.tipo||'—'}</td>
+          <td style="padding:10px 8px;font-size:11px">
+            ${REG_ORGAOS[pais]||'—'}
+            ${p.agente?`<div style="font-size:10px;color:var(--text-muted)">${p.agente}</div>`:''}
+          </td>
+          <td style="padding:10px 8px">
+            <span style="padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;
+              color:${sc.cor};background:${sc.bg};border:1px solid ${sc.border}">
+              ${sc.label}
+            </span>
+          </td>
+          <td style="padding:10px 8px;font-size:11px;color:var(--text-muted)">${p.responsavel||'—'}</td>
+          <td style="padding:10px 8px;font-size:11px">
+            ${tot>0?`<div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:4px;background:var(--gray-border);border-radius:2px;min-width:50px">
+                <div style="width:${pct}%;height:100%;background:${pct===100?'#059669':'var(--teal)'};border-radius:2px"></div>
+              </div>
+              <span style="font-size:10px;color:var(--text-muted);white-space:nowrap">${ok}/${tot}</span>
+            </div>`:'<span style="color:var(--text-muted)">—</span>'}
+          </td>
+          <td style="padding:10px 8px;font-size:11px">
+            ${prazoStr}${prazoStr&&vencStr?'<br>':''}${vencStr}
+          </td>
+          <td style="padding:10px 8px;text-align:right">
+            ${canEdit?`<button class="btn btn-sm" onclick="event.stopPropagation();abrirEdicaoProcesso('${p.id}')"
+              style="font-size:10px;padding:2px 8px">✏️</button>`:''}
+          </td>
+        </tr>`;
+    }).join('');
+
+    return `
+      <div style="border-bottom:2px solid var(--gray-border)">
+        <div style="padding:8px 14px;background:var(--gray-light);font-size:12px;font-weight:700;
+          display:flex;align-items:center;gap:8px">
+          <span>${flag} ${pais}</span>
+          <span style="font-weight:400;color:var(--text-muted)">${procs.length} processo(s)</span>
+        </div>
+        <table style="width:100%;border-collapse:collapse">
+          <thead>
+            <tr style="background:var(--glass);font-size:10px;color:var(--text-muted);text-transform:uppercase">
+              <th style="padding:6px 14px;text-align:left;font-weight:600">Produto</th>
+              <th style="padding:6px 8px;text-align:left;font-weight:600">Tipo</th>
+              <th style="padding:6px 8px;text-align:left;font-weight:600">Órgão</th>
+              <th style="padding:6px 8px;text-align:left;font-weight:600">Status</th>
+              <th style="padding:6px 8px;text-align:left;font-weight:600">Responsável</th>
+              <th style="padding:6px 8px;text-align:left;font-weight:600">Etapas</th>
+              <th style="padding:6px 8px;text-align:left;font-weight:600">Prazos</th>
+              <th style="padding:6px 8px"></th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>`;
+  }).join('');
+}
+
+// ── Ficha do processo (modal de detalhe + histórico) ──
+function abrirFichaProcesso(id){
+  const data  = getRegData();
+  const proc  = data.find(p=>p.id===id);
+  if(!proc) return;
+  const sc    = REG_STATUS_CFG[proc.status]||REG_STATUS_CFG.elaboracao;
+  const canEdit = true;  // visão unificada
+
+  const etapasHtml = (proc.etapas||[]).map((e,i)=>`
+    <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--gray-border)">
+      <input type="checkbox" ${e.done?'checked':''} ${canEdit?'':'disabled'}
+        onchange="toggleEtapaReg('${id}',${i},this.checked)"
+        style="width:16px;height:16px;cursor:${canEdit?'pointer':'default'}">
+      <span style="font-size:12px;${e.done?'text-decoration:line-through;color:var(--text-muted)':''}">${e.txt}</span>
+    </div>`).join('');
+
+  const histHtml = (proc.historico||[]).slice().reverse().map(h=>`
+    <div style="font-size:11px;padding:6px 0;border-bottom:1px solid var(--gray-border);
+      ${h.decisao?'background:#fffbeb;border-left:3px solid #d97706;padding-left:8px;margin-left:-8px':''}">
+      ${h.decisao?'<span style="font-size:9px;background:#fef3c7;color:#92400e;padding:1px 6px;border-radius:8px;font-weight:700;margin-right:4px">⚡ DECISÃO</span>':''}
+      <span style="color:var(--text-muted)">${h.dt}</span>
+      <span style="margin:0 6px;color:var(--teal);font-weight:600">${h.user||'—'}</span>
+      ${h.txt}
+    </div>`).join('') || '<div style="color:var(--text-muted);font-size:11px;padding:8px 0">Nenhum registro ainda</div>';
+
+  const modal = document.getElementById('modal-edicao-pedido');
+  document.getElementById('modal-edicao-body').innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
+      <div>
+        <div style="font-size:16px;font-weight:800">${proc.produto}</div>
+        <div style="font-size:12px;color:var(--text-muted)">${proc.pais} · ${REG_ORGAOS[proc.pais]||'—'} · ${REG_TIPOS[proc.tipo]||proc.tipo||'—'}</div>
+      </div>
+      <span style="padding:4px 12px;border-radius:12px;font-size:11px;font-weight:700;
+        color:${sc.cor};background:${sc.bg};border:1px solid ${sc.border}">${sc.label}</span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11px;margin-bottom:12px">
+      <div><span style="color:var(--text-muted)">Nº processo:</span> <strong>${proc.numProcesso||'—'}</strong></div>
+      <div><span style="color:var(--text-muted)">Responsável:</span> <strong>${proc.responsavel||'—'}</strong></div>
+      <div><span style="color:var(--text-muted)">Prazo órgão:</span>
+        <strong style="color:${proc.status==='exigencia'||proc.status==='em_correcao'?'#dc2626':'inherit'}">${proc.prazoOrgao||'—'}</strong>
+      </div>
+      <div><span style="color:var(--text-muted)">Venc. registro:</span> <strong>${proc.vencimentoReg||'—'}</strong></div>
+      ${proc.agente?`<div><span style="color:var(--text-muted)">Agente local:</span> <strong>${proc.agente}</strong></div>`:''}
+      ${proc.agenteEmail?`<div><span style="color:var(--text-muted)">Email agente:</span>
+        <a href="mailto:${proc.agenteEmail}" style="color:var(--teal)">${proc.agenteEmail}</a></div>`:''}
+    </div>
+
+    ${proc.obs?`<div style="font-size:11px;color:var(--text-muted);margin-bottom:12px;padding:8px;background:var(--gray-light);border-radius:var(--radius)">${proc.obs}</div>`:''}
+
+    ${(proc.exigencias||[]).length>0||proc.status==='exigencia'||proc.status==='em_correcao'?`
+    <div style="margin-bottom:12px;padding:10px 12px;background:#fef2f2;border:1px solid #fecaca;border-left:4px solid #dc2626;border-radius:var(--radius)">
+      <div style="font-size:11px;font-weight:700;color:#dc2626;margin-bottom:6px">🔴 Exigências do órgão</div>
+      ${(proc.exigencias||[]).map((ex,xi)=>`
+        <div style="display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:1px solid #fecaca">
+          <input type="checkbox" ${ex.resolvida?'checked':''} onchange="toggleExigenciaReg('${id}',${xi},this.checked)"
+            style="width:14px;height:14px;margin-top:2px;cursor:pointer;accent-color:#059669">
+          <div style="flex:1">
+            <span style="font-size:11px;${ex.resolvida?'text-decoration:line-through;color:#9ca3af':''}">${ex.txt}</span>
+            ${ex.decisao?`<div style="font-size:10px;color:#d97706;margin-top:2px">⚡ Decisão: ${ex.decisao}</div>`:''}
+          </div>
+        </div>`).join('')||'<div style="font-size:11px;color:#9ca3af">Nenhuma exigência registrada</div>'}
+      ${canEdit?`
+        <div style="display:flex;gap:6px;margin-top:8px">
+          <input id="reg-nova-exig" placeholder="Descrever exigência do órgão..." style="flex:1;font-size:11px;padding:4px 8px;border:1px solid #fecaca;border-radius:var(--radius);background:#fff;color:var(--text)">
+          <button class="btn btn-sm" onclick="addExigenciaReg('${id}')" style="font-size:10px;background:#fee2e2;color:#dc2626;border-color:#fecaca">+ Exigência</button>
+        </div>`:''}
+    </div>`:''}
+
+    <div style="margin-bottom:16px">
+      <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:6px">
+        Checklist de documentos
+        <span style="font-weight:400;color:var(--text-muted);margin-left:6px">${(proc.etapas||[]).filter(e=>e.done).length}/${(proc.etapas||[]).length} concluídos</span>
+      </div>
+      ${etapasHtml||'<div style="color:var(--text-muted);font-size:11px">Nenhum documento cadastrado</div>'}
+      ${canEdit?`
+        <div style="display:flex;gap:6px;margin-top:8px">
+          <input id="reg-nova-etapa" placeholder="Adicionar documento ao checklist..." style="flex:1;font-size:11px;padding:4px 8px;border:1px solid var(--gray-border);border-radius:var(--radius);background:var(--card);color:var(--text)">
+          <button class="btn btn-sm" onclick="addEtapaReg('${id}')" style="font-size:11px">+ Doc</button>
+        </div>`:''}
+    </div>
+
+    <div style="margin-bottom:16px">
+      <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:6px">Histórico</div>
+      <div style="max-height:150px;overflow-y:auto">${histHtml}</div>
+      ${canEdit?`
+        <div style="display:flex;flex-direction:column;gap:4px;margin-top:8px">
+          <div style="display:flex;gap:6px">
+            <input id="reg-nova-hist" placeholder="Registrar atualização..." style="flex:1;font-size:11px;padding:4px 8px;border:1px solid var(--gray-border);border-radius:var(--radius);background:var(--card);color:var(--text)">
+            <button class="btn btn-sm btn-primary" onclick="addHistReg('${id}',false)" style="font-size:11px">✓ Registrar</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px">
+            <input type="checkbox" id="reg-hist-decisao" style="accent-color:#d97706">
+            <label for="reg-hist-decisao" style="font-size:10px;color:#d97706;cursor:pointer">⚡ Marcar como decisão estratégica</label>
+          </div>
+        </div>`:''}
+    </div>
+
+    <div style="display:flex;justify-content:flex-end;gap:8px">
+      ${canEdit?`<button class="btn btn-sm btn-primary" onclick="fecharModalEdicao();abrirEdicaoProcesso('${id}')">✏️ Editar processo</button>`:''}
+      <button class="btn btn-sm" onclick="fecharModalEdicao()">Fechar</button>
+    </div>`;
+
+  modal.style.display='flex';
+}
+
+// ── Toggle etapa ──
+function toggleEtapaReg(id, idx, done){
+  const data = getRegData();
+  const proc = data.find(p=>p.id===id);
+  if(!proc || !proc.etapas[idx]) return;
+  proc.etapas[idx].done = done;
+  saveRegData(data);
+  renderRegulatorio();
+}
+
+// ── Adicionar etapa ──
+
+// ── Adicionar exigência ao processo ──
+function addExigenciaReg(id){
+  const txt = (document.getElementById('reg-nova-exig')||{}).value?.trim();
+  if(!txt) return;
+  const data = getRegData();
+  const proc = data.find(p=>p.id===id);
+  if(!proc) return;
+  if(!proc.exigencias) proc.exigencias=[];
+  proc.exigencias.push({id:'ex'+Date.now(), txt, resolvida:false, decisao:''});
+  // Auto-mudar status para exigencia se ainda não estiver
+  if(proc.status==='protocolo') proc.status='exigencia';
+  if(!proc.historico) proc.historico=[];
+  proc.historico.push({dt:new Date().toLocaleDateString('pt-BR'),
+    txt:`Exigência registrada: ${txt}`, user:usuarioAtivo?.nome||'—'});
+  saveRegData(data);
+  addLogEntry('regulatorio',`${proc.produto} (${proc.pais}): exigência — ${txt}`);
+  fecharModalEdicao();
+  renderRegulatorio();
+  abrirFichaProcesso(id);
+}
+
+// ── Toggle exigência resolvida ──
+function toggleExigenciaReg(id, idx, resolvida){
+  const data = getRegData();
+  const proc = data.find(p=>p.id===id);
+  if(!proc || !proc.exigencias[idx]) return;
+  proc.exigencias[idx].resolvida = resolvida;
+  // Se todas resolvidas → mudar para em_correcao
+  if(resolvida && proc.exigencias.every(e=>e.resolvida)){
+    proc.status = 'em_correcao';
+    if(!proc.historico) proc.historico=[];
+    proc.historico.push({dt:new Date().toLocaleDateString('pt-BR'),
+      txt:'Todas as exigências resolvidas → Em correção', user:usuarioAtivo?.nome||'—'});
+  }
+  saveRegData(data);
+  renderRegulatorio();
+}
+
+function addEtapaReg(id){
+  const txt = (document.getElementById('reg-nova-etapa')||{}).value?.trim();
+  if(!txt) return;
+  const data = getRegData();
+  const proc = data.find(p=>p.id===id);
+  if(!proc) return;
+  if(!proc.etapas) proc.etapas=[];
+  proc.etapas.push({id:'e'+Date.now(), txt, done:false});
+  saveRegData(data);
+  addLogEntry('regulatorio',`${proc.produto} (${proc.pais}): etapa adicionada — ${txt}`);
+  fecharModalEdicao();
+  abrirFichaProcesso(id);
+}
+
+// ── Adicionar histórico ──
+function addHistReg(id, decisao){
+  const txt = (document.getElementById('reg-nova-hist')||{}).value?.trim();
+  if(!txt) return;
+  const isDecisao = decisao || document.getElementById('reg-hist-decisao')?.checked || false;
+  const data = getRegData();
+  const proc = data.find(p=>p.id===id);
+  if(!proc) return;
+  if(!proc.historico) proc.historico=[];
+  const dt = new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'});
+  proc.historico.push({dt, txt, user: usuarioAtivo?.nome||'—', decisao: isDecisao});
+  saveRegData(data);
+  addLogEntry('regulatorio',`${proc.produto} (${proc.pais})${isDecisao?' [DECISÃO]':''}: ${txt}`);
+  fecharModalEdicao();
+  abrirFichaProcesso(id);
+}
+
+// ── Abrir modal de criação ──
+function abrirModalNovoProcesso(){
+  abrirModalInput('🔬 Novo processo regulatório', [
+    {id:'reg-pais',        label:'País',            ph:'ex: Peru', req:true},
+    {id:'reg-produto',     label:'Produto',          ph:'ex: NEWLAS', req:true},
+    {id:'reg-tipo',        label:'Tipo',             ph:'registro_novo | renovacao | extensao | variacao | vigilancia'},
+    {id:'reg-status',      label:'Status',           ph:'elaboracao | protocolo | exigencia | em_correcao | aprovado | suspenso'},
+    {id:'reg-resp',        label:'Responsável INATA', ph:'ex: Maks'},
+    {id:'reg-agente',      label:'Agente local (nome)', ph:'ex: Gabriela Herrera'},
+    {id:'reg-agente-email',label:'Email agente local',  ph:'ex: g.herrera@nutrisalminsa.com'},
+    {id:'reg-num-proc',    label:'Nº processo no órgão', ph:'ex: AGROCALIDAD-2025-0123'},
+    {id:'reg-prazo',       label:'Prazo do órgão (DD/MM/AAAA)', ph:'ex: 15/06/2026'},
+    {id:'reg-venc-reg',    label:'Vencimento do registro atual (DD/MM/AAAA)', ph:'ex: 01/03/2027'},
+    {id:'reg-obs',         label:'Observações / risco estratégico', ph:'ex: Rótulo não segue Manual 003 — risco de exigência'},
+  ], (vals) => {
+    const pais  = vals['reg-pais']   ||'';
+    const tipo  = vals['reg-tipo']   ||'registro_novo';
+    // Gerar checklist a partir do template
+    const tmpl  = getTemplate(pais, tipo);
+    const data  = getRegData();
+    const novo  = {
+      id:            nextRegId(),
+      pais, produto: vals['reg-produto']     ||'',
+      tipo,
+      status:        vals['reg-status']      ||'elaboracao',
+      responsavel:   vals['reg-resp']        ||'',
+      agente:        vals['reg-agente']      ||'',
+      agenteEmail:   vals['reg-agente-email']||'',
+      numProcesso:   vals['reg-num-proc']    ||'',
+      prazoOrgao:    vals['reg-prazo']       ||'',
+      vencimentoReg: vals['reg-venc-reg']    ||'',
+      obs:           vals['reg-obs']         ||'',
+      etapas: tmpl.map((txt,i)=>({id:'e'+i, txt, done:false})),
+      exigencias: [],
+      historico: [{dt:new Date().toLocaleDateString('pt-BR'),
+                   txt:'Processo criado', user:usuarioAtivo?.nome||'—'}],
+    };
+    data.push(novo);
+    saveRegData(data);
+    addLogEntry('regulatorio',`Novo processo: ${novo.produto} — ${novo.pais}`);
+    renderRegulatorio();
+    showToast(`✅ ${novo.produto} (${novo.pais}) criado com ${tmpl.length} documentos no checklist!`,'green',3000);
+  });
+}
+
+// ── Editar processo existente ──
+function abrirEdicaoProcesso(id){
+  const data = getRegData();
+  const proc = data.find(p=>p.id===id);
+  if(!proc) return;
+  abrirModalInput(`✏️ Editar — ${proc.produto} (${proc.pais})`, [
+    {id:'reg-e-produto',       label:'Produto',           val:proc.produto,       req:true},
+    {id:'reg-e-tipo',          label:'Tipo',               val:proc.tipo},
+    {id:'reg-e-status',        label:'Status',             val:proc.status},
+    {id:'reg-e-resp',          label:'Responsável INATA',  val:proc.responsavel},
+    {id:'reg-e-agente',        label:'Agente local (nome)',val:proc.agente||''},
+    {id:'reg-e-agente-email',  label:'Email agente local', val:proc.agenteEmail||''},
+    {id:'reg-e-num-proc',      label:'Nº processo',        val:proc.numProcesso},
+    {id:'reg-e-prazo',         label:'Prazo órgão (DD/MM/AAAA)',    val:proc.prazoOrgao},
+    {id:'reg-e-venc-reg',      label:'Venc. registro (DD/MM/AAAA)', val:proc.vencimentoReg},
+    {id:'reg-e-obs',           label:'Observações / risco estratégico', val:proc.obs},
+  ], (vals) => {
+    const oldStatus = proc.status;
+    proc.produto       = vals['reg-e-produto']      ||proc.produto;
+    proc.tipo          = vals['reg-e-tipo']          ||proc.tipo;
+    proc.status        = vals['reg-e-status']        ||proc.status;
+    proc.responsavel   = vals['reg-e-resp']          ||proc.responsavel;
+    proc.agente        = vals['reg-e-agente']        ||'';
+    proc.agenteEmail   = vals['reg-e-agente-email']  ||'';
+    proc.numProcesso   = vals['reg-e-num-proc']      ||proc.numProcesso;
+    proc.prazoOrgao    = vals['reg-e-prazo']         ||proc.prazoOrgao;
+    proc.vencimentoReg = vals['reg-e-venc-reg']      ||proc.vencimentoReg;
+    proc.obs           = vals['reg-e-obs']           ||'';
+    if(proc.status !== oldStatus){
+      if(!proc.historico) proc.historico=[];
+      const sc = REG_STATUS_CFG[proc.status]||{};
+      proc.historico.push({
+        dt: new Date().toLocaleDateString('pt-BR'),
+        txt:`Status alterado para ${sc.label||proc.status}`,
+        user: usuarioAtivo?.nome||'—'
+      });
+    }
+    saveRegData(data);
+    addLogEntry('regulatorio',`${proc.produto} (${proc.pais}): processo atualizado`);
+    renderRegulatorio();
+    showToast('✅ Processo atualizado','green',2500);
+  });
 }
 
 async function doLogin() {
