@@ -331,12 +331,13 @@ select option{background:#fff;color:#111827}
 </div>
 <div class="nav no-print">
   <!-- ABAS GLOBAIS -->
-  <div class="nav-tab global active" onclick="nav('painel',this)">🏠 Painel</div>
+  <div class="nav-tab global active" onclick="nav('painel',this)">🏠</div>
   <div class="nav-tab global" onclick="nav('alertas',this)">✅ Tarefas & Alertas <span class="dot"></span></div>
   <div class="nav-tab global" onclick="nav('envio',this)">✈️ Envios</div>
   <div class="nav-tab global" onclick="nav('insumos',this)">📦 Insumos <span class="dot"></span></div>
-  <div class="nav-tab global" onclick="nav('financas',this)">💹 Finanças &amp; Dashboard</div>
+  <div class="nav-tab global" onclick="nav('financas',this)">💹 Finanças</div>
   <div class="nav-tab global" onclick="nav('regulatorio',this)">🔬 Regulatório</div>
+  <div class="nav-tab global" onclick="nav('calendario',this)">📅 Calendário PCP</div>
   <!-- SEPARADOR -->
   <div class="nav-separator"></div>
   <span class="nav-dynamic-label" id="nav-pais-label">🌎 Global</span>
@@ -344,7 +345,8 @@ select option{background:#fff;color:#111827}
   <div class="nav-tab dynamic" onclick="nav('oc',this)">📋 OC &amp; Balanço</div>
   <div class="nav-tab dynamic" onclick="nav('invoice',this)">🧾 Invoice</div>
   <div class="nav-tab dynamic" onclick="nav('historico',this)">📁 Histórico</div>
-  <div class="nav-tab dynamic" onclick="nav('precos',this)">💲 Preços &amp; Regras</div>
+  <div class="nav-tab dynamic" onclick="nav('precos',this)">💲 Preços</div>
+  <div class="nav-tab dynamic" onclick="nav('regras',this)">📐 Regras</div>
 </div>
 <div class="page">
 <!-- BARRA DE CONTEXTO DO PAÍS — aparece em todas as abas exceto Painel -->
@@ -632,75 +634,15 @@ select option{background:#fff;color:#111827}
 
   <!-- ══ PARTE INFERIOR: RESUMO GLOBAL DE PEDIDOS ══ -->
   <div class="card" style="margin-bottom:12px">
-    <div class="card-head">📋 Todos os pedidos ativos — ordenados por envio</div>
-    <div class="tbl-wrap"><table>
-      <thead><tr><th>País</th><th>Pedido</th><th>Sislaudo</th><th>OC(s)</th><th>Envio</th><th>Produtos</th><th>Status</th></tr></thead>
-      <tbody>
-        <tr class="tr-warn">
-          <td><span style="font-size:13px">🇵🇪</span> <span style="font-size:10px;font-weight:600;background:#dbeafe;color:#1d4ed8;padding:1px 6px;border-radius:6px">PER</span></td>
-          <td><strong>003.2026</strong></td><td style="color:var(--text-muted);font-size:11px">482461</td>
-          <td style="font-size:11px">4400003387 / 3340</td>
-          <td style="font-weight:700;color:var(--teal)">08/04/2026</td>
-          <td style="font-size:11px">Alevac6, Salmovac, Sinuvac, Rinovac, Newlas10K, Reovac, Imuplex</td>
-          <td><span class="badge ba">⚙️ Em preparação</span></td>
-        </tr>
-        <tr class="tr-warn">
-          <td><span style="font-size:13px">🇵🇪</span> <span style="font-size:10px;font-weight:600;background:#dbeafe;color:#1d4ed8;padding:1px 6px;border-radius:6px">PER</span></td>
-          <td><strong>005.2026</strong></td><td style="color:var(--text-muted);font-size:11px">489302</td>
-          <td style="font-size:11px">4400003444</td>
-          <td style="font-weight:700;color:var(--teal)">28/04/2026</td>
-          <td style="font-size:11px">Newlas1K, Newlas5K, Sinuvac, Imuplex</td>
-          <td><span class="badge ba">📅 Programado</span></td>
-        </tr>
-        <tr class="tr-ok">
-          <td><span style="font-size:13px">🇵🇪</span> <span style="font-size:10px;font-weight:600;background:#dbeafe;color:#1d4ed8;padding:1px 6px;border-radius:6px">PER</span></td>
-          <td><strong>002.2026</strong></td><td style="color:var(--text-muted);font-size:11px">481378</td>
-          <td style="font-size:11px">4400003340</td>
-          <td style="color:var(--text-muted);font-size:11px">15/03/2026</td>
-          <td style="font-size:11px">Newlas5K, Rinovac, Reovac, Newlas10K</td>
-          <td><span class="badge bg">✅ Concluído</span></td>
-        </tr>
-        <tr class="tr-ok">
-          <td><span style="font-size:13px">🇵🇪</span> <span style="font-size:10px;font-weight:600;background:#dbeafe;color:#1d4ed8;padding:1px 6px;border-radius:6px">PER</span></td>
-          <td><strong>001.2026</strong></td><td style="color:var(--text-muted);font-size:11px">480110</td>
-          <td style="font-size:11px">4400003340</td>
-          <td style="color:var(--text-muted);font-size:11px">03/03/2026</td>
-          <td style="font-size:11px">Alevac6, Alevac8, Salmovac, Sinuvac, Newlas10K</td>
-          <td><span class="badge bg">✅ Concluído</span></td>
-        </tr>
-        <tr class="tr-ok">
-          <td><span style="font-size:13px">🇦🇪</span> <span style="font-size:10px;font-weight:600;background:#d1fae5;color:#065f46;padding:1px 6px;border-radius:6px">EAU</span></td>
-          <td><strong>004.2026</strong></td><td style="color:var(--text-muted);font-size:11px">—</td>
-          <td style="font-size:11px">GAH</td>
-          <td style="color:var(--text-muted);font-size:11px">20/02/2026</td>
-          <td style="font-size:11px">Matrivac Adenoastro — 324 fr</td>
-          <td><span class="badge bg">✅ Concluído</span></td>
-        </tr>
-        <tr style="background:#fffbeb">
-          <td><span style="font-size:13px">🇧🇴</span> <span style="font-size:10px;font-weight:600;background:#fef3c7;color:#92400e;padding:1px 6px;border-radius:6px">BOL</span></td>
-          <td><strong>*006.2026</strong></td><td style="color:var(--text-muted);font-size:11px">21/04/2026</td>
-          <td style="font-size:11px">— em cotação</td>
-          <td style="font-weight:700;color:#d97706">21/04/2026 <span style="font-size:10px">(prev.)</span></td>
-          <td style="font-size:11px">Alevac 6 — 300 fr · Lote 6LVC1/2026 🔒</td>
-          <td><span class="badge ba">* Em cotação</span></td>
-        </tr>
-        <tr style="background:#fffbeb">
-          <td><span style="font-size:13px">🇩🇴</span> <span style="font-size:10px;font-weight:600;background:#fef3c7;color:#92400e;padding:1px 6px;border-radius:6px">DO</span></td>
-          <td><strong>*001.2026</strong></td><td style="color:var(--text-muted);font-size:11px">—</td>
-          <td style="font-size:11px">— em cotação</td>
-          <td style="font-weight:700;color:#d97706">A definir</td>
-          <td style="font-size:11px">9 produtos · CIP $57.400,07</td>
-          <td><span class="badge ba">* Em cotação</span></td>
-        </tr>
-        <tr style="background:#fffbeb">
-          <td><span style="font-size:13px">🇪🇨</span> <span style="font-size:10px;font-weight:600;background:#fef3c7;color:#92400e;padding:1px 6px;border-radius:6px">EC</span></td>
-          <td><strong>*001.2026</strong></td><td style="color:var(--text-muted);font-size:11px">—</td>
-          <td style="font-size:11px">— em cotação</td>
-          <td style="font-weight:700;color:#d97706">A definir</td>
-          <td style="font-size:11px">Alevac 6 (90) + Newlas 2K (1500) + Sinuvac (90) · CIP $11.700,59</td>
-          <td><span class="badge ba">* Em cotação</span></td>
-        </tr>
-      </tbody>
+    <div class="card-head" style="display:flex;justify-content:space-between;align-items:center">
+      <span>📋 Todos os pedidos ativos — ordenados por envio</span>
+    </div>
+    <div class="tbl-wrap"><table id="painel-pedidos-table">
+      <thead><tr>
+        <th>País</th><th>Pedido</th><th>Sislaudo</th><th>OC(s)</th>
+        <th>Envio</th><th>Produtos</th><th>Status</th>
+      </tr></thead>
+      <tbody id="painel-pedidos-tbody"></tbody>
     </table></div>
   </div>
 
@@ -711,7 +653,7 @@ select option{background:#fff;color:#111827}
   </div>
 </div>
 <div id="v-oc" class="view">
-<div class="section-hd"><span class="section-title" id="oc-section-title">Ordens de Compra</span><button class="btn btn-primary" onclick="openModal('m-oc')">+ Registrar OC</button></div>
+<div class="section-hd"><span class="section-title" id="oc-section-title">Ordens de Compra</span><button class="btn btn-primary" onclick="openModal('m-oc')">+ Registrar OC</button><button class="btn btn-sm" onclick="abrirModalNovaLinhaBalanco()" style="font-size:11px;margin-left:6px">+ Nova linha balanço</button></div>
 <div id="oc-country-notice" style="display:none;flex-direction:column;align-items:center;padding:32px;text-align:center;color:var(--text-muted)">
   <div style="font-size:40px;margin-bottom:12px">📋</div>
   <div style="font-size:15px;font-weight:700;margin-bottom:8px;color:var(--text)" id="oc-notice-name">Nenhuma OC para este país</div>
@@ -1334,6 +1276,7 @@ select option{background:#fff;color:#111827}
 <div id="v-alertas" class="view">
 <div class="section-hd">
   <span class="section-title">✅ Tarefas & Alertas</span>
+    <button class="btn btn-sm btn-primary" onclick="abrirModalNovoAlerta()" style="font-size:11px">+ Novo alerta</button>
   <div style="display:flex;gap:8px;align-items:center">
     <span style="font-size:11px;color:var(--text-muted)" id="tarefas-resumo"></span>
     <button class="btn btn-sm" onclick="filtrarTarefas('todas')"    id="ftab-todas"    style="font-size:10px">Todas</button>
@@ -1430,7 +1373,7 @@ select option{background:#fff;color:#111827}
 
   <!-- SIMULADOR DE CONVERSÃO -->
   <div class="card" style="margin-bottom:16px">
-    <div class="card-head">💰 Simulador de Conversão — Faturas em aberto</div>
+    <div class="card-head" style="display:flex;justify-content:space-between;align-items:center"><span>💰 Simulador de Conversão — Faturas em aberto</span><button class="btn btn-sm" onclick="abrirModalNovaFatura()" style="font-size:10px">+ Nova fatura</button></div>
     <div class="card-body">
       <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Valores calculados com a cotação atual. Clique em "Simular" para ver com outra taxa.</div>
       <div style="display:flex;gap:10px;align-items:flex-end;margin-bottom:16px;flex-wrap:wrap">
@@ -1968,6 +1911,74 @@ select option{background:#fff;color:#111827}
 </div>
 
 
+<div id="v-calendario" class="view">
+  <div class="section-hd">
+    <span class="section-title">📅 Calendário de Produção</span>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <span style="font-size:11px;color:var(--text-muted)">Liberação = Fab + 23 dias (21 QC + 2 checagem)</span>
+      <button class="btn btn-sm btn-primary" onclick="abrirModalNovaPartida()" style="font-size:11px">+ Nova partida</button>
+      <button class="btn btn-sm" onclick="renderCalendario()" style="font-size:11px">↺ Atualizar</button>
+    </div>
+  </div>
+
+  <!-- ALERTA DISPONÍVEIS HOJE -->
+  <div id="cal-alertas" style="margin-bottom:12px"></div>
+
+  <!-- MÉTRICAS -->
+  <div id="cal-metricas" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px"></div>
+
+  <!-- FILTROS -->
+  <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+    <select id="cal-filtro-tipo" onchange="renderCalendario()"
+      style="font-size:12px;padding:4px 8px;border:1px solid var(--gray-border);border-radius:var(--radius);background:var(--card);color:var(--text)">
+      <option value="">Todos os tipos</option>
+      <option value="VIVA">🟢 Vivas</option>
+      <option value="INAT">🔵 Inativadas</option>
+    </select>
+    <select id="cal-filtro-dest" onchange="renderCalendario()"
+      style="font-size:12px;padding:4px 8px;border:1px solid var(--gray-border);border-radius:var(--radius);background:var(--card);color:var(--text)">
+      <option value="">Todos os destinos</option>
+      <option value="COMEX">📦 COMEX (exclusivo)</option>
+      <option value="INTERNO">🏠 Mercado interno</option>
+      <option value="COMPARTILHADO">🔄 Compartilhado</option>
+    </select>
+    <select id="cal-filtro-status" onchange="renderCalendario()"
+      style="font-size:12px;padding:4px 8px;border:1px solid var(--gray-border);border-radius:var(--radius);background:var(--card);color:var(--text)">
+      <option value="">Todos os status</option>
+      <option value="previsto">⏳ Previsto</option>
+      <option value="em_qc">🔬 Em QC</option>
+      <option value="disponivel">✅ Disponível</option>
+      <option value="esgotado">📭 Esgotado</option>
+    </select>
+  </div>
+
+  <!-- TABELA PRINCIPAL -->
+  <div class="card">
+    <div class="card-body" style="padding:0">
+      <div id="cal-tabela"></div>
+    </div>
+  </div>
+
+  <!-- TIMELINE VISUAL -->
+  <div class="card" style="margin-top:16px">
+    <div class="card-head">📆 Timeline de liberações — próximos 60 dias</div>
+    <div class="card-body">
+      <div id="cal-timeline" style="overflow-x:auto"></div>
+    </div>
+  </div>
+</div>
+
+<div id="v-regras" class="view">
+  <div class="section-hd">
+    <span class="section-title">📐 Regras &amp; Lógicas do Sistema</span>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span style="font-size:11px;color:var(--text-muted)">Edite qualquer regra — o site aplica automaticamente</span>
+      <button class="btn btn-sm btn-primary" onclick="salvarTodasRegras()" style="font-size:11px">💾 Salvar regras</button>
+    </div>
+  </div>
+  <div id="regras-lista" style="display:flex;flex-direction:column;gap:12px"></div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
 // ===== ENVIO PEDIDOS =====
@@ -2238,6 +2249,12 @@ function marcarConcluido(id){
   renderEnvioSidebar();
   setEnvioAba(id);
   addLogEntry('conclusão',`Pedido ${p.num} concluído`);
+  // alerta teal automático
+  alertaData.push({tipo:'teal', pais:p.flag+' '+p.pais,
+    titulo:`✅ ${p.num} — Embarque concluído`,
+    detalhe:`AWB: ${p.awb||'—'} · Fatura: ${p.fatura||'—'} · CIP: $${(p.cip||0).toLocaleString('en',{minimumFractionDigits:2})}`,
+    prazo:null,cascata:null,acao:'Concluído'});
+  salvarAlertasResolvidos(); renderAlertas();
   showToast(`✅ Pedido ${p.num} concluído!`,'green',3000);
 }
 
@@ -2248,7 +2265,9 @@ function toggleBloqueio(pedidoId, bloqueioId){
   const b = p.bloqueios.find(x=>x.id===bloqueioId);
   if(!b) return;
   b.done = !b.done;
+  if(b.done) syncBloqueioToAlerta(pedidoId, b.txt);
   salvarPedido(pedidoId);
+  renderEnvioSidebar();
   setEnvioAba(pedidoId);
 }
 
@@ -2269,37 +2288,85 @@ function abrirEdicaoPedido(id){
   const p = PEDIDOS_DATA[id];
   if(!p) return;
   _editingId = id;
-  const cfg = STATUS_CFG[p.status];
-  if(cfg.lock){
-    showToast('Pedido travado — edição não permitida após expedição.','red',3000);
-    return;
-  }
+
+  // Build unique product list from PRODUTOS catalog grouped by name
+  const prodNomes = [...new Set(PRODUTOS.map(pr=>pr.nome))];
 
   const flds = [
-    {label:'Nº Pedido', key:'num', type:'text'},
-    {label:'ETD (previsto)', key:'etd', type:'text', ph:'DD/MM/AAAA'},
-    {label:'ID Sislaudo', key:'sislaudo', type:'text'},
-    {label:'OC(s) Cliente', key:'oc', type:'text'},
-    {label:'AWB', key:'awb', type:'text', ph:'ex: LA 901 12345'},
-    {label:'Fatura Nº', key:'fatura', type:'text', ph:'ex: 003/2026'},
-    {label:'CIP (USD)', key:'cip', type:'number'},
-    {label:'Vencimento fatura', key:'faturaVenc', type:'text', ph:'DD/MM/AAAA'},
-    {label:'Incoterm', key:'incoterm', type:'text'},
-    {label:'Condição pagamento', key:'pagamento', type:'text'},
-    {label:'Destino', key:'destino', type:'text'},
-    {label:'Peso líquido (kg)', key:'pnKg', type:'number'},
-    {label:'Peso bruto (kg)', key:'pbKg', type:'number'},
-    {label:'Volumes', key:'volumes', type:'text'},
+    {label:'Nº Pedido',           key:'num',        type:'text'},
+    {label:'ETD (previsto)',       key:'etd',        type:'text', ph:'DD/MM/AAAA'},
+    {label:'ID Sislaudo',          key:'sislaudo',   type:'text'},
+    {label:'OC(s) Cliente',        key:'oc',         type:'text'},
+    {label:'AWB',                  key:'awb',        type:'text', ph:'ex: LA 901 12345'},
+    {label:'Fatura Nº',            key:'fatura',     type:'text', ph:'ex: 003/2026'},
+    {label:'CIP (USD)',            key:'cip',        type:'number'},
+    {label:'Vencimento fatura',    key:'faturaVenc', type:'text', ph:'DD/MM/AAAA'},
+    {label:'Incoterm',             key:'incoterm',   type:'text'},
+    {label:'Condição pagamento',   key:'pagamento',  type:'text'},
+    {label:'Destino',              key:'destino',    type:'text'},
+    {label:'Frete (USD)',          key:'frete',      type:'number'},
+    {label:'Seguro (USD)',         key:'seguro',     type:'number'},
   ];
 
   const rows = flds.map(f=>`
     <div style="display:flex;flex-direction:column;gap:3px">
       <label style="font-size:11px;color:var(--text-muted)">${f.label}</label>
       <input data-key="${f.key}" type="${f.type||'text'}"
-        value="${p[f.key]??''}"
-        placeholder="${f.ph||''}"
-        style="border:1px solid var(--gray-border);border-radius:var(--radius);padding:5px 8px;font-size:12px;background:var(--card);color:var(--text)">
+        value="${p[f.key]??''}" placeholder="${f.ph||''}"
+        style="border:1px solid var(--gray-border);border-radius:var(--radius);
+               padding:5px 8px;font-size:12px;background:var(--card);color:var(--text)">
     </div>`).join('');
+
+  // Products section — each product row fully editable + remove btn
+  const prodRows = p.produtos.map((pr,i) => `
+    <tr id="edit-prod-row-${i}" style="border-bottom:1px solid var(--gray-border)">
+      <td style="padding:4px 6px;font-size:11px;font-weight:600">
+        ${pr.loteExtra
+          ? '<span style="color:var(--text-muted);font-size:10px;padding-left:8px">↳ 2º lote</span>'
+          : `<select onchange="editProdField(${i},'prod',this.value);editProdField(${i},'tipo',PRODUTOS.find(x=>x.nome===this.value)?.tipo||'VIVA');editProdField(${i},'cod',PRODUTOS.find(x=>x.nome===this.value)?.cod||'')"
+              style="font-size:11px;border:1px solid var(--gray-border);border-radius:3px;padding:2px 4px;background:var(--card);color:var(--text);max-width:130px">
+              ${prodNomes.map(n=>`<option value="${n}" ${normalizarNomeProd(pr.prod)===n?'selected':''}>${n}</option>`).join('')}
+            </select>`
+        }
+      </td>
+      <td style="padding:4px 2px">
+        <input value="${pr.qtd??''}" placeholder="Total" type="number" onchange="editProdField(${i},'qtd',+this.value||null)"
+          style="width:46px;font-size:10px;border:1px solid var(--gray-border);border-radius:3px;padding:2px 3px;background:var(--card);color:var(--text)" title="Qtd total OC">
+        <input value="${pr.qtdLote??''}" placeholder="Lote" type="number" onchange="editProdField(${i},'qtdLote',+this.value||null)"
+          style="width:46px;font-size:10px;border:1px solid #bfdbfe;border-radius:3px;padding:2px 3px;background:var(--card);color:#1d4ed8;margin-top:2px;display:block" title="Qtd neste lote (azul)">
+      </td>
+      <td style="padding:4px 4px">
+        <input value="${pr.preco??''}" placeholder="Preço" type="number" step="0.01" onchange="editProdField(${i},'preco',parseFloat(this.value)||0)"
+          style="width:62px;font-size:11px;border:1px solid var(--gray-border);border-radius:3px;padding:2px 4px;background:var(--card);color:var(--text)">
+      </td>
+      <td style="padding:4px 4px">
+        <input value="${pr.oc??''}" placeholder="OC" onchange="editProdField(${i},'oc',this.value)"
+          style="width:90px;font-size:11px;border:1px solid var(--gray-border);border-radius:3px;padding:2px 4px;background:var(--card);color:var(--text)">
+      </td>
+      <td style="padding:4px 4px">
+        <input value="${pr.coa??''}" placeholder="VENC COA" onchange="editProdField(${i},'coa',this.value)"
+          title="Vencimento COA" style="width:80px;font-size:11px;border:1px solid var(--gray-border);border-radius:3px;padding:2px 4px;background:var(--card);color:var(--text)">
+      </td>
+      <td style="padding:4px 4px">
+        <select onchange="editProdField(${i},'obs',this.value)"
+          style="font-size:10px;border:1px solid var(--gray-border);border-radius:3px;padding:2px 3px;background:var(--card);color:var(--text);max-width:120px">
+          <option value="${pr.obs||''}">${pr.obs||'— obs —'}</option>
+          <option value="">— limpar —</option>
+          <option value="CONSULTAR PCP">🔴 CONSULTAR PCP</option>
+          <option value="CONSULTAR COMERCIAL">🔴 CONSULTAR COMERCIAL</option>
+          <option value="CONSULTAR PCP E COMERCIAL">🔴 PCP+COMERCIAL</option>
+          <option value="Reservada em sistema">Reservada em sistema</option>
+          <option value="Disponível">✅ Disponível</option>
+        </select>
+      </td>
+      <td style="padding:4px 4px;text-align:center">
+        ${!pr.loteExtra ? `<button onclick="removerProduto(${i})"
+          style="background:none;border:none;color:#dc2626;cursor:pointer;font-size:13px;padding:2px 4px"
+          title="Remover produto">✕</button>` : ''}
+      </td>
+    </tr>`).join('');
+
+  const cfg = STATUS_CFG[p.status];
 
   const html = `
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
@@ -2309,25 +2376,66 @@ function abrirEdicaoPedido(id){
       </div>
       <span class="${cfg.badge}" style="font-size:11px;padding:3px 10px;border-radius:100px">${cfg.label}</span>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
-      ${rows}
+
+    <!-- CAMPOS GERAIS -->
+    <div style="font-size:11px;font-weight:700;color:var(--teal);text-transform:uppercase;margin-bottom:8px;letter-spacing:.5px">Dados do pedido</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">${rows}</div>
+
+    <!-- PRODUTOS -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <div style="font-size:11px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.5px">Produtos</div>
+      <button onclick="adicionarProdutoModal()" class="btn btn-sm" style="font-size:10px">+ Adicionar produto</button>
     </div>
-    <div style="font-size:12px;font-weight:600;margin-bottom:8px;color:var(--text-muted)">BLOQUEIOS</div>
-    <div id="edit-bloqueios" style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">
+    <div style="overflow-x:auto;margin-bottom:14px">
+      <table style="width:100%;border-collapse:collapse;font-size:11px" id="edit-prod-table">
+        <thead><tr style="background:var(--gray-light)">
+          <th style="padding:4px 6px;text-align:left;font-size:10px">Produto</th>
+          <th style="padding:4px 4px;text-align:center;font-size:10px">Qtd</th>
+          <th style="padding:4px 4px;text-align:center;font-size:10px">Preço</th>
+          <th style="padding:4px 4px;text-align:left;font-size:10px">OC</th>
+          <th style="padding:4px 4px;text-align:left;font-size:10px">Obs</th>
+          <th style="padding:4px 4px"></th>
+        </tr></thead>
+        <tbody id="edit-prod-tbody">${prodRows}</tbody>
+      </table>
+    </div>
+
+    <!-- BLOQUEIOS -->
+    <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px">Bloqueios</div>
+    <div id="edit-bloqueios" style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px">
       ${p.bloqueios.map((b,i)=>`
         <div style="display:flex;align-items:center;gap:8px">
           <input type="checkbox" id="eb${i}" ${b.done?'checked':''} onchange="toggleBloqueioEdit(${i},this.checked)" style="width:14px;height:14px;cursor:pointer">
-          <label for="eb${i}" style="font-size:12px;cursor:pointer;${b.done?'text-decoration:line-through;color:var(--text-muted)':''}">${b.txt}</label>
+          <label for="eb${i}" style="font-size:12px;cursor:pointer;${b.done?'text-decoration:line-through;color:var(--text-muted)':''}">
+            ${b.txt}
+          </label>
+          <button onclick="removerBloqueioEdit(${i})" style="background:none;border:none;color:#9ca3af;cursor:pointer;font-size:11px;margin-left:auto">✕</button>
         </div>`).join('')}
+      <div style="display:flex;gap:6px;margin-top:4px">
+        <input id="novo-bloqueio-txt" placeholder="Novo bloqueio..."
+          style="flex:1;font-size:11px;padding:4px 8px;border:1px solid var(--gray-border);border-radius:var(--radius);background:var(--card);color:var(--text)">
+        <button class="btn btn-sm" onclick="adicionarBloqueioEdit()" style="font-size:10px">+ Add</button>
+      </div>
     </div>
-    <div style="font-size:12px;font-weight:600;margin-bottom:8px;color:var(--text-muted)">PENDÊNCIAS</div>
+
+    <!-- PENDÊNCIAS -->
+    <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px">Pendências</div>
     <div id="edit-pendencias" style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px">
       ${p.pendencias.map((pd,i)=>`
         <div style="display:flex;align-items:center;gap:8px">
           <input type="checkbox" id="ep${i}" ${pd.done?'checked':''} onchange="togglePendenciaEdit(${i},this.checked)" style="width:14px;height:14px;cursor:pointer">
-          <label for="ep${i}" style="font-size:12px;cursor:pointer;${pd.done?'text-decoration:line-through;color:var(--text-muted)':''}">${pd.txt}</label>
+          <label for="ep${i}" style="font-size:12px;cursor:pointer;${pd.done?'text-decoration:line-through;color:var(--text-muted)':''}">
+            ${pd.txt}
+          </label>
+          <button onclick="removerPendenciaEdit(${i})" style="background:none;border:none;color:#9ca3af;cursor:pointer;font-size:11px;margin-left:auto">✕</button>
         </div>`).join('')}
+      <div style="display:flex;gap:6px;margin-top:4px">
+        <input id="nova-pendencia-txt" placeholder="Nova pendência..."
+          style="flex:1;font-size:11px;padding:4px 8px;border:1px solid var(--gray-border);border-radius:var(--radius);background:var(--card);color:var(--text)">
+        <button class="btn btn-sm" onclick="adicionarPendenciaEdit()" style="font-size:10px">+ Add</button>
+      </div>
     </div>
+
     <div style="display:flex;justify-content:flex-end;gap:8px">
       <button class="btn btn-sm" onclick="fecharModalEdicao()">Cancelar</button>
       <button class="btn btn-sm btn-primary" onclick="salvarEdicaoPedido()">💾 Salvar alterações</button>
@@ -2336,6 +2444,130 @@ function abrirEdicaoPedido(id){
   const modal = document.getElementById('modal-edicao-pedido');
   document.getElementById('modal-edicao-body').innerHTML = html;
   modal.style.display = 'flex';
+}
+
+// Helpers para edição inline de produtos no modal
+function editProdField(idx, field, val){
+  const p = PEDIDOS_DATA[_editingId];
+  if(!p || !p.produtos[idx]) return;
+  p.produtos[idx][field] = val;
+}
+
+function removerProduto(idx){
+  const p = PEDIDOS_DATA[_editingId];
+  if(!p) return;
+  // Remove this row and any loteExtra rows immediately after
+  const toRemove = [idx];
+  if(p.produtos[idx+1]?.loteExtra) toRemove.push(idx+1);
+  toRemove.reverse().forEach(i => p.produtos.splice(i,1));
+  // Re-render just the tbody
+  const prodNomes = [...new Set(PRODUTOS.map(pr=>pr.nome))];
+  const tbody = document.getElementById('edit-prod-tbody');
+  if(tbody) tbody.innerHTML = p.produtos.map((pr,i) => `
+    <tr id="edit-prod-row-${i}" style="border-bottom:1px solid var(--gray-border)">
+      <td style="padding:4px 6px;font-size:11px;font-weight:600">
+        ${pr.loteExtra
+          ? '<span style="color:var(--text-muted);font-size:10px;padding-left:8px">↳ 2º lote</span>'
+          : `<select onchange="editProdField(${i},'prod',this.value)"
+              style="font-size:11px;border:1px solid var(--gray-border);border-radius:3px;padding:2px 4px;background:var(--card);color:var(--text);max-width:130px">
+              ${prodNomes.map(n=>`<option value="${n}" ${normalizarNomeProd(pr.prod)===n?'selected':''}>${n}</option>`).join('')}
+            </select>`}
+      </td>
+      <td style="padding:4px 2px"><input value="${pr.qtd??''}" type="number" onchange="editProdField(${i},'qtd',+this.value||null)" placeholder="Total" style="width:46px;font-size:10px;border:1px solid var(--gray-border);border-radius:3px;padding:2px 3px;background:var(--card);color:var(--text)" title="Qtd total"><input value="${pr.qtdLote??''}" type="number" onchange="editProdField(${i},'qtdLote',+this.value||null)" placeholder="Lote" style="width:46px;font-size:10px;border:1px solid #bfdbfe;border-radius:3px;padding:2px 3px;background:var(--card);color:#1d4ed8;margin-top:2px;display:block" title="Qtd lote (azul)"></td>
+      <td style="padding:4px 4px"><input value="${pr.preco??''}" type="number" step="0.01" onchange="editProdField(${i},'preco',parseFloat(this.value)||0)"
+        style="width:62px;font-size:11px;border:1px solid var(--gray-border);border-radius:3px;padding:2px 4px;background:var(--card);color:var(--text)"></td>
+      <td style="padding:4px 4px"><input value="${pr.oc??''}" onchange="editProdField(${i},'oc',this.value)"
+        style="width:90px;font-size:11px;border:1px solid var(--gray-border);border-radius:3px;padding:2px 4px;background:var(--card);color:var(--text)"></td>
+      <td style="padding:4px 4px"><input value="${pr.coa??''}" placeholder="VENC COA" onchange="editProdField(${i},'coa',this.value)"
+        style="width:78px;font-size:11px;border:1px solid var(--gray-border);border-radius:3px;padding:2px 4px;background:var(--card);color:var(--text)"></td>
+      <td style="padding:4px 4px"><select onchange="editProdField(${i},'obs',this.value)"
+        style="font-size:10px;border:1px solid var(--gray-border);border-radius:3px;padding:2px 3px;background:var(--card);color:var(--text);max-width:110px">
+        <option value="${pr.obs||''}">${pr.obs||'— obs —'}</option>
+        <option value="">— limpar —</option>
+        <option value="CONSULTAR PCP">🔴 CONSULTAR PCP</option>
+        <option value="CONSULTAR COMERCIAL">🔴 CONSULTAR COMERCIAL</option>
+        <option value="Reservada em sistema">Reservada em sistema</option>
+        <option value="Disponível">✅ Disponível</option>
+      </select></td>
+      <td style="padding:4px 4px;text-align:center">
+        ${!pr.loteExtra ? `<button onclick="removerProduto(${i})" style="background:none;border:none;color:#dc2626;cursor:pointer;font-size:13px;padding:2px 4px">✕</button>` : ''}
+      </td>
+    </tr>`).join('');
+}
+
+
+function atualizarApresSelect(idx,nomeProd){
+  const sel=document.getElementById('add-prod-apres-'+idx);
+  if(!sel)return;
+  const opts=PRODUTOS.filter(function(p){return p.nome===nomeProd;});
+  sel.innerHTML=opts.map(function(p){return '<option value="'+p.apres+'">'+p.apres+'</option>';}).join('');
+  if(opts.length>0){editProdField(idx,'apres',opts[0].apres);editProdField(idx,'cod',opts[0].cod);editProdField(idx,'tipo',opts[0].tipo||getTipoVacina(opts[0].cod,nomeProd));}
+}
+function adicionarProdutoModal(){
+  const p = PEDIDOS_DATA[_editingId];
+  if(!p) return;
+  const novoProd = {
+    oc:'', prod: PRODUTOS[0]?.nome||'', tipo:'VIVA', cod: PRODUTOS[0]?.cod||'',
+    qtd:null, qtdLote:null, lote:'', loteExp:'', fab:'', venc:'', coa:'', preco:0,
+    status:'pendente', obs:''
+  };
+  p.produtos.push(novoProd);
+  const idx = p.produtos.length - 1;
+  const prodNomes = [...new Set(PRODUTOS.map(pr=>pr.nome))];
+  const tbody = document.getElementById('edit-prod-tbody');
+  if(tbody){
+    const tr = document.createElement('tr');
+    tr.id = `edit-prod-row-${idx}`;
+    tr.style.borderBottom = '1px solid var(--gray-border)';
+    tr.innerHTML = `
+      <td style="padding:4px 6px">
+        <select id="add-prod-nome-${idx}" onchange="editProdField(${idx},'prod',this.value);atualizarApresSelect(${idx},this.value)"
+          style="font-size:11px;border:1px solid var(--teal);border-radius:3px;padding:2px 4px;background:var(--card);color:var(--text);max-width:130px">
+          ${prodNomes.map(n=>`<option value="${n}">${n}</option>`).join('')}
+        </select>
+        <select id="add-prod-apres-${idx}" onchange="editProdField(${idx},'apres',this.value)"
+          style="font-size:11px;border:1px solid var(--teal);border-radius:3px;padding:2px 2px;background:var(--card);color:var(--text);max-width:100px;display:block;margin-top:2px">
+          ${PRODUTOS.filter(x=>x.nome===PRODUTOS[0].nome).map(x=>`<option value="${x.apres}">${x.apres}</option>`).join('')}
+        </select>
+      </td>
+      <td style="padding:4px 4px"><input type="number" placeholder="Qtd" onchange="editProdField(${idx},'qtd',+this.value||null)"
+        style="width:54px;font-size:11px;border:1px solid var(--teal);border-radius:3px;padding:2px 4px;background:var(--card);color:var(--text)"></td>
+      <td style="padding:4px 4px"><input type="number" step="0.01" placeholder="Preço" onchange="editProdField(${idx},'preco',parseFloat(this.value)||0)"
+        style="width:62px;font-size:11px;border:1px solid var(--teal);border-radius:3px;padding:2px 4px;background:var(--card);color:var(--text)"></td>
+      <td style="padding:4px 4px"><input placeholder="OC" onchange="editProdField(${idx},'oc',this.value)"
+        style="width:90px;font-size:11px;border:1px solid var(--gray-border);border-radius:3px;padding:2px 4px;background:var(--card);color:var(--text)"></td>
+      <td style="padding:4px 4px"><input placeholder="Obs" onchange="editProdField(${idx},'obs',this.value)"
+        style="width:90px;font-size:11px;border:1px solid var(--gray-border);border-radius:3px;padding:2px 4px;background:var(--card);color:var(--text)"></td>
+      <td style="padding:4px 4px;text-align:center">
+        <button onclick="removerProduto(${idx})" style="background:none;border:none;color:#dc2626;cursor:pointer;font-size:13px;padding:2px 4px">✕</button>
+      </td>`;
+    tbody.appendChild(tr);
+  }
+}
+
+function removerBloqueioEdit(idx){
+  const p = PEDIDOS_DATA[_editingId]; if(!p) return;
+  p.bloqueios.splice(idx,1);
+  abrirEdicaoPedido(_editingId);
+}
+function adicionarBloqueioEdit(){
+  const txt = document.getElementById('novo-bloqueio-txt')?.value?.trim();
+  if(!txt) return;
+  const p = PEDIDOS_DATA[_editingId]; if(!p) return;
+  p.bloqueios.push({id:'b'+Date.now(), txt, done:false});
+  abrirEdicaoPedido(_editingId);
+}
+function removerPendenciaEdit(idx){
+  const p = PEDIDOS_DATA[_editingId]; if(!p) return;
+  p.pendencias.splice(idx,1);
+  abrirEdicaoPedido(_editingId);
+}
+function adicionarPendenciaEdit(){
+  const txt = document.getElementById('nova-pendencia-txt')?.value?.trim();
+  if(!txt) return;
+  const p = PEDIDOS_DATA[_editingId]; if(!p) return;
+  p.pendencias.push({id:'p'+Date.now(), txt, done:false});
+  abrirEdicaoPedido(_editingId);
 }
 
 function fecharModalEdicao(){
@@ -2366,6 +2598,13 @@ function salvarEdicaoPedido(){
   fecharModalEdicao();
   renderEnvioSidebar();
   setEnvioAba(_editingId);
+  renderPainelPedidos();
+  if(typeof renderTimelineEmbarques==='function') renderTimelineEmbarques();
+  if(typeof renderResumoExecutivo==='function') renderResumoExecutivo();
+  if(typeof renderProximosPassos==='function') renderProximosPassos();
+  // Sync timeline + proximos passos when ETD changes
+  if(typeof renderProximosPassos === 'function') renderProximosPassos();
+  if(typeof renderProximosPassosTarefas === 'function') renderProximosPassosTarefas();
   showToast('✅ Pedido atualizado!','green',2500);
 }
 
@@ -2373,7 +2612,7 @@ function salvarEdicaoPedido(){
 function renderEnvioSidebar(){
   const sb = document.getElementById('envio-sidebar');
   if(!sb) return;
-  const order = ['e001','e002','e003','e004','e005','e006','e007','e008'];
+  const order = Object.keys(PEDIDOS_DATA).sort();
   sb.innerHTML = order.map(id=>{
     const p = PEDIDOS_DATA[id];
     if(!p) return '';
@@ -2528,7 +2767,34 @@ function renderFicha(id){
 
   // Shared table builder — used by all statuses
   // editable=true: locked inputs (click to unlock). editable=false: plain text cells.
-  const buildProdTable = (prods, editable, showPreco) => {
+  
+function renderObsBadge(obs, pi, editable, pidCtx){
+  const urgent = obs && (obs.toUpperCase().includes('CONSULTAR') || obs.toUpperCase().includes('URGENTE'));
+  const badge = obs
+    ? urgent
+      ? `<span style="padding:2px 7px;border-radius:6px;font-size:9px;font-weight:700;
+           background:#fef2f2;color:#dc2626;border:1px solid #fecaca;white-space:nowrap;cursor:pointer"
+           onclick="nav('calendario',document.querySelector('[onclick*=calendario]'))"
+           title="Clique para abrir o Calendário de Produção">🔴 ${obs}${obs.toUpperCase().includes('PCP')?' 📅':''}</span>`
+      : `<span style="padding:2px 7px;border-radius:6px;font-size:9px;background:var(--gray-light);
+           color:var(--text-muted);border:1px solid var(--gray-border)">${obs}</span>`
+    : '';
+  if(!editable) return badge || '<span style="color:var(--text-muted)">—</span>';
+  return `<div style="display:flex;flex-direction:column;gap:2px">
+    ${badge}
+    <select onchange="editarLoteProduto('${pidCtx}',${pi},'obs',this.value)"
+      style="font-size:9px;border:1px solid var(--gray-border);border-radius:3px;padding:1px 2px;background:var(--card);color:var(--text);max-width:130px">
+      <option value="${obs||''}">${obs||'— obs —'}</option>
+      <option value="">— limpar —</option>
+      <option value="CONSULTAR PCP">🔴 CONSULTAR PCP</option>
+      <option value="CONSULTAR COMERCIAL">🔴 CONSULTAR COMERCIAL</option>
+      <option value="CONSULTAR PCP E COMERCIAL">🔴 CONSULTAR PCP+COMERCIAL</option>
+      <option value="Reservada em sistema">Reservada em sistema</option>
+      <option value="Disponível">✅ Disponível</option>
+    </select>
+  </div>`;
+}
+const buildProdTable = (prods, editable, showPreco, _pidCtx) => {
     const inpLocked = 'width:100%;border:1px solid transparent;border-radius:3px;padding:2px 5px;font-size:11px;font-family:inherit;background:var(--card);color:var(--text);cursor:pointer;outline:none';
     const mkCell = (field, val, ph, pidx) => editable
       ? `<input value="${val||''}" placeholder="${ph||''}" readonly
@@ -2563,6 +2829,7 @@ function renderFicha(id){
         <td style="padding:3px 6px;min-width:68px">${mkCell('fab',     pr.fab,     'MMM/AA', pi)}</td>
         <td style="padding:3px 6px;min-width:68px">${mkCell('venc',    pr.venc,    'MMM/AA', pi)}</td>
         <td style="padding:3px 6px;min-width:85px">${mkCell('coa',     pr.coa,     'DD/MM/AAAA', pi)}</td>
+        <td style="padding:3px 6px;min-width:110px">${renderObsBadge(pr.obs, pi, editable, _pidCtx||'')}</td>
         ${showPreco?`<td style="padding:4px 8px;font-size:11px;text-align:right">${pr.preco?'$'+pr.preco.toFixed(2):'—'}</td>`:''}
         ${editable?`<td style="padding:4px 8px;text-align:center">${statusBadge}</td>`:''}
       </tr>`;
@@ -2590,6 +2857,7 @@ function renderFicha(id){
             <th style="text-align:center">Qtd Lote</th>
             <th>Lote BR</th><th>Lote Exp.</th>
             <th>FAB</th><th>VENC</th><th>VENC COA</th>
+            <th>Obs</th>
             ${extraTh}${statusTh}
           </tr></thead>
           <tbody>${trows}</tbody>
@@ -2598,14 +2866,14 @@ function renderFicha(id){
   };
 
   if(isCot){
-    secProd = buildProdTable(p.produtos, false, false);
+    secProd = buildProdTable(p.produtos, false, false, id);
 
   } else if(isTrab){
     // Tabela de trabalho: agrupa por produto, mostra todos os lotes
-    secProd = buildProdTable(p.produtos, true, false);
+    secProd = buildProdTable(p.produtos, true, false, id);
 
   } else { // documental
-    secProd = buildProdTable(p.produtos, false, true);
+    secProd = buildProdTable(p.produtos, false, true,  id);
   }
 
   // ── SEÇÃO LOGÍSTICA — merged into Identidade ──
@@ -2716,6 +2984,66 @@ function salvarModalInput(ids){
 }
 
 // ── Registrar recebimento USD (transferência ILENDER) ──
+
+function abrirModalNovaFatura(){
+  const modal = document.getElementById('modal-edicao-pedido');
+  const body  = document.getElementById('modal-edicao-body');
+  if(!modal||!body) return;
+  body.innerHTML = `
+    <div style="font-size:15px;font-weight:700;margin-bottom:14px">💳 Adicionar fatura</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+      ${[
+        ['nf-num','Nº Fatura *','ex: 004/2026'],
+        ['nf-cip','Valor CIP (USD) *','ex: 45000'],
+        ['nf-emb','Data embarque (AAAA-MM-DD)','ex: 2026-05-10'],
+        ['nf-venc','Vencimento (AAAA-MM-DD)','ex: 2026-08-08'],
+      ].map(([id,lbl,ph])=>`
+        <div style="display:flex;flex-direction:column;gap:3px">
+          <label style="font-size:11px;color:var(--text-muted)">${lbl}</label>
+          <input id="${id}" placeholder="${ph}"
+            style="border:1px solid var(--gray-border);border-radius:var(--radius);padding:5px 8px;font-size:12px;background:var(--card);color:var(--text)">
+        </div>`).join('')}
+    </div>
+    <div style="display:flex;flex-direction:column;gap:3px;margin-bottom:12px">
+      <label style="font-size:11px;color:var(--text-muted)">Observações</label>
+      <input id="nf-obs" style="border:1px solid var(--gray-border);border-radius:var(--radius);padding:5px 8px;font-size:12px;background:var(--card);color:var(--text)">
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:8px">
+      <button class="btn btn-sm" onclick="fecharModalEdicao()">Cancelar</button>
+      <button class="btn btn-sm btn-primary" onclick="salvarNovaFatura()">💾 Adicionar</button>
+    </div>`;
+  modal.style.display = 'flex';
+}
+
+function salvarNovaFatura(){
+  const g = id => (document.getElementById(id)?.value||'').trim();
+  const num = g('nf-num'); const cip = parseFloat(g('nf-cip'));
+  if(!num || !cip){ showToast('Nº Fatura e CIP obrigatórios','red',2000); return; }
+  const nova = { num, cip, embarque: g('nf-emb'), venc: g('nf-venc'), obs: g('nf-obs'), _custom: true };
+  // Add to faturas array
+  faturas.push(nova);
+  // Also add to FATURAS_ABERTAS if not paid
+  FATURAS_ABERTAS.push({num, envio: nova.embarque, usd: cip});
+  // Persist
+  const custom = JSON.parse(localStorage.getItem(FAT_CUSTOM_KEY)||'[]');
+  custom.push(nova);
+  localStorage.setItem(FAT_CUSTOM_KEY, JSON.stringify(custom));
+  addLogEntry('financeiro', `Nova fatura adicionada: ${num} — $${cip.toLocaleString('en',{minimumFractionDigits:2})}`);
+  fecharModalEdicao();
+  renderFinanceiro();
+  simularConversao();
+  showToast(`✅ Fatura ${num} adicionada!`,'green',2500);
+}
+
+function carregarFaturasCustom(){
+  try{
+    const custom = JSON.parse(localStorage.getItem(FAT_CUSTOM_KEY)||'[]');
+    custom.forEach(f => {
+      if(!faturas.find(x=>x.num===f.num)) faturas.push(f);
+      if(!FATURAS_ABERTAS.find(x=>x.num===f.num)) FATURAS_ABERTAS.push({num:f.num, envio:f.embarque, usd:f.cip});
+    });
+  }catch(e){}
+}
 function abrirModalTransferencia(numFatura){
   const hoje = new Date().toISOString().split('T')[0];
   abrirModalInput(
@@ -2763,6 +3091,24 @@ function abrirModalConversao(numFatura){
           salvarPedido(p.id);
         }
       });
+      // Sync pedido status when fatura is paid
+      Object.values(PEDIDOS_DATA).forEach(p => {
+        if(p.fatura === numFatura){
+          p.cipBRL  = parseFloat(vals.brl);
+          p.cambio  = parseFloat(vals.cotacao);
+          p.faturaStatus = 'pago';
+          salvarPedido(p.id);
+          // Add a teal alerta for this payment
+          const pagoAlerta = alertaData.find(a=>a.titulo.includes(numFatura)&&a.titulo.includes('PAGO'));
+          if(!pagoAlerta){
+            alertaData.push({tipo:'teal',pais:p.flag+' '+p.pais,
+              titulo:`✅ Fatura ${numFatura} — PAGO`,
+              detalhe:`Conversão registrada: R$ ${parseFloat(vals.brl).toLocaleString('pt-BR',{minimumFractionDigits:2})} @ R$${parseFloat(vals.cotacao).toFixed(4)}`,
+              prazo:null,cascata:null,acao:'Concluído'});
+            salvarAlertasResolvidos();
+          }
+        }
+      });
       addLogEntry('financeiro', `Fatura ${numFatura}: conversão BRL registrada — R$ ${parseFloat(vals.brl).toLocaleString('pt-BR',{minimumFractionDigits:2})} @ R$ ${parseFloat(vals.cotacao).toFixed(4)}`);
       renderFinanceiro();
       simularConversao();
@@ -2802,8 +3148,8 @@ function abrirModalNovoPedido(){
       const allIds = document.querySelectorAll('.itab');
       salvarPedido(newId);
       renderEnvioSidebar();
-      nav('envio');
-      setEnvioAba(newId);
+      nav('envio', document.querySelector('[onclick*="envio"]'));
+      setTimeout(() => setEnvioAba(newId), 50);
       addLogEntry('criação', `Novo pedido criado: ${vals.num}`);
       showToast(`✅ Pedido ${vals.num} criado!`, 'green', 3000);
     }
@@ -2941,6 +3287,68 @@ function setEnvioAba(id){
 
 
 
+
+// Mapa de normalização: prod do PEDIDOS_DATA → nome no catálogo PRODUTOS
+const PRECO_KEY = 'cf_precos';
+const PROD_NOME_MAP = {
+  // ALEVAC
+  'ALEVAC 6':          'Alevac 6',
+  'ALEVAC 6 1K':       'Alevac 6',
+  'ALEVAC 7':          'Alevac 7',
+  'ALEVAC 7 1K':       'Alevac 7',
+  'ALEVAC 8':          'Alevac 8',
+  'ALEVAC 8 1K':       'Alevac 8',
+  'ALEVAC 9':          'Alevac 9',
+  'ALEVAC 9 1K':       'Alevac 9',
+  // SALMOVAC
+  'SALMOVAC SE+SG':    'Salmovac SE + SG',
+  'SALMOVAC SE+SG 1K': 'Salmovac SE + SG',
+  'SALMOVAC SE+ST':    'Salmovac SE + ST',
+  'SALMOVAC SE+ST 1K': 'Salmovac SE + ST',
+  'SALMOVAC 9R':       'Salmovac 9R',
+  // SINUVAC
+  'SINUVAC':           'Sinuvac',
+  'SINUVAC 1K':        'Sinuvac',
+  'SINUVAC SE':        'Sinuvac SE',
+  'SINUVAC SE 1K':     'Sinuvac SE',
+  // NEWLAS
+  'NEWLAS 1K':         'Newlas (La sota)',
+  'NEWLAS 5K':         'Newlas (La sota)',
+  'NEWLAS 10K':        'Newlas (La sota)',
+  'NEWLAS 10K ↔':      'Newlas (La sota)',
+  'NEWLAS 5K ↔':       'Newlas (La sota)',
+  'NEWLAS 2K':         'Newlas (La sota)',
+  // IMUPLEX
+  'IMUPLEX 1K':        'Imuplex',
+  'IMUPLEX 2K':        'Imuplex',
+  'IMUPLEX 2K ↔':      'Imuplex',
+  'IMUPLEX 4K':        'Imuplex',
+  // REOVAC
+  'REOVAC 1K':         'Reovac (1133)',
+  'REOVAC 5K':         'Reovac (1133)',
+  'REOVAC 5K ↔':       'Reovac (1133)',
+  // RINOVAC
+  'RINOVAC 1K':        'Rinovac',
+  // BIG MASS / BIG BR
+  'BIG MASS':          'Big Mass (M41)',
+  'BIG MASS 1K':       'Big Mass (M41)',
+  'BIG MASS 5K':       'Big Mass (M41)',
+  'BIG BR':            'Big BR',
+  'BIG BR 2K':         'Big BR',
+  // PULMOVAC
+  'PULMOVAC B1':       'Pulmovac B1 (HB1)',
+  'PULMOVAC B1 1K':    'Pulmovac B1 (HB1)',
+  // MATRIVAC
+  'MATRIVAC ADENOASTRO': 'Matrivac 5',
+  'MATRIVAC 5':        'Matrivac 5',
+  'MATRIVAC 7':        'Matrivac 7',
+};
+
+// Retorna o nome normalizado para match com PRODUTOS
+function normalizarNomeProd(prod) {
+  if (!prod) return '';
+  return PROD_NOME_MAP[prod.toUpperCase()] || PROD_NOME_MAP[prod] || prod;
+}
 const PRODUTOS=[
   {cod:'VVIBVPER',nome:'Big Mass (M41)',apres:'Frs. c/ 1.000 doses',preco:1.66,tipo:'VIVA'},
   {cod:'VVIBVPER',nome:'Big Mass (M41)',apres:'Frs. c/ 2.000 doses',preco:2.78,tipo:'VIVA'},
@@ -3158,8 +3566,8 @@ let invItems=[
   {cod:'VVREOPER',desc:'REOVAC INATA - Vacuna viva liofilizada contra la reovirus aviar - cepa S1133 - 5.000 dosis',lote:'001/26',venc:'15/08/2027',pn:3.3,pb:5.6,qty:180,preco:8.76},
   {cod:'VVIBDPER',desc:'IMUPLEX INATA - Vacuna inactivada oleosa contra la bursitis infecciosa (Gumboro) - 2.000 dosis',lote:'001/26',venc:'01/12/2027',pn:9.1,pb:15.2,qty:490,preco:3.79},
   // SINUVAC — dois lotes BR distintos: linha separada para cada
-  {cod:'SNVPER',desc:'SINUVAC INATA - Vacuna inactivada oleosa contra la Rinotraqueitis aviar (ART/TRT) - 1.000 dosis',lote:'003/26',venc:'20/02/2028',pn:308.0,pb:448.8,qty:604,preco:19.20},
-  {cod:'SNVPER',desc:'SINUVAC INATA - Vacuna inactivada oleosa contra la Rinotraqueitis aviar (ART/TRT) - 1.000 dosis',lote:'004/26',venc:'19/02/2028',pn:193.8,pb:282.3,qty:380,preco:19.20},
+  {cod:'SNVPER',desc:'SINUVAC INATA - Vacuna Inactivada contra la Coriza Aviar - Tipos A, B y C - 1.000 dosis',lote:'003/26',venc:'20/02/2028',pn:308.0,pb:448.8,qty:604,preco:19.20},
+  {cod:'SNVPER',desc:'SINUVAC INATA - Vacuna Inactivada contra la Coriza Aviar - Tipos A, B y C - 1.000 dosis',lote:'004/26',venc:'19/02/2028',pn:193.8,pb:282.3,qty:380,preco:19.20},
   {cod:'VVPNEUBPER',desc:'RINOVAC INATA - Vacuna viva liofilizada contra la pneumovirosis aviar - metapneumovirus Tipo B - 1.000 dosis',lote:'001/26',venc:'28/10/2027',pn:2.0,pb:3.4,qty:110,preco:7.30},
   {cod:'VVNDPER',desc:'NEWLAS INATA - Vacuna viva liofilizada contra la enfermedad de Newcastle cepa La Sota - 10.000 dosis',lote:'003/26',venc:'13/03/2028',pn:111.0,pb:186.0,qty:6000,preco:6.09},
 ];
@@ -3192,7 +3600,7 @@ function buildInvForm(){
       <div class="form-group"><label>QTY (frascos)</label><input type="number" value="${item.qty}" oninput="invItems[${i}].qty=+this.value; const _tipo=TIPO_VACINA[invItems[${i}].cod]||invItems[${i}].tipo||'VIVA'; const _pw=PESOS_UNIT[_tipo]; invItems[${i}].pn=parseFloat((_pw.pn*+this.value).toFixed(1)); invItems[${i}].pb=parseFloat((_pw.pb*+this.value).toFixed(1)); buildInvForm(); updateInvoice();"/></div>
       <div class="form-group"><label>Unit Price (USD)</label><input type="number" step="0.01" value="${item.preco}" oninput="invItems[${i}].preco=+this.value;updateInvoice()"/></div>
       <div class="form-group"><label>Lote (formato NNN/AA)</label><input value="${item.lote}" placeholder="ex: 001/26" oninput="invItems[${i}].lote=this.value;updateInvoice()"/></div>
-      <div class="form-group"><label>Vencimento</label><input value="${formatMesPais(item.venc, paisAtivo)}" oninput="invItems[${i}].venc=this.value;updateInvoice()"/></div>
+      <div class="form-group"><label>Vencimento</label><input value="${item.venc||''}" oninput="invItems[${i}].venc=this.value;updateInvoice()" placeholder="DD/MM/AAAA"/></div>
       <div class="form-group"><label>Peso Neto (kg)</label><input type="number" step="0.1" value="${item.pn}" oninput="invItems[${i}].pn=+this.value;updateInvoice()"/></div>
       <div class="form-group"><label>Peso Bruto (kg)</label><input type="number" step="0.1" value="${item.pb}" oninput="invItems[${i}].pb=+this.value;updateInvoice()"/></div>
     </div>
@@ -3241,7 +3649,7 @@ function updateInvoice(){
   let sub=0;
   g('inv-table-body').innerHTML=invItems.map(item=>{
     const tot=item.qty*item.preco;sub+=tot;
-    return`<tr><td style="font-family:monospace;font-size:10px">${item.cod}</td><td>${item.qty.toLocaleString('es')}</td><td style="font-size:10px">${item.desc}</td><td style="font-family:monospace;font-size:10px">${item.lote}</td><td style="font-size:10px">${formatMesPais(item.venc, paisAtivo)}</td><td>${item.pn.toFixed(1)}</td><td>${item.pb.toFixed(1)}</td><td>$ ${item.preco.toFixed(2)}</td><td style="font-weight:700">$ ${fmt(tot)}</td></tr>`;
+    return`<tr><td style="font-family:monospace;font-size:10px">${item.cod}</td><td>${item.qty.toLocaleString('es')}</td><td style="font-size:10px">${item.desc}</td><td style="font-family:monospace;font-size:10px">${item.lote}</td><td style="font-size:10px">${item.venc||"—"}</td><td>${item.pn.toFixed(1)}</td><td>${item.pb.toFixed(1)}</td><td>$ ${item.preco.toFixed(2)}</td><td style="font-weight:700">$ ${fmt(tot)}</td></tr>`;
   }).join('');
   g('prev-subtotal').textContent=fmt(sub);
   g('prev-total').textContent=fmt(sub+fl+fi+sg+bc);
@@ -3256,6 +3664,22 @@ function updateInvoice(){
 let plCaixas=[];
 
 // Tipo de cada produto (VIVA=550/cx, INAT=30/cx)
+
+// Mapeamento TIPO por nome de produto (fallback quando cod vazio)
+const NOME_TIPO_MAP = {
+  'Big Mass (M41)':'VIVA','Big BR':'VIVA','Newlas (La sota)':'VIVA',
+  'Pulmovac B1 (HB1)':'VIVA','Imuplex':'VIVA','Reovac (1133)':'VIVA',
+  'Rinovac':'VIVA','Adenovirus ATV':'INAT',
+  'Alevac 6':'INAT','Alevac 7':'INAT','Alevac 8':'INAT','Alevac 9':'INAT',
+  'Salmovac SE + SG':'INAT','Salmovac SE + ST':'INAT','Salmovac 9R':'INAT',
+  'Sinuvac':'INAT','Sinuvac SE':'INAT','Matrivac 5':'INAT','Matrivac 7':'INAT',
+};
+function getTipoVacina(cod,nome){
+  if(cod && TIPO_VACINA[cod]) return TIPO_VACINA[cod];
+  if(nome && NOME_TIPO_MAP[nome]) return NOME_TIPO_MAP[nome];
+  if(nome){ const e=Object.entries(NOME_TIPO_MAP).find(([k])=>nome.toLowerCase().includes(k.toLowerCase().split(' ')[0])); if(e) return e[1]; }
+  return 'VIVA';
+}
 const TIPO_VACINA = {
   // ── VIVAS (Big Mass, Big BR, Newlas, Pulmovac B1, Imuplex, Reovac, Rinovac) ──
   // 550 fr/cx — caixas podem misturar vivas diferentes
@@ -3298,7 +3722,7 @@ function calcularCaixas(){
   const inatItems = [];
   const vivaItems = [];
   invItems.forEach(item => {
-    const tipo = TIPO_VACINA[item.cod] || item.tipo || 'VIVA';
+    const tipo = getTipoVacina(item.cod, item.prod||item.nome||'') || item.tipo || 'VIVA';
     if(tipo === 'INAT') inatItems.push({...item, tipo:'INAT'});
     else                vivaItems.push({...item, tipo:'VIVA'});
   });
@@ -3471,18 +3895,154 @@ function confirmarPedidoCotacao(pais, numPedido, cip) {
 
 const ALERTAS_KEY = 'cf_alertas_resolvidos';
 function salvarAlertasResolvidos(){
-  const r=alertaData.map((a,i)=>({i,teal:a.tipo==='teal',titulo:a.titulo})).filter(x=>x.teal).map(x=>({i:x.i,titulo:x.titulo}));
+  var r=alertaData.filter(function(a){return a.tipo==="teal";}).map(function(a){return {titulo:a.titulo,acao:a.acao||"Concluído"};});
   localStorage.setItem(ALERTAS_KEY,JSON.stringify(r));
 }
 function carregarAlertasResolvidos(){
   try{
-    JSON.parse(localStorage.getItem(ALERTAS_KEY)||'[]').forEach(({i,titulo})=>{
-      const a=alertaData[i];
-      if(a&&a.tipo!=='teal'){a.tipo='teal';a.titulo=titulo||('✅ '+a.titulo.replace(/^[🚨🔴⚠️⏳✅\s]+/,''));a.prazo=null;a.cascata=null;a.acao='Concluído';}
+    JSON.parse(localStorage.getItem(ALERTAS_KEY)||"[]").forEach(function(item){
+      var titulo=item.titulo||item; if(!titulo)return;
+      var strip=function(t){return String(t).replace(/^[^a-zA-ZÀ-ɏ]+/,"").substring(0,40);};
+      var a=alertaData.find(function(x){return x.tipo!=="teal"&&(x.titulo===titulo||strip(x.titulo)===strip(titulo));});
+      if(a){a.tipo="teal";a.titulo=titulo;a.prazo=null;a.cascata=null;a.acao="Concluído";}
     });
   }catch(e){}
 }
 function limparAlertasResolvidos(){localStorage.removeItem(ALERTAS_KEY);location.reload();}
+
+const ALERTAS_CUSTOM_KEY = 'cf_alertas_custom';
+
+function getAlertasCustom(){ try{ return JSON.parse(localStorage.getItem(ALERTAS_CUSTOM_KEY)||'[]'); }catch(e){return[];} }
+function saveAlertasCustom(arr){ localStorage.setItem(ALERTAS_CUSTOM_KEY, JSON.stringify(arr)); }
+
+function carregarAlertasCustom(){
+  const custom = getAlertasCustom();
+  custom.forEach(a => {
+    // Only add if not already present (avoid duplicates on reload)
+    if(!alertaData.find(x => x._customId === a._customId)){
+      alertaData.push(a);
+    }
+  });
+}
+
+function abrirModalNovoAlerta(){
+  var modal=document.getElementById("modal-edicao-pedido");
+  var body=document.getElementById("modal-edicao-body");
+  if(!modal||!body)return;
+  var selTipo=Object.entries({red:"🔴 Urgente",amber:"⚠ Importante",blue:"ℹ Informativo",teal:"✅ Resolvido"})
+    .map(function(e){return "<option value='"+e[0]+"'>"+e[1]+"</option>";}).join("");
+  var selPais=["🌎 Global","🗂️ Interno"].concat(
+    Object.values(PAISES).filter(function(p){return ["ativo","registro"].includes(p.status);}).map(function(p){return p.flag+" "+p.nome;})
+  ).map(function(v){return "<option value='"+v+"'>"+v+"</option>";}).join("");
+  var mk=function(id,lbl,isTA){
+    return "<div style='margin-bottom:10px'><label style='font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px'>"+lbl+"</label>"
+    +(isTA
+      ?"<textarea id='"+id+"' rows='2' style='width:100%;border:1px solid var(--gray-border);border-radius:var(--radius);padding:5px 8px;font-size:12px;background:var(--card);color:var(--text);resize:vertical'></textarea>"
+      :"<input id='"+id+"' style='width:100%;border:1px solid var(--gray-border);border-radius:var(--radius);padding:5px 8px;font-size:12px;background:var(--card);color:var(--text)'>")
+    +"</div>";};
+  body.innerHTML=
+    "<div style='font-size:15px;font-weight:700;margin-bottom:14px'>🔔 Novo alerta</div>"
+    +"<div style='display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px'>"
+    +"<div><label style='font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px'>Tipo</label>"
+    +"<select id='na-tipo' style='width:100%;border:1px solid var(--gray-border);border-radius:var(--radius);padding:5px 8px;font-size:12px;background:var(--card);color:var(--text)'>"+selTipo+"</select></div>"
+    +"<div><label style='font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px'>País</label>"
+    +"<select id='na-pais' style='width:100%;border:1px solid var(--gray-border);border-radius:var(--radius);padding:5px 8px;font-size:12px;background:var(--card);color:var(--text)'>"+selPais+"</select></div>"
+    +"</div>"
+    +mk("na-titulo","Título *",false)
+    +mk("na-detalhe","Detalhe",true)
+    +mk("na-acao","Ação sugerida",false)
+    +mk("na-prazo","Prazo (DD/MM/AAAA)",false)
+    +mk("na-cascata","Cascata / risco",true)
+    +"<div style='display:flex;justify-content:flex-end;gap:8px'>"
+    +"<button class='btn btn-sm' onclick='fecharModalEdicao()'>Cancelar</button>"
+    +"<button class='btn btn-sm btn-primary' onclick='salvarNovoAlerta()'>💾 Criar alerta</button></div>";
+  modal.style.display="flex";
+}
+
+function salvarNovoAlerta(){
+  const g = id => (document.getElementById(id)?.value||'').trim();
+  const titulo = g('na-titulo');
+  if(!titulo){ showToast('Título obrigatório','red',2000); return; }
+  const novo = {
+    tipo:    g('na-tipo')||'amber',
+    pais:    g('na-pais')||'🌎 Global',
+    titulo,
+    detalhe: g('na-detalhe'),
+    acao:    g('na-acao'),
+    prazo:   g('na-prazo')||null,
+    cascata: g('na-cascata')||null,
+    _customId: 'custom-'+Date.now(),
+    _custom: true,
+  };
+  alertaData.push(novo);
+  const custom = getAlertasCustom();
+  custom.push(novo);
+  saveAlertasCustom(custom);
+  salvarAlertasResolvidos();
+  addLogEntry('alerta', `Novo alerta criado: ${titulo}`);
+  fecharModalEdicao();
+  renderAlertas();
+  showToast('✅ Alerta criado!','green',2500);
+}
+
+function excluirAlertaCustom(customId){
+  // Remove from alertaData array
+  const idx = alertaData.findIndex(a=>a._customId===customId);
+  if(idx>=0) alertaData.splice(idx,1);
+  // Remove from localStorage
+  const custom = getAlertasCustom().filter(a=>a._customId!==customId);
+  saveAlertasCustom(custom);
+  salvarAlertasResolvidos();
+  renderAlertas();
+  showToast('Alerta removido','green',2000);
+}
+
+// Mapa de sincronização: fragmento do título do alerta → ação em PEDIDOS_DATA
+const ALERTA_SYNC_MAP = [
+  // Rótulos RINOVAC ↔ bloqueio b1 do e003
+  { match: 'RINOVAC.*reprov|rótulos.*RINOVAC', pedidoId:'e003', tipo:'bloqueio', id:'b1' },
+  // Enviar lote/fab/venc ao Gustavo ↔ bloqueio b2 do e003
+  { match: 'Gustavo.*SOLCOM|SOLCOM-14701.*lote|lote.*fab.*venc.*Gustavo', pedidoId:'e003', tipo:'bloqueio', id:'b2' },
+  // Rótulos Salmovac PER ↔ pendencia p3 e003
+  { match: 'SALMOVAC.*rótulos|rótulos.*SALMOVAC', pedidoId:'e003', tipo:'pendencia', id:'p3' },
+  // Arte Alevac 6 BOL ↔ bloqueio BOL
+  { match: 'ALEVAC 6.*BOL.*arte|arte.*ALEVAC 6.*BOL', pedidoId:'e006', tipo:'bloqueio', id:'b1' },
+];
+
+function syncAlertaToPedido(tituloAlerta){
+  ALERTA_SYNC_MAP.forEach(rule => {
+    if(new RegExp(rule.match,'i').test(tituloAlerta)){
+      const p = PEDIDOS_DATA[rule.pedidoId];
+      if(!p) return;
+      if(rule.tipo==='bloqueio'){
+        const b = (p.bloqueios||[]).find(x=>x.id===rule.id);
+        if(b && !b.done){ b.done=true; salvarPedido(rule.pedidoId); }
+      } else if(rule.tipo==='pendencia'){
+        const pd = (p.pendencias||[]).find(x=>x.id===rule.id);
+        if(pd && !pd.done){ pd.done=true; salvarPedido(rule.pedidoId); }
+      }
+    }
+  });
+}
+
+function syncBloqueioToAlerta(pedidoId, bloqueioTxt){
+  // When a bloqueio is marked done in Envios, resolve the linked alerta
+  ALERTA_SYNC_MAP.forEach((rule,idx) => {
+    if(rule.pedidoId !== pedidoId) return;
+    // Find the alerta by matching title
+    const alertaIdx = alertaData.findIndex(a =>
+      a.tipo !== 'teal' && new RegExp(rule.match,'i').test(a.titulo)
+    );
+    if(alertaIdx >= 0){
+      alertaData[alertaIdx].tipo  = 'teal';
+      alertaData[alertaIdx].titulo = '✅ ' + alertaData[alertaIdx].titulo.replace(/^[🚨🔴⚠️⏳✅\s]+/,'');
+      alertaData[alertaIdx].prazo  = null;
+      alertaData[alertaIdx].cascata = null;
+      alertaData[alertaIdx].acao   = 'Concluído';
+      salvarAlertasResolvidos();
+    }
+  });
+}
 function resolverAlerta(idx) {
   // idx refere-se ao alertaData original (não ao enriched reordenado)
   const a = alertaData[idx];
@@ -3490,6 +4050,7 @@ function resolverAlerta(idx) {
   a.tipo = 'teal';
   a.titulo = '✅ ' + a.titulo.replace(/^[🚨🔴⚠️⏳✅\s]+/,'');
   a.prazo = null; a.cascata = null; a.acao = 'Concluído';
+  syncAlertaToPedido(a.titulo);  // sync to linked pedido bloqueios/pendencias
   salvarAlertasResolvidos();
   addLogEntry('alerta',`Alerta resolvido: ${a.titulo.substring(0,60)}`);
   renderAlertas();
@@ -3661,30 +4222,49 @@ function setInsumosPais(pais){
     if(btn){ btn.className = p===pais ? 'btn btn-primary' : 'btn'; }
   });
 }
+function getPrecosSalvos(){ try{ return JSON.parse(localStorage.getItem(PRECO_KEY)||'{}'); }catch(e){return{};} }
+function aplicarPrecosSalvos(){
+  const saved = getPrecosSalvos();
+  PRODUTOS.forEach((p,i)=>{ if(saved[p.cod+'|'+p.apres]) p.preco = saved[p.cod+'|'+p.apres]; });
+}
+function salvarPreco(cod, apres, novoPreco){
+  const saved = getPrecosSalvos();
+  saved[cod+'|'+apres] = parseFloat(novoPreco);
+  localStorage.setItem(PRECO_KEY, JSON.stringify(saved));
+  // Atualizar em PRODUTOS
+  PRODUTOS.forEach(p=>{ if(p.cod===cod && p.apres===apres) p.preco=parseFloat(novoPreco); });
+  addLogEntry('auto',`Preço atualizado: ${cod} ${apres} → $${parseFloat(novoPreco).toFixed(2)}`);
+  showToast('✅ Preço salvo','green',2000);
+}
+
 function renderPrecos(){
+  aplicarPrecosSalvos();
+  const mkRow = (p, codDisplay) => `<tr>
+    <td style="font-family:monospace;font-size:11px;font-weight:600">${codDisplay}</td>
+    <td><strong>${p.nome}</strong></td>
+    <td style="color:var(--text-muted)">${p.apres}</td>
+    <td style="font-weight:700;color:var(--teal)">
+      <input type="number" step="0.01" value="${p.preco.toFixed(2)}"
+        onblur="salvarPreco('${p.cod}','${p.apres}',this.value)"
+        onkeydown="if(event.key==='Enter'){this.blur()}"
+        style="width:72px;border:1px solid var(--gray-border);border-radius:3px;
+               padding:2px 5px;font-size:11px;font-weight:700;color:var(--teal);
+               background:var(--card);text-align:right">
+    </td>
+  </tr>`;
   // Peru
   ['VIVA','INAT','DIL'].forEach(tipo=>{
     const key=tipo==='VIVA'?'viva':tipo==='INAT'?'inat':'dil';
     const tb=document.getElementById(`tbl-precos-${key}`);
     if(!tb)return;
-    tb.innerHTML=PRODUTOS.filter(p=>p.tipo===tipo).map(p=>`<tr>
-      <td style="font-family:monospace;font-size:11px;font-weight:600">${p.cod}</td>
-      <td><strong>${p.nome}</strong></td>
-      <td style="color:var(--text-muted)">${p.apres}</td>
-      <td style="font-weight:700;color:var(--teal)">$ ${p.preco.toFixed(2)}</td>
-    </tr>`).join('');
+    tb.innerHTML=PRODUTOS.filter(p=>p.tipo===tipo).map(p=>mkRow(p,p.cod)).join('');
   });
-  // Bolívia — mesmos preços, código com BOL
+  // Bolívia
   ['VIVA','INAT','DIL'].forEach(tipo=>{
     const key=tipo==='VIVA'?'viva':tipo==='INAT'?'inat':'dil';
     const tb=document.getElementById(`tbl-precos-bol-${key}`);
     if(!tb)return;
-    tb.innerHTML=PRODUTOS.filter(p=>p.tipo===tipo).map(p=>`<tr>
-      <td style="font-family:monospace;font-size:11px;font-weight:600">${p.cod.replace('PER','BOL')}</td>
-      <td><strong>${p.nome}</strong></td>
-      <td style="color:var(--text-muted)">${p.apres}</td>
-      <td style="font-weight:700;color:var(--teal)">$ ${p.preco.toFixed(2)}</td>
-    </tr>`).join('');
+    tb.innerHTML=PRODUTOS.filter(p=>p.tipo===tipo).map(p=>mkRow(p,p.cod.replace('PER','BOL'))).join('');
   });
   const sel=document.getElementById('oc-prod-sel');
   if(sel)sel.innerHTML='<option value="">Selecione...</option>'+PRODUTOS.map(p=>`<option value="${p.preco}">${p.nome} — ${p.apres} ($${p.preco.toFixed(2)})</option>`).join('');
@@ -3783,8 +4363,7 @@ function renderProximosPassos() {
   const bl005=(p005?.bloqueios||[]).filter(b=>!b.done);
   const bl006=(p006?.bloqueios||[]).filter(b=>!b.done);
 
-  const limRot003 = new Date('2026-03-24');
-  const limSup003 = new Date('2026-03-29');
+  var _iso003=PEDIDOS_DATA['e003']&&PEDIDOS_DATA['e003'].etd?toISO(PEDIDOS_DATA['e003'].etd):null;var _etd003d=_iso003?new Date(_iso003):null;var limRot003=_etd003d?new Date(_etd003d.getTime()-15*86400000):new Date('2026-03-24');var limSup003=_etd003d?new Date(_etd003d.getTime()-10*86400000):new Date('2026-03-29');
   const dRot = Math.ceil((limRot003 - hoje) / (1000*60*60*24));
   const dSup = Math.ceil((limSup003 - hoje) / (1000*60*60*24));
 
@@ -3870,7 +4449,7 @@ function setPassoStatus(id, status) {
 }
 
 
-const ESTADO_KEYS=['cf_pedidos_data','cf_alertas_resolvidos','cf_passos','cf_financeiro_2026','cf_awbs','cf_reg_data'];
+const ESTADO_KEYS=['cf_pedidos_data','cf_alertas_resolvidos','cf_passos','cf_financeiro_2026','cf_awbs','cf_reg_data','cf_precos','cf_alertas_custom','cf_faturas_custom','cf_calendario','cf_lote_seq','cf_balanco','cf_insumos_status'];
 function exportarEstado(){
   const est={versao:'2026.03',data:new Date().toISOString()};
   ESTADO_KEYS.forEach(k=>{const v=localStorage.getItem(k);if(v)est[k]=JSON.parse(v);});
@@ -3904,7 +4483,7 @@ function limparPassos() {
 
 // ===== SOLCOM =====
 const PRAZOS = {rotulo:15, suporte:10, bula:10};
-const ENVIO_003 = new Date('2026-04-08');
+var _iso003b=PEDIDOS_DATA['e003']&&PEDIDOS_DATA['e003'].etd?toISO(PEDIDOS_DATA['e003'].etd):null;var ENVIO_003=_iso003b?new Date(_iso003b):new Date('2026-04-08');
 
 function calcLimiteSolcom(dataEnvio, prazo) {
   const d = new Date(dataEnvio); d.setDate(d.getDate() - prazo); return d;
@@ -4051,6 +4630,10 @@ function renderBalanco(data,tbId){
       ${saldoCell(saldo)}
       ${prod005}
       ${obsTd}
+      <td style="padding:2px 4px;text-align:right">
+        <button onclick="abrirModalEditarBalanco('${tbId}',${data.indexOf(r)})"
+          style="font-size:9px;padding:1px 6px;border-radius:5px;background:none;border:1px solid var(--gray-border);color:var(--text-muted);cursor:pointer">✏️</button>
+      </td>
     </tr>`;
   }).join('');
 }
@@ -4081,8 +4664,8 @@ function renderTimeline() {
   const el = document.getElementById('timeline-content');
   if(!el) return;
   const hoje = new Date(); hoje.setHours(0,0,0,0);
-  const envio = new Date('2026-04-08');
-  const totalDias = Math.ceil((envio - hoje) / 86400000);
+  var _iso003c=PEDIDOS_DATA['e003']&&PEDIDOS_DATA['e003'].etd?toISO(PEDIDOS_DATA['e003'].etd):null;var envio=_iso003c?new Date(_iso003c):new Date('2026-04-08');
+  var totalDias = Math.ceil((envio - hoje) / 86400000);
 
   const marcos = [
     { label:'Hoje',           data: hoje,                          cor:'#6b7280' },
@@ -4274,6 +4857,8 @@ function renderInsumos(){
       tags += `<span style="font-size:10px;background:#ede9fe;color:#5b21b6;padding:2px 7px;border-radius:6px;font-weight:700">🎨 aguardar arte</span> `;
     if(item.status.includes('análise QC'))
       tags += `<span style="font-size:10px;background:#dbeafe;color:#1e40af;padding:2px 7px;border-radius:6px;font-weight:700">🔬 em análise QC</span> `;
+    tags += `<button onclick="abrirModalInsumo('${item.pedido}','${item.prod}')" title="Atualizar status" style="font-size:9px;padding:1px 5px;border-radius:5px;background:none;border:1px solid var(--gray-border);color:var(--text-muted);cursor:pointer;margin-left:3px">✏️</button>`;
+
 
     return `<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 8px;background:${bg};border-radius:6px;margin-bottom:4px;font-size:11px">
       <span>${flag} <strong>${item.prod}</strong> <span style="color:var(--text-muted);font-size:10px">${item.pedido}</span></span>
@@ -4433,6 +5018,7 @@ function renderAlertas(){
           <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
           <button class="btn btn-sm" style="font-size:11px" onclick="navegarAlerta('${a.acao}','${a.titulo}')">${a.acao} ↗</button>
           ${a.tipo!=='teal'?`<button onclick="resolverAlerta(${a.originalIdx})" style="font-size:9px;padding:2px 8px;border-radius:6px;background:none;border:1px solid #d1d5db;color:#6b7280;cursor:pointer;font-family:inherit">${a.titulo.includes('[REUNIÃO]')?'📅 Arquivar':'✓ Resolver'}</button>`:''}
+              ${a._custom?`<button onclick="excluirAlertaCustom('${a._customId}')" title="Excluir alerta" style="font-size:9px;padding:2px 6px;border-radius:6px;background:none;border:1px solid #fecaca;color:#dc2626;cursor:pointer;font-family:inherit;margin-left:3px">✕</button>`:''}
         </div>
         </div>
       </div>
@@ -4459,13 +5045,15 @@ function nav(name,tab){
   }
   // Se saiu da aba envio, ocultar todos os painéis de pedido
   if(name !== 'envio'){
-    ['e001','e002','e003','e004','e005','e006','e007','e008'].forEach(k=>{
+    Object.keys(PEDIDOS_DATA).forEach(k=>{
       const el=document.getElementById('etbl-'+k);
       if(el) el.style.display='none';
     });
   }
   // Render on enter
   if(name === 'financas') renderDashboard();
+  if(name === 'regras') setTimeout(renderRegras, 0);
+  if(name === 'painel') { setTimeout(gerarPrioridadesDia,100); setTimeout(renderPainelPedidos,50); }
   if(name === 'envio') {
     // Abrir automaticamente o pedido mais próximo em andamento
     const ativo = ['e003','e005','e006','e007','e008'].find(k => {
@@ -4478,7 +5066,7 @@ function nav(name,tab){
   atualizarContextoPais(name);
 }
 
-const GLOBAL_VIEWS = ['painel','alertas','envio','insumos','financas','regulatorio'];
+const GLOBAL_VIEWS = ['painel','alertas','envio','insumos','financas','regulatorio','calendario','regras'];
 
 function atualizarContextoPais(viewName) {
   const bar = document.getElementById('pais-context-bar');
@@ -4956,6 +5544,7 @@ function imprimirComValidacao() {
 }
 
 // ===== ITEM 6: CONTROLE FINANCEIRO =====
+const FAT_CUSTOM_KEY = 'cf_faturas_custom';
 const FIN_KEY = 'cf_financeiro_2026';
 const faturas = [
   {num:'009/25', cip:85829.67,  embarque:'2025-12-05', venc:'2026-03-05', obs:'Convertido R$5,2000 em 19/03/2026 → R$446.314,28'},
@@ -5336,29 +5925,42 @@ function gerarInvoiceDePedido(pedidoId){
   // invItems schema: {cod, desc, lote, venc, pn, pb, qty, preco}
   // We use qtdLote as qty (per-lote qty for invoice), qtd as total reference
   const descMap = {
-    'ALEVAC 6':     'ALEVAC 6 INATA - Vacuna inactivada contra la Bronquitis Infecciosa, la Newcastle, Sindrome de Baja Puesta, y la Coriza Infecciosa - 1.000 dosis',
-    'ALEVAC 6 1K':  'ALEVAC 6 INATA - Vacuna inactivada contra la Bronquitis Infecciosa, la Newcastle, Sindrome de Baja Puesta, y la Coriza Infecciosa - 1.000 dosis',
-    'ALEVAC 8 1K':  'ALEVAC 8 INATA - Vacuna inactivada de tipo emulsionada contra la enfermedad de Marek - serotipo 8 - 1.000 dosis',
-    'ALEVAC 8':    'ALEVAC 8 INATA - Vacuna inactivada de tipo emulsionada contra la enfermedad de Marek - serotipo 8 - 1.000 dosis',
-    'SALMOVAC SE+SG 1K': 'SALMOVAC SE+SG INATA - Vacuna inactivada oleosa contra salmonelosis aviar cepas SE y SG - 1.000 dosis',
-    'REOVAC 5K':   'REOVAC INATA - Vacuna viva liofilizada contra la reovirus aviar - cepa S1133 - 5.000 dosis',
-    'REOVAC 5K ↔': 'REOVAC INATA - Vacuna viva liofilizada contra la reovirus aviar - cepa S1133 - 5.000 dosis',
-    'IMUPLEX 2K':  'IMUPLEX INATA - Vacuna inactivada oleosa contra la bursitis infecciosa (Gumboro) - 2.000 dosis',
-    'IMUPLEX 2K ↔':'IMUPLEX INATA - Vacuna inactivada oleosa contra la bursitis infecciosa (Gumboro) - 2.000 dosis',
-    'SINUVAC 1K':  'SINUVAC INATA - Vacuna inactivada oleosa contra la Rinotraqueitis aviar (ART/TRT) - 1.000 dosis',
-    'RINOVAC 1K':  'RINOVAC INATA - Vacuna viva liofilizada contra la Bronquitis Infecciosa - 1.000 dosis',
-    'NEWLAS 5K':   'NEWLAS INATA - Vacuna viva liofilizada contra Newcastle cepa La Sota - 5.000 dosis',
-    'NEWLAS 10K':  'NEWLAS INATA - Vacuna viva liofilizada contra Newcastle cepa La Sota - 10.000 dosis',
-    'NEWLAS 10K ↔':'NEWLAS INATA - Vacuna viva liofilizada contra Newcastle cepa La Sota - 10.000 dosis',
-    'MATRIVAC ADENOASTRO': 'MATRIVAC ADENOASTRO INATA - Vacuna inactivada polivalente - 1.000 dosis',
-    'MATRIVAC 7':   'MATRIVAC 7 INATA - Vacuna inactivada polivalente contra Newcastle, Gumboro, Neumovirus y Reovirus - 1.000 dosis',
+    'ALEVAC 6':'ALEVAC 6 INATA - Vacuna inactivada contra la Bronquitis Infecciosa, la Newcastle, Sindrome de Baja Puesta, y la Coriza Infecciosa - 1.000 dosis',
+    'ALEVAC 6 1K':'ALEVAC 6 INATA - Vacuna inactivada contra la Bronquitis Infecciosa, la Newcastle, Sindrome de Baja Puesta, y la Coriza Infecciosa - 1.000 dosis',
+    'ALEVAC 7':'ALEVAC 7 INATA - Vacuna inactivada contra la Bronquitis Infecciosa, la Newcastle, Sindrome de Baja Puesta, Coriza Infecciosa y Salmonelosis - 1.000 dosis',
+    'ALEVAC 7 1K':'ALEVAC 7 INATA - Vacuna inactivada contra la Bronquitis Infecciosa, la Newcastle, Sindrome de Baja Puesta, Coriza Infecciosa y Salmonelosis - 1.000 dosis',
+    'ALEVAC 8':'ALEVAC 8 INATA - Vacuna inactivada de tipo emulsionada contra la enfermedad de Marek - serotipo 8 - 1.000 dosis',
+    'ALEVAC 8 1K':'ALEVAC 8 INATA - Vacuna inactivada de tipo emulsionada contra la enfermedad de Marek - serotipo 8 - 1.000 dosis',
+    'ALEVAC 9':'ALEVAC 9 INATA - Vacuna inactivada polivalente - 1.000 dosis',
+    'ALEVAC 9 1K':'ALEVAC 9 INATA - Vacuna inactivada polivalente - 1.000 dosis',
     'SALMOVAC SE+SG':'SALMOVAC SE+SG INATA - Vacuna inactivada oleosa contra salmonelosis aviar cepas SE y SG - 1.000 dosis',
-    'SINUVAC':      'SINUVAC INATA - Vacuna inactivada oleosa contra la Rinotraqueitis aviar (ART/TRT) - 1.000 dosis',
-    'NEWLAS 2K':    'NEWLAS INATA - Vacuna viva liofilizada contra Newcastle cepa La Sota - 2.000 dosis',
-    'NEWLAS 1K':    'NEWLAS INATA - Vacuna viva liofilizada contra Newcastle cepa La Sota - 1.000 dosis',
-    'REOVAC 5K ↔':  'REOVAC INATA - Vacuna viva liofilizada contra la reovirus aviar - cepa S1133 - 5.000 dosis',
-    'IMUPLEX 2K ↔': 'IMUPLEX INATA - Vacuna inactivada oleosa contra la bursitis infecciosa (Gumboro) - 2.000 dosis',
-    'NEWLAS 10K ↔': 'NEWLAS INATA - Vacuna viva liofilizada contra Newcastle cepa La Sota - 10.000 dosis',
+    'SALMOVAC SE+SG 1K':'SALMOVAC SE+SG INATA - Vacuna inactivada oleosa contra salmonelosis aviar cepas SE y SG - 1.000 dosis',
+    'SALMOVAC SE+ST':'SALMOVAC SE+ST INATA - Vacuna inactivada oleosa contra salmonelosis aviar cepas SE y ST - 1.000 dosis',
+    'SALMOVAC SE+ST 1K':'SALMOVAC SE+ST INATA - Vacuna inactivada oleosa contra salmonelosis aviar cepas SE y ST - 1.000 dosis',
+    'SINUVAC':'SINUVAC INATA - Vacuna Inactivada contra la Coriza Aviar - Tipos A, B y C - 1.000 dosis',
+    'SINUVAC 1K':'SINUVAC INATA - Vacuna Inactivada contra la Coriza Aviar - Tipos A, B y C - 1.000 dosis',
+    'IMUPLEX 1K':'IMUPLEX INATA - Vacuna de Inmunocomplejo liofilizada contra la Enfermedad de Gumboro cepa W2512 - 1.000 dosis',
+    'IMUPLEX 2K':'IMUPLEX INATA - Vacuna de Inmunocomplejo liofilizada contra la Enfermedad de Gumboro cepa W2512 - 2.000 dosis',
+    'IMUPLEX 4K':'IMUPLEX INATA - Vacuna de Inmunocomplejo liofilizada contra la Enfermedad de Gumboro cepa W2512 - 4.000 dosis',
+    'IMUPLEX 2K ⇔':'IMUPLEX INATA - Vacuna de Inmunocomplejo liofilizada contra la Enfermedad de Gumboro cepa W2512 - 2.000 dosis',
+    'REOVAC 1K':'REOVAC INATA - Vacuna viva liofilizada contra el Reovirus aviar - cepa S1133 - 1.000 dosis',
+    'REOVAC 5K':'REOVAC INATA - Vacuna viva liofilizada contra el Reovirus aviar - cepa S1133 - 5.000 dosis',
+    'REOVAC 5K ⇔':'REOVAC INATA - Vacuna viva liofilizada contra el Reovirus aviar - cepa S1133 - 5.000 dosis',
+    'RINOVAC 1K':'RINOVAC INATA - Vacuna viva liofilizada contra la Bronquitis Infecciosa - cepa Connecticut - 1.000 dosis',
+    'NEWLAS 1K':'NEWLAS INATA - Vacuna viva liofilizada contra la enfermedad de Newcastle que contiene la cepa La Sota - 1.000 dosis',
+    'NEWLAS 2K':'NEWLAS INATA - Vacuna viva liofilizada contra la enfermedad de Newcastle que contiene la cepa La Sota - 2.000 dosis',
+    'NEWLAS 5K':'NEWLAS INATA - Vacuna viva liofilizada contra la enfermedad de Newcastle que contiene la cepa La Sota - 5.000 dosis',
+    'NEWLAS 10K':'NEWLAS INATA - Vacuna viva liofilizada contra la enfermedad de Newcastle que contiene la cepa La Sota - 10.000 dosis',
+    'NEWLAS 10K ⇔':'NEWLAS INATA - Vacuna viva liofilizada contra la enfermedad de Newcastle que contiene la cepa La Sota - 10.000 dosis',
+    'NEWLAS 5K ⇔':'NEWLAS INATA - Vacuna viva liofilizada contra la enfermedad de Newcastle que contiene la cepa La Sota - 5.000 dosis',
+    'BIG MASS':'BIG MASS INATA - Vacuna viva liofilizada contra la Bronquitis Infecciosa - cepa Massachusetts M41 - 1.000 dosis',
+    'BIG MASS 1K':'BIG MASS INATA - Vacuna viva liofilizada contra la Bronquitis Infecciosa - cepa Massachusetts M41 - 1.000 dosis',
+    'BIG MASS 5K':'BIG MASS INATA - Vacuna viva liofilizada contra la Bronquitis Infecciosa - cepa Massachusetts M41 - 5.000 dosis',
+    'MATRIVAC ADENOASTRO':'MATRIVAC ADENOASTRO INATA - Vacuna inactivada polivalente - 1.000 dosis',
+    'MATRIVAC 5':'MATRIVAC 5 INATA - Vacuna inactivada polivalente contra Newcastle, Gumboro, Neumovirus, Adenovirus y Reovirus - 1.000 dosis',
+    'MATRIVAC 7':'MATRIVAC 7 INATA - Vacuna inactivada polivalente contra Newcastle, Gumboro, Neumovirus y Reovirus - 1.000 dosis',
+    'PULMOVAC B1':'PULMOVAC B1 INATA - Vacuna viva liofilizada contra la Bronquitis Infecciosa - cepa HB1 - 1.000 dosis',
+    'PULMOVAC B1 1K':'PULMOVAC B1 INATA - Vacuna viva liofilizada contra la Bronquitis Infecciosa - cepa HB1 - 1.000 dosis',
   };
 
 
@@ -5381,10 +5983,11 @@ function gerarInvoiceDePedido(pedidoId){
     .filter(pr => pr.loteExp && pr.preco)  // só produtos com lote exportação definido
     .map(pr => {
       const qty  = pr.qtdLote || pr.qtd || 0;
-      const tipo = TIPO_VACINA[pr.cod] || pr.tipo || 'VIVA';
+      const tipo = getTipoVacina(pr.cod, pr.prod||pr.nome||'') || pr.tipo || 'VIVA';
       const pw   = PESOS_UNIT[tipo] || PESOS_UNIT.VIVA;
       return {
         cod:   pr.cod || '',
+        prod:  pr.prod || '',
         tipo,
         desc:  descMap[pr.prod] || pr.prod,
         lote:  pr.loteExp || '',
@@ -5584,7 +6187,7 @@ function gerarInvoiceDePedido(pedidoId){
     'REOVAC 5K ↔': 'REOVAC INATA - Vacuna viva liofilizada contra la reovirus aviar - cepa S1133 - 5.000 dosis',
     'IMUPLEX 2K':  'IMUPLEX INATA - Vacuna inactivada oleosa contra la bursitis infecciosa (Gumboro) - 2.000 dosis',
     'IMUPLEX 2K ↔':'IMUPLEX INATA - Vacuna inactivada oleosa contra la bursitis infecciosa (Gumboro) - 2.000 dosis',
-    'SINUVAC 1K':  'SINUVAC INATA - Vacuna inactivada oleosa contra la Rinotraqueitis aviar (ART/TRT) - 1.000 dosis',
+    'SINUVAC 1K':  'SINUVAC INATA - Vacuna Inactivada contra la Coriza Aviar - Tipos A, B y C - 1.000 dosis',
     'RINOVAC 1K':  'RINOVAC INATA - Vacuna viva liofilizada contra la Bronquitis Infecciosa - 1.000 dosis',
     'NEWLAS 5K':   'NEWLAS INATA - Vacuna viva liofilizada contra Newcastle cepa La Sota - 5.000 dosis',
     'NEWLAS 10K':  'NEWLAS INATA - Vacuna viva liofilizada contra Newcastle cepa La Sota - 10.000 dosis',
@@ -5592,7 +6195,7 @@ function gerarInvoiceDePedido(pedidoId){
     'MATRIVAC ADENOASTRO': 'MATRIVAC ADENOASTRO INATA - Vacuna inactivada polivalente - 1.000 dosis',
     'MATRIVAC 7':   'MATRIVAC 7 INATA - Vacuna inactivada polivalente contra Newcastle, Gumboro, Neumovirus y Reovirus - 1.000 dosis',
     'SALMOVAC SE+SG':'SALMOVAC SE+SG INATA - Vacuna inactivada oleosa contra salmonelosis aviar cepas SE y SG - 1.000 dosis',
-    'SINUVAC':      'SINUVAC INATA - Vacuna inactivada oleosa contra la Rinotraqueitis aviar (ART/TRT) - 1.000 dosis',
+    'SINUVAC':      'SINUVAC INATA - Vacuna Inactivada contra la Coriza Aviar - Tipos A, B y C - 1.000 dosis',
     'NEWLAS 2K':    'NEWLAS INATA - Vacuna viva liofilizada contra Newcastle cepa La Sota - 2.000 dosis',
     'NEWLAS 1K':    'NEWLAS INATA - Vacuna viva liofilizada contra Newcastle cepa La Sota - 1.000 dosis',
     'REOVAC 5K ↔':  'REOVAC INATA - Vacuna viva liofilizada contra la reovirus aviar - cepa S1133 - 5.000 dosis',
@@ -5620,10 +6223,11 @@ function gerarInvoiceDePedido(pedidoId){
     .filter(pr => pr.loteExp && pr.preco)  // só produtos com lote exportação definido
     .map(pr => {
       const qty  = pr.qtdLote || pr.qtd || 0;
-      const tipo = TIPO_VACINA[pr.cod] || pr.tipo || 'VIVA';
+      const tipo = getTipoVacina(pr.cod, pr.prod||pr.nome||'') || pr.tipo || 'VIVA';
       const pw   = PESOS_UNIT[tipo] || PESOS_UNIT.VIVA;
       return {
         cod:   pr.cod || '',
+        prod:  pr.prod || '',
         tipo,
         desc:  descMap[pr.prod] || pr.prod,
         lote:  pr.loteExp || '',
@@ -6869,11 +7473,7 @@ function renderResumoExecutivo() {
   const total2026 = 143768.14 + 37062.76 + 33358.24;
 
   const hoje = new Date(); hoje.setHours(0,0,0,0);
-  const embarques = [
-    {num:'*006.2026 BOL', data:'2026-04-21', flag:'🇧🇴'},
-    {num:'003.2026 PER',  data:'2026-04-08', flag:'🇵🇪'},
-    {num:'005.2026 PER',  data:'2026-04-28', flag:'🇵🇪'},
-  ];
+  var embarques=Object.values(PEDIDOS_DATA).filter(function(p){return p.etd&&p.status!=='concluido';}).map(function(p){var iso=toISO(p.etd);return iso?{num:p.num,data:iso,flag:p.flag||'🌎'}:null;}).filter(Boolean);
   const proxEmb = embarques
     .map(e=>({...e, dias: Math.ceil((new Date(e.data)-hoje)/86400000)}))
     .filter(e=>e.dias>=0)
@@ -6949,14 +7549,11 @@ function renderTimelineEmbarques() {
   const hoje = new Date(); hoje.setHours(0,0,0,0);
   if(hojeEl) hojeEl.textContent = 'Hoje: ' + hoje.toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'});
 
-  const eventos = [
-    {data:'2026-04-21', label:'*006 BOL',  flag:'🇧🇴', tipo:'embarque', cor:'#f59e0b', status:'cotação'},
-    {data:'2026-04-08', label:'003 PER',   flag:'🇵🇪', tipo:'embarque', cor:'#0d9488', status:'preparação'},
-    {data:'2026-04-28', label:'005 PER',   flag:'🇵🇪', tipo:'embarque', cor:'#0d9488', status:'programado'},
-    {data:'2026-05-01', label:'ETA PER',   flag:'🇵🇪', tipo:'eta',      cor:'#6366f1', status:'chegada'},
-    {data:'2026-04-01', label:'Venc. 011/25', flag:'💵', tipo:'financeiro', cor:'#dc2626', status:'VENCIDO'},
-  ].map(e => ({...e, dias: Math.ceil((new Date(e.data) - hoje) / 86400000)}))
-   .sort((a,b) => a.dias - b.dias);
+  var statusCor={cotacao:'#f59e0b',trabalho:'#0d9488',expedicao:'#8b5cf6',concluido:'#10b981'};
+  var statusLabel={cotacao:'cotação',trabalho:'preparação',expedicao:'expedição',concluido:'concluído'};
+  var pedEventos=Object.values(PEDIDOS_DATA).filter(function(p){return p.etd&&p.status!=='concluido';}).map(function(p){var iso=toISO(p.etd);if(!iso)return null;var num=(p.num||'').split(' ').slice(0,2).join(' ');return{data:iso,label:num,flag:p.flag||'🌎',tipo:'embarque',cor:statusCor[p.status]||'#6b7280',status:statusLabel[p.status]||p.status,pedidoId:p.id};}).filter(Boolean);
+  var finEventos=[];if(typeof faturas!=='undefined'){faturas.filter(function(f){return f.venc&&f.cip>0&&!f.obs;}).forEach(function(f){finEventos.push({data:f.venc,label:'Venc. Fat. '+f.num,flag:'💵',tipo:'financeiro',cor:'#dc2626',status:'vencimento',pedidoId:null});});}
+  const eventos=[].concat(pedEventos,finEventos).filter(function(e){return e&&e.data;}).map(function(e){return Object.assign({},e,{dias:Math.ceil((new Date(e.data)-hoje)/86400000)});}).sort(function(a,b){return a.dias-b.dias;});
 
   // Separar passados e futuros
   const passados = eventos.filter(e => e.dias < 0);
@@ -7050,16 +7647,15 @@ function renderProximosPassosTarefas() {
   const diasAte = (d) => Math.ceil((new Date(d)-hoje)/86400000);
 
   // Ações críticas com data — em ordem cronológica
-  const acoes = [
-    { data:'2026-04-21', label:'Embarque *006.2026 BOL', flag:'🇧🇴', aba:'envio',   cor:'#f59e0b', tipo:'📦' },
-    { data:'2026-04-08', label:'Embarque 003.2026 PER',  flag:'🇵🇪', aba:'envio',   cor:'#0d9488', tipo:'📦' },
-    { data:'2026-04-08', label:'AWB 003.2026 PER',       flag:'🇵🇪', aba:'envio',   cor:'#6366f1', tipo:'✈️' },
-    { data:'2026-04-28', label:'Embarque 005.2026 PER',  flag:'🇵🇪', aba:'envio',   cor:'#0d9488', tipo:'📦' },
-    { data:'2026-06-01', label:'Venc. Fat. 001/26',      flag:'💵',  aba:'financas', cor:'#dc2626', tipo:'💵' },
-    { data:'2026-06-13', label:'Venc. Fat. 002/26',      flag:'💵',  aba:'financas', cor:'#dc2626', tipo:'💵' },
-  ].map(a => ({...a, dias: diasAte(a.data)}))
-   .filter(a => a.dias > -30)
-   .sort((a,b) => a.dias - b.dias);
+  // Acoes — dynamic from PEDIDOS_DATA + faturas
+  var _acoesPed=Object.values(PEDIDOS_DATA)
+    .filter(function(p){return p.etd&&p.status!=='concluido';})
+    .map(function(p){var iso=toISO(p.etd);return iso?{data:iso,label:'Embarque '+p.num,flag:p.flag||'🌎',aba:'envio',cor:'#0d9488',tipo:'📦',dias:diasAte(iso)}:null;})
+    .filter(Boolean);
+  var _acoesFin=[];if(typeof faturas!=='undefined'){
+    faturas.filter(function(f){return f.venc&&f.cip>0&&!f.obs;}).forEach(function(f){
+      _acoesFin.push({data:f.venc,label:'Venc. Fat. '+f.num,flag:'💵',aba:'financas',cor:'#dc2626',tipo:'💵',dias:diasAte(f.venc)});});}
+  const acoes=_acoesPed.concat(_acoesFin).filter(function(a){return a.dias>-30;}).sort(function(a,b){return a.dias-b.dias;});
 
   const pill = (a) => {
     const vencido = a.dias < 0;
@@ -7085,11 +7681,111 @@ function renderProximosPassosTarefas() {
     <div style="display:flex;gap:8px;flex-wrap:wrap">${acoes.map(pill).join('')}</div>`;
 }
 
+// ── Numeração de lote exportação: sequencial por envio ──
+// Regra nova: cada novo envio de um produto+apresentação+país recebe número seguinte
+// Independente do lote BR de origem
+// Formato: <COD_PAIS><SEQ>/<ANO>  ex: VVNDPER5/2026
+
+const LOTE_SEQ_KEY = 'cf_lote_seq';
+
+function getLoteSeq(){ try{ return JSON.parse(localStorage.getItem(LOTE_SEQ_KEY)||'{}'); }catch(e){return{};} }
+function saveLoteSeq(seq){ localStorage.setItem(LOTE_SEQ_KEY, JSON.stringify(seq)); }
+
+// Retorna o próximo número de lote para cod+ano, e incrementa
+function proximoLoteExp(codBase, ano){
+  // codBase = prefixo sem número, ex: 'VVNDPER', 'SNVPER', '6LVCPER'
+  const seq  = getLoteSeq();
+  const key  = `${codBase}|${ano}`;
+  const prox = (seq[key]||0) + 1;
+  seq[key] = prox;
+  saveLoteSeq(seq);
+  return `${codBase}${prox}/${ano}`;
+}
+
+// Peek sem incrementar
+function peekProximoLoteExp(codBase, ano){
+  const seq = getLoteSeq();
+  const key = `${codBase}|${ano}`;
+  return `${codBase}${(seq[key]||0)+1}/${ano}`;
+}
+
+// Inicializar sequência com base nos lotes já emitidos em PEDIDOS_DATA
+function inicializarLoteSeq(){
+  const seq = getLoteSeq();
+  let updated = false;
+  Object.values(PEDIDOS_DATA).forEach(p=>{
+    (p.produtos||[]).forEach(pr=>{
+      if(!pr.loteExp || pr.loteExp.includes(' + ')) return;
+      // Parse: VVNDPER3/2026 → codBase=VVNDPER, num=3, ano=2026
+      const m = pr.loteExp.match(/^([A-Za-z6789]+)([0-9]+)\/([0-9]{4})$/);
+      if(!m) return;
+      const [,codBase,numStr,ano] = m;
+      const num = parseInt(numStr);
+      const key = `${codBase}|${ano}`;
+      if(!seq[key] || seq[key] < num){
+        seq[key] = num;
+        updated = true;
+      }
+    });
+  });
+  if(updated) saveLoteSeq(seq);
+}
+
+
+// ── KEY declarations (moved before init) ──
+const REG_KEY = 'cf_reg_data';
+const CAL_KEY      = 'cf_calendario';
+const CAL_DIAS_LIB = 23;
+const INSUMOS_KEY = 'cf_insumos_status';
+const BALANCO_KEY = 'cf_balanco';
+
+const REGRAS_KEY='cf_regras';
+const REGRAS_BASE=[
+  {id:'r_cap_viva',cat:'Embalagem',titulo:'Capacidade caixa — VIVA',desc:'Máximo de frascos por caixa para vacinas VIVAS (Big Mass, Newlas, Imuplex, Reovac, Rinovac, Pulmovac, Big BR)',valor:550,tipo:'numero',unidade:'fr/cx',impacto:['calcularCaixas','packing list','pesos totais']},
+  {id:'r_cap_inat',cat:'Embalagem',titulo:'Capacidade caixa — INAT',desc:'Máximo de frascos por caixa para vacinas INATIVADAS (Alevac, Salmovac, Sinuvac, Matrivac, Adenovirus ATV)',valor:30,tipo:'numero',unidade:'fr/cx',impacto:['calcularCaixas','packing list','pesos totais']},
+  {id:'r_gelo',cat:'Embalagem',titulo:'Peso do gelo por caixa',desc:'Peso do gelo seco por caixa térmica, rateado no PB por frasco',valor:7,tipo:'numero',unidade:'kg/cx',impacto:['PESOS_UNIT','pesos totais invoice']},
+  {id:'r_pn_viva',cat:'Pesos',titulo:'Peso neto unitário — VIVA',desc:'Peso neto por frasco para vacinas vivas',valor:0.0185,tipo:'decimal',unidade:'kg/fr',impacto:['P. Neto invoice','packing list']},
+  {id:'r_pb_viva',cat:'Pesos',titulo:'Peso bruto unitário — VIVA',desc:'Peso bruto por frasco para vacinas vivas (inclui embalagem + gelo)',valor:0.0310,tipo:'decimal',unidade:'kg/fr',impacto:['P. Bruto invoice','packing list']},
+  {id:'r_pn_inat',cat:'Pesos',titulo:'Peso neto unitário — INAT',desc:'Peso neto por frasco para vacinas inativadas',valor:0.5100,tipo:'decimal',unidade:'kg/fr',impacto:['P. Neto invoice','packing list']},
+  {id:'r_pb_inat',cat:'Pesos',titulo:'Peso bruto unitário — INAT',desc:'Peso bruto por frasco para vacinas inativadas (inclui embalagem + gelo)',valor:0.7430,tipo:'decimal',unidade:'kg/fr',impacto:['P. Bruto invoice','packing list']},
+  {id:'r_dias_qc',cat:'Qualidade',titulo:'Dias de controle de qualidade',desc:'Dias de QC após fabricação antes de liberar o lote',valor:21,tipo:'numero',unidade:'dias',impacto:['Calendário PCP','data de liberação','disponibilidade COMEX']},
+  {id:'r_dias_check',cat:'Qualidade',titulo:'Dias de checagem pós-QC',desc:'Dias adicionais de checagem após aprovação do QC',valor:2,tipo:'numero',unidade:'dias',impacto:['Calendário PCP','data de liberação']},
+  {id:'r_lote_seq',cat:'Lotes',titulo:'Numeração de lote exportação',desc:'Regra: SEQUENCIAL POR ENVIO. Ex: VVNDPER1/2026, VVNDPER2/2026 no próximo envio, independente do lote BR de origem.',valor:'sequencial_por_envio',tipo:'texto',unidade:'',impacto:['loteExp','invoice','packing list']},
+  {id:'r_lote_fmt',cat:'Lotes',titulo:'Formato do lote exportação',desc:'Formato: [COD][PAIS][SEQ]/[ANO]. Ex: VVNDPER3/2026',valor:'[COD][PAIS][SEQ]/[ANO]',tipo:'texto',unidade:'',impacto:['loteExp','invoice']},
+  {id:'r_incoterm',cat:'Comercial',titulo:'Incoterm padrão',desc:'Condição de entrega padrão para exportação',valor:'CIP',tipo:'texto',unidade:'',impacto:['invoice','OC','pedido']},
+  {id:'r_vivas',cat:'Classificação',titulo:'Vacinas VIVAS (550 fr/cx)',desc:'Produtos classificados como VIVA — 550 frascos por caixa, podem misturar na mesma caixa',valor:'Big Mass (M41), Big BR, Newlas (La sota), Pulmovac B1 (HB1), Imuplex, Reovac (1133), Rinovac',tipo:'lista',unidade:'',impacto:['calcularCaixas','packing list','TIPO_VACINA']},
+  {id:'r_inats',cat:'Classificação',titulo:'Vacinas INATIVADAS (30 fr/cx)',desc:'Produtos classificados como INAT — 30 frascos por caixa, cada produto em caixa própria',valor:'Alevac 6, Alevac 7, Alevac 8, Alevac 9, Salmovac SE + SG, Salmovac SE + ST, Salmovac 9R, Sinuvac, Sinuvac SE, Matrivac 5, Matrivac 7, Adenovirus ATV',tipo:'lista',unidade:'',impacto:['calcularCaixas','packing list','TIPO_VACINA']},
+];
+function getRegras(){try{var saved=JSON.parse(localStorage.getItem(REGRAS_KEY)||'{}');return REGRAS_BASE.map(function(r){return Object.assign({},r,{valor:saved[r.id]!==undefined?saved[r.id]:r.valor});});}catch(e){return REGRAS_BASE.slice();}}
+function salvarTodasRegras(){var saved={};getRegras().forEach(function(r){var el=document.getElementById('regra-val-'+r.id);if(el)saved[r.id]=r.tipo==='numero'||r.tipo==='decimal'?parseFloat(el.value)||r.valor:el.value;});localStorage.setItem(REGRAS_KEY,JSON.stringify(saved));aplicarRegrasRuntime(saved);addLogEntry('regras','Regras atualizadas');showToast('✅ Regras salvas e aplicadas!','green',3000);}
+function aplicarRegrasRuntime(saved){if(!saved)return;if(saved.r_cap_viva)window.CAP_VIVA=parseFloat(saved.r_cap_viva)||550;if(saved.r_cap_inat)window.CAP_INAT=parseFloat(saved.r_cap_inat)||30;if(saved.r_dias_qc||saved.r_dias_check){var qc=parseFloat(saved.r_dias_qc)||21;var ch=parseFloat(saved.r_dias_check)||2;window.CAL_DIAS_LIB=qc+ch;}if(typeof PESOS_UNIT!=='undefined'){if(saved.r_pn_viva)PESOS_UNIT.VIVA.pn=parseFloat(saved.r_pn_viva)||0.0185;if(saved.r_pb_viva)PESOS_UNIT.VIVA.pb=parseFloat(saved.r_pb_viva)||0.0310;if(saved.r_pn_inat)PESOS_UNIT.INAT.pn=parseFloat(saved.r_pn_inat)||0.5100;if(saved.r_pb_inat)PESOS_UNIT.INAT.pb=parseFloat(saved.r_pb_inat)||0.7430;}}
+function renderRegras(){var lista=document.getElementById('regras-lista');if(!lista)return;var regras=getRegras();var cats=[...new Set(regras.map(function(r){return r.cat;}))];var catColors={Embalagem:'#eff6ff',Pesos:'#f0fdf4',Qualidade:'#fef3c7',Lotes:'#f5f3ff',Comercial:'#fff7ed',Classificação:'#fdf2f8'};
+lista.innerHTML=cats.map(function(cat){
+  var cr=regras.filter(function(r){return r.cat===cat;});
+  return '<div class="card" style="padding:0;margin-bottom:0">'+
+    '<div class="card-head" style="background:'+(catColors[cat]||'var(--gray-light)')+';color:var(--text)">'+cat+'</div>'+
+    '<div class="card-body" style="display:flex;flex-direction:column;gap:10px;padding:14px">'+
+    cr.map(function(r){
+      var inp=r.tipo==='numero'?'<input id="regra-val-'+r.id+'" type="number" step="1" value="'+r.valor+'" style="width:80px;border:1px solid var(--teal);border-radius:4px;padding:4px 8px;font-size:13px;font-weight:700;color:var(--teal);background:var(--card);text-align:right">'
+        :r.tipo==='decimal'?'<input id="regra-val-'+r.id+'" type="number" step="0.0001" value="'+r.valor+'" style="width:90px;border:1px solid var(--teal);border-radius:4px;padding:4px 8px;font-size:13px;font-weight:700;color:var(--teal);background:var(--card);text-align:right">'
+        :r.tipo==='lista'?'<textarea id="regra-val-'+r.id+'" rows="2" style="width:100%;border:1px solid var(--teal);border-radius:4px;padding:4px 8px;font-size:11px;color:var(--text);background:var(--card);resize:vertical">'+r.valor+'</textarea>'
+        :'<input id="regra-val-'+r.id+'" type="text" value="'+r.valor+'" style="width:200px;border:1px solid var(--teal);border-radius:4px;padding:4px 8px;font-size:12px;color:var(--text);background:var(--card)">';
+      return '<div style="display:flex;align-items:flex-start;gap:12px;padding:8px 0;border-bottom:1px solid var(--gray-border)">'+
+        '<div style="flex:1">'+
+        '<div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:2px">'+r.titulo+' <span style="font-size:10px;font-weight:400;color:var(--text-muted)">'+r.unidade+'</span></div>'+
+        '<div style="font-size:11px;color:var(--text-muted);margin-bottom:6px">'+r.desc+'</div>'+
+        '<div style="display:flex;flex-wrap:wrap;gap:4px">'+r.impacto.map(function(i){return '<span style="font-size:9px;background:var(--teal-light);color:var(--teal);padding:1px 6px;border-radius:8px;font-weight:600">&rarr; '+i+'</span>';}).join('')+'</div>'+
+        '</div><div style="flex-shrink:0;margin-top:2px">'+inp+'</div></div>';
+    }).join('')+'</div></div>';
+}).join('');}
+
 // ===== INIT =====
 updateClock();setInterval(updateClock,60000);
+carregarAlertasCustom();carregarAlertasResolvidos();carregarFaturasCustom();aplicarPrecosSalvos();inicializarLoteSeq();aplicarBalancoSalvo();
+aplicarRegrasRuntime(JSON.parse(localStorage.getItem(REGRAS_KEY)||'{}'));
 renderBalanco(balanco003,'tbl-balanco-003');
 renderInsumos();renderAlertas();renderPrecos();renderSolcom();renderGlobalMetrics();
-renderResumoExecutivo();renderTimelineEmbarques();atualizarContadoresPaises();
+renderResumoExecutivo(); renderPainelPedidos();renderTimelineEmbarques();atualizarContadoresPaises();
 buildInvForm();calcularCaixas();
 (function(){const _e=document.getElementById('inv-date');if(_e)_e.value='2026-04-08';})();
 (function(){const _e=document.getElementById('inv-num');if(_e)_e.value='003/2026';})();
@@ -7101,7 +7797,7 @@ buildInvForm();calcularCaixas();
 (function(){const _e=document.getElementById('inv-bc');if(_e)_e.value='120.00';})();
 updateInvoice();updatePL();updateInsumoForm();
 // Garantir que todos os painéis de envio começam ocultos
-['e001','e002','e003','e004','e005','e006','e007','e008'].forEach(k=>{
+Object.keys(PEDIDOS_DATA).forEach(k=>{
   const el=document.getElementById('etbl-'+k);
   if(el) el.style.display='none';
 });
@@ -7138,7 +7834,7 @@ if(!localStorage.getItem(USD_DISP_KEY)) {
 }
 // Pré-registrar conversão 009/25 se ainda não salvo
 (function(){
-  const FIN_KEY = 'cf_financeiro_2026';
+  
   try {
     const fin = JSON.parse(localStorage.getItem(FIN_KEY)||'{}');
     if(!fin['009/25']) {
@@ -7204,12 +7900,12 @@ const USUARIOS = {
 
 // Abas visíveis por perfil (nav target names)
 const PERFIL_ABAS = {
-  admin:       ['painel','alertas','envio','oc','insumos','invoice','financas','historico','precos','regulatorio'],
+  admin:       ['painel','alertas','envio','oc','insumos','invoice','financas','historico','precos','regras','regulatorio','calendario'],
   operacional: ['painel','envio','invoice','insumos','oc'],
   qualidade:   ['painel','insumos','alertas'],
-  regulatorio: ['painel','insumos','alertas','oc','regulatorio'],
-  diretoria:   ['painel','alertas','envio','oc','insumos','invoice','financas','historico','precos','regulatorio'],
-  pcp:         ['painel','alertas','envio','insumos','oc','historico'],
+  regulatorio: ['painel','insumos','alertas','oc','regulatorio','calendario'],
+  diretoria:   ['painel','alertas','envio','oc','insumos','invoice','financas','historico','precos','regras','regulatorio','calendario'],
+  pcp:         ['painel','alertas','envio','insumos','oc','historico','calendario'],
 };
 
 // Descrições amigáveis dos perfis
@@ -7229,7 +7925,7 @@ async function sha256(msg) {
 // MÓDULO REGULATÓRIO
 // ══════════════════════════════════════════════════════════════
 
-const REG_KEY = 'cf_reg_data';
+
 
 // Órgãos regulatórios por país
 const REG_ORGAOS = {
@@ -7698,47 +8394,69 @@ function addHistReg(id, decisao){
 
 // ── Abrir modal de criação ──
 function abrirModalNovoProcesso(){
-  abrirModalInput('🔬 Novo processo regulatório', [
-    {id:'reg-pais',        label:'País',            ph:'ex: Peru', req:true},
-    {id:'reg-produto',     label:'Produto',          ph:'ex: NEWLAS', req:true},
-    {id:'reg-tipo',        label:'Tipo',             ph:'registro_novo | renovacao | extensao | variacao | vigilancia'},
-    {id:'reg-status',      label:'Status',           ph:'elaboracao | protocolo | exigencia | em_correcao | aprovado | suspenso'},
-    {id:'reg-resp',        label:'Responsável INATA', ph:'ex: Maks'},
-    {id:'reg-agente',      label:'Agente local (nome)', ph:'ex: Gabriela Herrera'},
-    {id:'reg-agente-email',label:'Email agente local',  ph:'ex: g.herrera@nutrisalminsa.com'},
-    {id:'reg-num-proc',    label:'Nº processo no órgão', ph:'ex: AGROCALIDAD-2025-0123'},
-    {id:'reg-prazo',       label:'Prazo do órgão (DD/MM/AAAA)', ph:'ex: 15/06/2026'},
-    {id:'reg-venc-reg',    label:'Vencimento do registro atual (DD/MM/AAAA)', ph:'ex: 01/03/2027'},
-    {id:'reg-obs',         label:'Observações / risco estratégico', ph:'ex: Rótulo não segue Manual 003 — risco de exigência'},
-  ], (vals) => {
-    const pais  = vals['reg-pais']   ||'';
-    const tipo  = vals['reg-tipo']   ||'registro_novo';
-    // Gerar checklist a partir do template
-    const tmpl  = getTemplate(pais, tipo);
-    const data  = getRegData();
-    const novo  = {
-      id:            nextRegId(),
-      pais, produto: vals['reg-produto']     ||'',
-      tipo,
-      status:        vals['reg-status']      ||'elaboracao',
-      responsavel:   vals['reg-resp']        ||'',
-      agente:        vals['reg-agente']      ||'',
-      agenteEmail:   vals['reg-agente-email']||'',
-      numProcesso:   vals['reg-num-proc']    ||'',
-      prazoOrgao:    vals['reg-prazo']       ||'',
-      vencimentoReg: vals['reg-venc-reg']    ||'',
-      obs:           vals['reg-obs']         ||'',
-      etapas: tmpl.map((txt,i)=>({id:'e'+i, txt, done:false})),
-      exigencias: [],
-      historico: [{dt:new Date().toLocaleDateString('pt-BR'),
-                   txt:'Processo criado', user:usuarioAtivo?.nome||'—'}],
-    };
-    data.push(novo);
-    saveRegData(data);
-    addLogEntry('regulatorio',`Novo processo: ${novo.produto} — ${novo.pais}`);
-    renderRegulatorio();
-    showToast(`✅ ${novo.produto} (${novo.pais}) criado com ${tmpl.length} documentos no checklist!`,'green',3000);
-  });
+  var modal=document.getElementById("modal-edicao-pedido");
+  var body=document.getElementById("modal-edicao-body");
+  if(!modal||!body)return;
+  var fld=function(id,lbl,ph,val){
+    return "<div style='display:flex;flex-direction:column;gap:3px'>"
+    +"<label style='font-size:11px;color:var(--text-muted)'>"+lbl+"</label>"
+    +"<input id='nrp-"+id+"' value='"+(val||"")+"' placeholder='"+(ph||"")+"' "
+    +"style='border:1px solid var(--gray-border);border-radius:var(--radius);padding:5px 8px;font-size:12px;background:var(--card);color:var(--text)'></div>";};
+  var sel=function(id,lbl,opts){
+    return "<div style='display:flex;flex-direction:column;gap:3px'>"
+    +"<label style='font-size:11px;color:var(--text-muted)'>"+lbl+"</label>"
+    +"<select id='nrp-"+id+"' style='border:1px solid var(--gray-border);border-radius:var(--radius);padding:5px 8px;font-size:12px;background:var(--card);color:var(--text)'>"+opts+"</select></div>";};
+  var paisOpts="<option value=''>— selecione —</option>"
+    +Object.values(PAISES).filter(function(p){return p.status==="ativo";})
+      .map(function(p){return "<option value='"+p.nome+"'>"+p.flag+" "+p.nome+"</option>";}).join("");
+  var statOpts=Object.entries(REG_STATUS_CFG)
+    .map(function(e){return "<option value='"+e[0]+"'>"+e[1].label+"</option>";}).join("");
+  var tipoOpts=Object.entries(REG_TIPOS)
+    .map(function(e){return "<option value='"+e[0]+"'>"+e[1]+"</option>";}).join("");
+  body.innerHTML=
+    "<div style='font-size:15px;font-weight:700;margin-bottom:14px'>🔬 Novo processo regulatório</div>"
+    +"<div style='display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px'>"
+    +sel("pais","País *",paisOpts)+fld("produto","Produto *","ex: NEWLAS")
+    +sel("tipo","Tipo",tipoOpts)+sel("status","Status",statOpts)
+    +fld("resp","Responsável INATA","ex: Maks")+fld("agente","Agente local","ex: Gabriela")
+    +fld("agente-email","Email agente","ex: g@email.com")+fld("num-proc","Nº processo","ex: AGROCALIDAD-2025")
+    +fld("prazo","Prazo órgão","ex: 15/06/2026")+fld("venc-reg","Venc. registro","ex: 01/03/2027")
+    +"</div>"+fld("obs","Observações","ex: Rótulo não segue Manual 003")
+    +"<div style='display:flex;justify-content:flex-end;gap:8px;margin-top:16px'>"
+    +"<button class='btn btn-sm' onclick='fecharModalEdicao()'>Cancelar</button>"
+    +"<button class='btn btn-sm btn-primary' onclick='salvarNovoProcesso()'>💾 Criar processo</button></div>";
+  modal.style.display="flex";
+}
+
+function salvarNovoProcesso(){
+  const g = id => document.getElementById('nrp-'+id)?.value?.trim()||'';
+  const pais    = g('pais');
+  const produto = g('produto');
+  if(!pais || !produto){ showToast('⚠️ País e Produto são obrigatórios','red',3000); return; }
+  const tipo  = g('tipo')||'registro_novo';
+  const tmpl  = getTemplate(pais, tipo);
+  const data  = getRegData();
+  const novo  = {
+    id: nextRegId(), pais, produto, tipo,
+    status:        g('status')||'elaboracao',
+    responsavel:   g('resp'),
+    agente:        g('agente'),
+    agenteEmail:   g('agente-email'),
+    numProcesso:   g('num-proc'),
+    prazoOrgao:    g('prazo'),
+    vencimentoReg: g('venc-reg'),
+    obs:           g('obs'),
+    etapas:    tmpl.map((txt,i)=>({id:'e'+i, txt, done:false})),
+    exigencias:[],
+    historico: [{dt:new Date().toLocaleDateString('pt-BR'),
+                 txt:'Processo criado', user:usuarioAtivo?.nome||'—'}],
+  };
+  data.push(novo);
+  saveRegData(data);
+  fecharModalEdicao();
+  addLogEntry('regulatorio',`Novo processo: ${novo.produto} — ${novo.pais}`);
+  renderRegulatorio();
+  showToast(`✅ ${novo.produto} (${novo.pais}) criado com ${tmpl.length} documentos!`,'green',3000);
 }
 
 // ── Editar processo existente ──
@@ -7779,12 +8497,738 @@ function abrirEdicaoProcesso(id){
       });
     }
     saveRegData(data);
+    // If status changed to aprovado → create teal alerta
+    if(proc.status === 'aprovado' && proc.status !== oldStatus){
+      alertaData.push({tipo:'teal', pais: Object.values(PAISES).find(p=>p.nome===proc.pais)?.flag+' '+proc.pais || proc.pais,
+        titulo:`✅ Registro ${proc.produto} APROVADO — ${proc.pais}`,
+        detalhe:`Processo ${proc.numProcesso||'—'} aprovado. Responsável: ${proc.responsavel||'—'}. Vencimento: ${proc.vencimentoReg||'indefinido'}.`,
+        prazo:null, cascata:null, acao:'Concluído'});
+      salvarAlertasResolvidos();
+      renderAlertas();
+    }
     addLogEntry('regulatorio',`${proc.produto} (${proc.pais}): processo atualizado`);
     renderRegulatorio();
     showToast('✅ Processo atualizado','green',2500);
   });
 }
 
+
+// ══════════════════════════════════════════════════════════════
+// MÓDULO CALENDÁRIO DE PRODUÇÃO
+// ══════════════════════════════════════════════════════════════
+
+
+ // 21 QC + 2 checagem
+
+// ── Dados seed: cronograma PCP Abril/2026 ──
+const CAL_SEED = [
+  // ── VIVAS — Liofilização Abril/2026 ──
+  { id:'c001', produto:'Big Mass (M41)',  apres:'5.000 doses',  tipo:'VIVA', fab:'2026-04-06', qtd:1, destino:'COMPARTILHADO', obs:'' },
+  { id:'c002', produto:'Big Mass (M41)',  apres:'10.000 doses', tipo:'VIVA', fab:'2026-04-10', qtd:1, destino:'COMPARTILHADO', obs:'Big Mass 10K — PCP Abr/26' },
+  { id:'c003', produto:'Imuplex',         apres:'5.000 doses',  tipo:'VIVA', fab:'2026-04-14', qtd:1, destino:'COMPARTILHADO', obs:'PCP Abr/26' },
+  { id:'c004', produto:'Big Mass (M41)',  apres:'5.000 doses',  tipo:'VIVA', fab:'2026-04-18', qtd:1, destino:'COMPARTILHADO', obs:'PCP Abr/26' },
+  { id:'c005', produto:'Big Mass (M41)',  apres:'5.000 doses',  tipo:'VIVA', fab:'2026-04-22', qtd:1, destino:'COMPARTILHADO', obs:'PCP Abr/26' },
+  { id:'c006', produto:'Rinovac',         apres:'1.000 doses',  tipo:'VIVA', fab:'2026-04-26', qtd:1, destino:'COMPARTILHADO', obs:'PCP Abr/26' },
+  { id:'c007', produto:'Rinovac',         apres:'1.000 doses',  tipo:'VIVA', fab:'2026-04-30', qtd:1, destino:'COMPARTILHADO', obs:'PCP Abr/26' },
+  // ── VIVAS — Março/2026 ──
+  { id:'m001', produto:'Big Mass (M41)',   apres:'5.000 doses',  tipo:'VIVA', fab:'2026-03-03', qtd:1, destino:'COMPARTILHADO', obs:'PCP Mar/26' },
+  { id:'m002', produto:'Big Mass (M41)',   apres:'5.000 doses',  tipo:'VIVA', fab:'2026-03-09', qtd:1, destino:'COMPARTILHADO', obs:'PCP Mar/26' },
+  { id:'m003', produto:'Newlas (La sota)', apres:'10.000 doses', tipo:'VIVA', fab:'2026-03-13', qtd:1, destino:'COMPARTILHADO', obs:'PCP Mar/26' },
+  { id:'m004', produto:'Pulmovac B1 (HB1)',apres:'5.000 doses',  tipo:'VIVA', fab:'2026-03-17', qtd:1, destino:'COMPARTILHADO', obs:'PCP Mar/26' },
+  { id:'m005', produto:'Reovac (1133)',    apres:'1.000 doses',  tipo:'VIVA', fab:'2026-03-21', qtd:1, destino:'COMPARTILHADO', obs:'PCP Mar/26' },
+  { id:'m006', produto:'Imuplex',          apres:'2.000 doses',  tipo:'VIVA', fab:'2026-03-25', qtd:1, destino:'COMPARTILHADO', obs:'PCP Mar/26' },
+  { id:'m007', produto:'Imuplex',          apres:'5.000 doses',  tipo:'VIVA', fab:'2026-03-25', qtd:1, destino:'COMPARTILHADO', obs:'PCP Mar/26' },
+  { id:'m008', produto:'Rinovac',          apres:'1.000 doses',  tipo:'VIVA', fab:'2026-03-29', qtd:1, destino:'COMPARTILHADO', obs:'PCP Mar/26' },
+  // ── INATIVADAS — Março/2026 ──
+  { id:'m009', produto:'Alevac 8',         apres:'1.000 doses',  tipo:'INAT', fab:'2026-03-09', qtd:2, destino:'COMPARTILHADO', obs:'2 partidas — PCP Mar/26' },
+  { id:'m010', produto:'Alevac 8',         apres:'1.000 doses',  tipo:'INAT', fab:'2026-03-16', qtd:1, destino:'COMPARTILHADO', obs:'PCP Mar/26' },
+  { id:'m011', produto:'Matrivac 7',       apres:'1.000 doses',  tipo:'INAT', fab:'2026-03-30', qtd:3, destino:'COMPARTILHADO', obs:'3 partidas — PCP Mar/26' },
+  { id:'m012', produto:'Salmovac SE + SG', apres:'1.000 doses',  tipo:'INAT', fab:'2026-03-23', qtd:3, destino:'COMEX',        obs:'3 partidas COMEX — PCP Mar/26' },
+  { id:'m013', produto:'Salmovac SE + SG', apres:'1.000 doses',  tipo:'INAT', fab:'2026-03-30', qtd:2, destino:'COMPARTILHADO', obs:'2 partidas — PCP Mar/26' },
+  { id:'m014', produto:'Sinuvac',          apres:'1.000 doses',  tipo:'INAT', fab:'2026-03-23', qtd:2, destino:'COMPARTILHADO', obs:'2 partidas — PCP Mar/26' },
+  { id:'m015', produto:'Sinuvac',          apres:'1.000 doses',  tipo:'INAT', fab:'2026-03-30', qtd:2, destino:'COMPARTILHADO', obs:'2 partidas — PCP Mar/26' },
+  { id:'m016', produto:'Salmovac SE + SG', apres:'500 mL',       tipo:'INAT', fab:'2026-03-30', qtd:2, destino:'INTERNO',      obs:'PP Salmovac S4 — PCP Mar/26' },
+  // ── INATIVADAS — Abril/2026 ──
+  { id:'c008', produto:'Alevac 8',        apres:'1.000 doses',  tipo:'INAT', fab:'2026-04-10', qtd:2, destino:'COMPARTILHADO', obs:'2 partidas — PCP Abr/26' },
+  { id:'c009', produto:'Salmovac SE + SG',apres:'1.000 doses',  tipo:'INAT', fab:'2026-04-22', qtd:3, destino:'COMEX',        obs:'3 partidas dedicadas COMEX — PCP Abr/26' },
+  { id:'c010', produto:'Salmovac SE + SG',apres:'500 mL',       tipo:'INAT', fab:'2026-04-22', qtd:2, destino:'INTERNO',      obs:'PP Salmovac S4 — 2 partidas — PCP Abr/26' },
+];
+
+function getCalData(){
+  try{
+    const saved = JSON.parse(localStorage.getItem(CAL_KEY)||'[]');
+    // Merge seed + custom (seed only if not already present)
+    const ids = new Set(saved.map(x=>x.id));
+    return [...saved, ...CAL_SEED.filter(x=>!ids.has(x.id))];
+  }catch(e){ return [...CAL_SEED]; }
+}
+
+function saveCalData(data){
+  // Only save non-seed items (custom additions) to localStorage
+  const custom = data.filter(x=>!CAL_SEED.find(s=>s.id===x.id) || x._edited);
+  localStorage.setItem(CAL_KEY, JSON.stringify(custom));
+}
+
+function dataLib(fabStr){
+  const d = new Date(fabStr);
+  d.setDate(d.getDate() + CAL_DIAS_LIB);
+  return d;
+}
+
+function statusPartida(fab){
+  const hoje = new Date(); hoje.setHours(0,0,0,0);
+  const fabD = new Date(fab);
+  const libD = dataLib(fab);
+  if(fabD > hoje) return 'previsto';
+  if(fabD <= hoje && libD > hoje) return 'em_qc';
+  return 'disponivel';
+}
+
+const CAL_STATUS_CFG = {
+  previsto:   { label:'⏳ Previsto',    cor:'#6b7280', bg:'#f9fafb', border:'#e5e7eb' },
+  em_qc:      { label:'🔬 Em QC',       cor:'#d97706', bg:'#fffbeb', border:'#fde68a' },
+  disponivel: { label:'✅ Disponível',  cor:'#059669', bg:'#f0fdf4', border:'#bbf7d0' },
+  esgotado:   { label:'📭 Esgotado',    cor:'#6b7280', bg:'#f9fafb', border:'#e5e7eb' },
+};
+
+const CAL_DEST_CFG = {
+  COMEX:         { label:'📦 COMEX',        cor:'#0d9488', bg:'#f0fdfa', border:'#99f6e4' },
+  INTERNO:       { label:'🏠 Interno',      cor:'#2563eb', bg:'#eff6ff', border:'#bfdbfe' },
+  COMPARTILHADO: { label:'🔄 Compartilhado',cor:'#7c3aed', bg:'#f5f3ff', border:'#ddd6fe' },
+};
+
+// ── Render principal ──
+function renderCalendario(){
+  const data     = getCalData();
+  const filtTipo = document.getElementById('cal-filtro-tipo')?.value||'';
+  const filtDest = document.getElementById('cal-filtro-dest')?.value||'';
+  const filtStat = document.getElementById('cal-filtro-status')?.value||'';
+  const hoje     = new Date(); hoje.setHours(0,0,0,0);
+
+  const filtrado = data.filter(p=>{
+    const st = statusPartida(p.fab);
+    return (!filtTipo || p.tipo===filtTipo)
+        && (!filtDest || p.destino===filtDest)
+        && (!filtStat || st===filtStat || (filtStat==='esgotado' && p.esgotado));
+  });
+
+  // ── Métricas ──
+  const total    = data.length;
+  const dispCom  = data.filter(x=>statusPartida(x.fab)==='disponivel'&&x.destino==='COMEX').length;
+  const dispComp = data.filter(x=>statusPartida(x.fab)==='disponivel'&&x.destino==='COMPARTILHADO').length;
+  const emQC     = data.filter(x=>statusPartida(x.fab)==='em_qc').length;
+  const prev     = data.filter(x=>statusPartida(x.fab)==='previsto').length;
+
+  const mEl = document.getElementById('cal-metricas');
+  if(mEl) mEl.innerHTML = [
+    {label:'Total partidas',   val:total,   cor:'var(--teal)'},
+    {label:'Em QC',            val:emQC,    cor:'#d97706'},
+    {label:'Disp. COMEX',      val:dispCom, cor:'#0d9488'},
+    {label:'Disp. Compart.',   val:dispComp,cor:'#7c3aed'},
+    {label:'Previstos',        val:prev,    cor:'#6b7280'},
+  ].map(m=>`
+    <div style="background:var(--card);border:1px solid var(--gray-border);border-radius:var(--radius);padding:10px 14px;text-align:center">
+      <div style="font-size:22px;font-weight:800;color:${m.cor}">${m.val}</div>
+      <div style="font-size:10px;color:var(--text-muted);margin-top:2px">${m.label}</div>
+    </div>`).join('');
+
+  // ── Alertas de liberação próxima ──
+  const aEl = document.getElementById('cal-alertas');
+  if(aEl){
+    const proxLib = data.filter(x=>{
+      const lib = dataLib(x.fab);
+      const dias = Math.ceil((lib-hoje)/86400000);
+      return dias>=0 && dias<=5 && !x.esgotado;
+    }).sort((a,b)=>new Date(a.fab)-new Date(b.fab));
+    aEl.innerHTML = proxLib.length ? `
+      <div style="display:flex;flex-direction:column;gap:6px">
+        ${proxLib.map(p=>{
+          const lib  = dataLib(p.fab);
+          const dias = Math.ceil((lib-hoje)/86400000);
+          return `<div style="padding:8px 14px;border-radius:var(--radius);font-size:12px;
+            background:#f0fdfa;border:1px solid #99f6e4;border-left:4px solid #0d9488">
+            🎯 <strong>${p.produto} ${p.apres}</strong> (${p.destino}) — libera em
+            <strong>${dias===0?'HOJE':dias+'d'}</strong>
+            · ${lib.toLocaleDateString('pt-BR')} · ${p.qtd} partida(s)
+          </div>`;
+        }).join('')}
+      </div>` : '';
+  }
+
+  // ── Tabela ──
+  const tEl = document.getElementById('cal-tabela');
+  if(!tEl) return;
+
+  if(filtrado.length===0){
+    tEl.innerHTML = `<div style="text-align:center;padding:48px;color:var(--text-muted)">
+      <div style="font-size:28px;margin-bottom:8px">📅</div>
+      <div>Nenhuma partida encontrada. Clique em "+ Nova partida".</div></div>`;
+    return;
+  }
+
+  // Group by month
+  const porMes = {};
+  filtrado.forEach(p=>{
+    const d   = new Date(p.fab);
+    const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    const lbl = d.toLocaleDateString('pt-BR',{month:'long',year:'numeric'});
+    if(!porMes[key]) porMes[key]={lbl, itens:[]};
+    porMes[key].itens.push(p);
+  });
+
+  tEl.innerHTML = Object.entries(porMes).sort(([a],[b])=>a.localeCompare(b)).map(([,mes])=>{
+    const rows = mes.itens.sort((a,b)=>new Date(a.fab)-new Date(b.fab)).map(p=>{
+      const st  = p.esgotado ? 'esgotado' : statusPartida(p.fab);
+      const sc  = CAL_STATUS_CFG[st]||CAL_STATUS_CFG.previsto;
+      const dc  = CAL_DEST_CFG[p.destino]||CAL_DEST_CFG.COMPARTILHADO;
+      const lib = dataLib(p.fab);
+      const hoje2 = new Date(); hoje2.setHours(0,0,0,0);
+      const diasLib = Math.ceil((lib-hoje2)/86400000);
+      const diasStr = diasLib>0 ? `em ${diasLib}d` : diasLib===0 ? 'HOJE' : `há ${Math.abs(diasLib)}d`;
+
+      // Link to PEDIDOS_DATA: find which pedidos need this product
+      const linked = Object.values(PEDIDOS_DATA)
+        .filter(ped=>['cotacao','trabalho'].includes(ped.status))
+        .filter(ped=>(ped.produtos||[]).some(pr=>
+          pr.prod?.toLowerCase().includes(p.produto.toLowerCase().split(' ')[0]) ||
+          p.produto.toLowerCase().includes(pr.prod?.toLowerCase().split(' ')[0]||'xx')
+        ))
+        .map(ped=>ped.num);
+
+      return `<tr style="border-bottom:1px solid var(--gray-border)">
+        <td style="padding:10px 14px;font-size:12px">
+          <strong>${p.produto}</strong>
+          <span style="font-size:10px;color:var(--text-muted);margin-left:6px">${p.apres}</span>
+          <span style="padding:1px 6px;border-radius:8px;font-size:9px;margin-left:4px;
+            color:${p.tipo==='VIVA'?'#059669':'#2563eb'};
+            background:${p.tipo==='VIVA'?'#f0fdf4':'#eff6ff'}">
+            ${p.tipo==='VIVA'?'VIVA':'INAT'}
+          </span>
+          ${p.obs?`<div style="font-size:10px;color:var(--text-muted);margin-top:2px">${p.obs}</div>`:''}
+        </td>
+        <td style="padding:10px 8px;font-size:11px;text-align:center">
+          <strong>${p.qtd}</strong>
+          <span style="font-size:10px;color:var(--text-muted)"> partida(s)</span>
+        </td>
+        <td style="padding:10px 8px;font-size:11px;text-align:center">
+          ${new Date(p.fab).toLocaleDateString('pt-BR')}
+        </td>
+        <td style="padding:10px 8px;font-size:11px;text-align:center">
+          <strong>${lib.toLocaleDateString('pt-BR')}</strong>
+          <div style="font-size:10px;color:${diasLib<=3?'#059669':'var(--text-muted)'}">${diasStr}</div>
+        </td>
+        <td style="padding:10px 8px">
+          <span style="padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;
+            color:${sc.cor};background:${sc.bg};border:1px solid ${sc.border}">
+            ${sc.label}
+          </span>
+        </td>
+        <td style="padding:10px 8px">
+          <span style="padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;
+            color:${dc.cor};background:${dc.bg};border:1px solid ${dc.border}">
+            ${dc.label}
+          </span>
+        </td>
+        <td style="padding:10px 8px;font-size:10px;color:var(--teal)">
+          ${linked.length?linked.join(', '):'<span style="color:var(--text-muted)">—</span>'}
+        </td>
+        <td style="padding:10px 8px;text-align:right">
+          <button class="btn btn-sm" onclick="editarPartida('${p.id}')" style="font-size:10px;padding:2px 8px">✏️</button>
+          ${!p.esgotado&&st==='disponivel'
+            ? `<button class="btn btn-sm" onclick="marcarEsgotada('${p.id}')" style="font-size:10px;padding:2px 8px;background:#f0fdf4;color:#059669;border-color:#bbf7d0;margin-left:4px">📭 Esgotar</button>`
+            : ''}
+        </td>
+      </tr>`;
+    }).join('');
+
+    return `
+      <div style="border-bottom:2px solid var(--gray-border)">
+        <div style="padding:8px 14px;background:var(--gray-light);font-size:12px;font-weight:700;
+          display:flex;align-items:center;gap:8px;text-transform:capitalize">
+          📅 ${mes.lbl}
+          <span style="font-weight:400;color:var(--text-muted)">${mes.itens.length} partida(s)</span>
+        </div>
+        <table style="width:100%;border-collapse:collapse">
+          <thead>
+            <tr style="background:var(--glass);font-size:10px;color:var(--text-muted);text-transform:uppercase">
+              <th style="padding:6px 14px;text-align:left;font-weight:600">Produto</th>
+              <th style="padding:6px 8px;text-align:center;font-weight:600">Partidas</th>
+              <th style="padding:6px 8px;text-align:center;font-weight:600">Fabricação</th>
+              <th style="padding:6px 8px;text-align:center;font-weight:600">Liberação</th>
+              <th style="padding:6px 8px;text-align:left;font-weight:600">Status</th>
+              <th style="padding:6px 8px;text-align:left;font-weight:600">Destino</th>
+              <th style="padding:6px 8px;text-align:left;font-weight:600">Pedidos vinculados</th>
+              <th style="padding:6px 8px"></th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>`;
+  }).join('');
+
+  renderTimelineCalendario(filtrado);
+}
+
+// ── Timeline visual ──
+function renderTimelineCalendario(data){
+  const tEl = document.getElementById('cal-timeline');
+  if(!tEl||!data.length) return;
+
+  const hoje = new Date(); hoje.setHours(0,0,0,0);
+  const inicio = new Date(hoje); inicio.setDate(inicio.getDate()-5);
+  const fim    = new Date(hoje); fim.setDate(fim.getDate()+60);
+  const totalDias = Math.ceil((fim-inicio)/86400000);
+  const pxPorDia  = 14;
+  const largura   = totalDias * pxPorDia;
+
+  // Header with dates
+  const semanas = [];
+  for(let d=new Date(inicio); d<=fim; d.setDate(d.getDate()+7)){
+    semanas.push(new Date(d));
+  }
+
+  const headerHtml = semanas.map(d=>{
+    const offset = Math.ceil((d-inicio)/86400000) * pxPorDia;
+    return `<div style="position:absolute;left:${offset}px;font-size:9px;color:var(--text-muted);white-space:nowrap;border-left:1px dashed var(--gray-border);padding-left:2px;top:0;height:100%">
+      ${d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})}
+    </div>`;
+  }).join('');
+
+  // Today line
+  const todayOffset = Math.ceil((hoje-inicio)/86400000) * pxPorDia;
+
+  // Rows
+  const rows = data.slice().sort((a,b)=>new Date(a.fab)-new Date(b.fab)).map((p,i)=>{
+    const fabD = new Date(p.fab);
+    const libD = dataLib(p.fab);
+    const fabOff = Math.max(0, Math.ceil((fabD-inicio)/86400000)) * pxPorDia;
+    const libOff = Math.min(largura, Math.ceil((libD-inicio)/86400000) * pxPorDia);
+    const w = Math.max(4, libOff - fabOff);
+    const st = p.esgotado?'esgotado':statusPartida(p.fab);
+    const cor = st==='disponivel'?'#059669':st==='em_qc'?'#d97706':st==='previsto'?'#6b7280':'#e5e7eb';
+    const dc  = CAL_DEST_CFG[p.destino]||CAL_DEST_CFG.COMPARTILHADO;
+
+    return `
+      <div style="display:flex;align-items:center;gap:8px;padding:3px 0;border-bottom:1px solid var(--gray-border)">
+        <div style="width:160px;flex-shrink:0;font-size:10px;font-weight:600;text-align:right;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis"
+          title="${p.produto} ${p.apres}">${p.produto.split(' ').slice(0,2).join(' ')}</div>
+        <div style="position:relative;height:20px;flex:1;min-width:${largura}px">
+          <!-- QC bar (fab → lib) -->
+          <div style="position:absolute;left:${fabOff}px;width:${w}px;height:16px;top:2px;
+            background:${cor}22;border:1px solid ${cor};border-radius:4px;
+            display:flex;align-items:center;justify-content:center;overflow:hidden"
+            title="${p.produto}: Fab ${fabD.toLocaleDateString('pt-BR')} → Lib ${libD.toLocaleDateString('pt-BR')}">
+            <span style="font-size:8px;color:${cor};font-weight:700;white-space:nowrap;padding:0 3px">
+              ${w>50?dc.label:''}
+            </span>
+          </div>
+          <!-- Fab dot -->
+          <div style="position:absolute;left:${fabOff-3}px;top:5px;width:8px;height:8px;
+            border-radius:50%;background:${cor};border:1px solid white;z-index:1"></div>
+          <!-- Lib dot (star) -->
+          <div style="position:absolute;left:${libOff-4}px;top:4px;font-size:10px;z-index:1">
+            ${st==='disponivel'?'⭐':st==='em_qc'?'🔬':'📅'}
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+
+  tEl.innerHTML = `
+    <div style="overflow-x:auto">
+      <div style="min-width:${largura+200}px">
+        <!-- Header -->
+        <div style="display:flex;align-items:center;gap:8px;padding:3px 0;margin-bottom:4px">
+          <div style="width:160px;flex-shrink:0"></div>
+          <div style="position:relative;height:20px;flex:1;min-width:${largura}px">
+            ${headerHtml}
+            <!-- Today line -->
+            <div style="position:absolute;left:${todayOffset}px;top:-4px;width:2px;height:calc(100% + 8px);background:#ef4444;z-index:2"></div>
+            <div style="position:absolute;left:${todayOffset-12}px;top:-16px;font-size:9px;color:#ef4444;font-weight:700;white-space:nowrap">HOJE</div>
+          </div>
+        </div>
+        ${rows}
+      </div>
+    </div>
+    <div style="font-size:10px;color:var(--text-muted);margin-top:8px">
+      📅 = Previsto &nbsp;·&nbsp; 🔬 = Em QC (${CAL_DIAS_LIB}d) &nbsp;·&nbsp; ⭐ = Disponível &nbsp;·&nbsp; Linha vermelha = Hoje
+    </div>`;
+}
+
+// ── Marcar partida como esgotada ──
+function marcarEsgotada(id){
+  const data = getCalData();
+  const p = data.find(x=>x.id===id);
+  if(!p) return;
+  if(!confirm(`Marcar "${p.produto} ${p.apres}" como esgotada?`)) return;
+  p.esgotado = true;
+  p._edited  = true;
+  saveCalData(data);
+  renderCalendario();
+  showToast('Partida marcada como esgotada','green',2500);
+}
+
+// ── Modal nova partida ──
+function abrirModalNovaPartida(id){
+  const modal = document.getElementById('modal-edicao-pedido');
+  const body  = document.getElementById('modal-edicao-body');
+  if(!modal||!body) return;
+
+  const editing = id ? getCalData().find(x=>x.id===id) : null;
+  const titulo  = editing ? `✏️ Editar partida` : '📅 Nova partida de produção';
+
+  const prodNomes = [...new Set(PRODUTOS.map(p=>p.nome))];
+  const selProd = `<select id="cp-produto" style="border:1px solid var(--gray-border);border-radius:var(--radius);padding:5px 8px;font-size:12px;background:var(--card);color:var(--text);width:100%">
+    ${prodNomes.map(n=>`<option value="${n}" ${editing?.produto===n?'selected':''}>${n}</option>`).join('')}
+  </select>`;
+
+  const selTipo = `<select id="cp-tipo" style="border:1px solid var(--gray-border);border-radius:var(--radius);padding:5px 8px;font-size:12px;background:var(--card);color:var(--text);width:100%">
+    <option value="VIVA" ${editing?.tipo==='VIVA'?'selected':''}>🟢 VIVA</option>
+    <option value="INAT" ${editing?.tipo==='INAT'?'selected':''}>🔵 INAT</option>
+  </select>`;
+
+  const selDest = `<select id="cp-destino" style="border:1px solid var(--gray-border);border-radius:var(--radius);padding:5px 8px;font-size:12px;background:var(--card);color:var(--text);width:100%">
+    <option value="COMEX" ${editing?.destino==='COMEX'?'selected':''}>📦 COMEX (exclusivo exportação)</option>
+    <option value="INTERNO" ${editing?.destino==='INTERNO'?'selected':''}>🏠 Mercado interno</option>
+    <option value="COMPARTILHADO" ${editing?.destino==='COMPARTILHADO'?'selected':''}>🔄 Compartilhado</option>
+  </select>`;
+
+  const fld = (id,lbl,val='',ph='',type='text') => `
+    <div style="display:flex;flex-direction:column;gap:3px">
+      <label style="font-size:11px;color:var(--text-muted)">${lbl}</label>
+      <input id="${id}" type="${type}" value="${val}" placeholder="${ph}"
+        style="border:1px solid var(--gray-border);border-radius:var(--radius);padding:5px 8px;font-size:12px;background:var(--card);color:var(--text)">
+    </div>`;
+
+  body.innerHTML = `
+    <div style="font-size:15px;font-weight:700;margin-bottom:14px">${titulo}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+      <div style="display:flex;flex-direction:column;gap:3px"><label style="font-size:11px;color:var(--text-muted)">Produto</label>${selProd}</div>
+      ${fld('cp-apres','Apresentação',editing?.apres||'','ex: 1.000 doses')}
+      <div style="display:flex;flex-direction:column;gap:3px"><label style="font-size:11px;color:var(--text-muted)">Tipo</label>${selTipo}</div>
+      <div style="display:flex;flex-direction:column;gap:3px"><label style="font-size:11px;color:var(--text-muted)">Destino</label>${selDest}</div>
+      ${fld('cp-fab','Data de fabricação',editing?.fab||'','AAAA-MM-DD','date')}
+      ${fld('cp-qtd','Nº de partidas',editing?.qtd||1,'ex: 2','number')}
+    </div>
+    ${fld('cp-obs','Observações',editing?.obs||'','ex: Partida dedicada COMEX')}
+    <div style="margin-top:8px;padding:8px;background:var(--gray-light);border-radius:var(--radius);font-size:11px;color:var(--text-muted)">
+      ⏱ Liberação = Data fab + ${CAL_DIAS_LIB} dias (21 QC + 2 checagem)
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:14px">
+      ${editing?`<button class="btn btn-sm btn-danger" onclick="excluirPartida('${id}')" style="margin-right:auto">🗑 Excluir</button>`:''}
+      <button class="btn btn-sm" onclick="fecharModalEdicao()">Cancelar</button>
+      <button class="btn btn-sm btn-primary" onclick="salvarPartida('${id||''}')">💾 Salvar</button>
+    </div>`;
+  modal.style.display = 'flex';
+}
+
+function editarPartida(id){ abrirModalNovaPartida(id); }
+
+function salvarPartida(id){
+  const g = i => document.getElementById(i)?.value?.trim()||'';
+  const produto = g('cp-produto');
+  const fab     = g('cp-fab');
+  if(!produto||!fab){ showToast('Produto e data são obrigatórios','red',2000); return; }
+
+  const data = getCalData();
+  if(id){
+    const p = data.find(x=>x.id===id);
+    if(p){
+      p.produto = produto; p.apres = g('cp-apres');
+      p.tipo    = g('cp-tipo'); p.destino = g('cp-destino');
+      p.fab = fab; p.qtd = parseInt(g('cp-qtd'))||1;
+      p.obs = g('cp-obs'); p._edited = true;
+    }
+  } else {
+    data.push({
+      id: 'c'+Date.now(), produto, apres: g('cp-apres'),
+      tipo: g('cp-tipo'), destino: g('cp-destino'),
+      fab, qtd: parseInt(g('cp-qtd'))||1, obs: g('cp-obs'),
+    });
+  }
+  saveCalData(data);
+  fecharModalEdicao();
+  addLogEntry('auto',`Calendário: ${id?'editado':'nova partida'} — ${produto} fab ${fab}`);
+  renderCalendario();
+  showToast(`✅ Partida ${id?'atualizada':'adicionada'}!`,'green',2500);
+}
+
+function excluirPartida(id){
+  if(!confirm('Excluir esta partida?')) return;
+  const data = getCalData().filter(x=>x.id!==id);
+  saveCalData(data);
+  fecharModalEdicao();
+  renderCalendario();
+  showToast('Partida excluída','green',2000);
+}
+
+// ── Chaves de persistência de insumos ──
+
+
+function getInsumoStatus(pedido, prod){
+  try{
+    const all = JSON.parse(localStorage.getItem(INSUMOS_KEY)||'{}');
+    return all[pedido+'|'+prod] || null;
+  }catch(e){return null;}
+}
+
+function saveInsumoStatus(pedido, prod, status, obs){
+  try{
+    const all = JSON.parse(localStorage.getItem(INSUMOS_KEY)||'{}');
+    all[pedido+'|'+prod] = {status, obs, dt: new Date().toLocaleDateString('pt-BR')};
+    localStorage.setItem(INSUMOS_KEY, JSON.stringify(all));
+  }catch(e){}
+}
+
+function abrirModalInsumo(pedidoId,prodNome){
+  var modal=document.getElementById("modal-edicao-pedido");
+  var body=document.getElementById("modal-edicao-body");
+  if(!modal||!body)return;
+  var cur=pedidoId?getInsumoStatus(pedidoId,prodNome):null;
+  var stOpts=[["ok","✅ OK"],["aguardando","⏳ Aguardando"],["em_analise_qc","🔬 Em análise QC"],
+    ["reprovado","❌ REPROVADO"],["pendente_compra","🛒 Pendente compra"],
+    ["divergencia","⚠ Divergência"],["parcial","📦 Parcial"]]
+    .map(function(x){return "<option value='"+x[0]+"'"+(cur&&cur.status===x[0]?" selected":"")+">"+x[1]+"</option>";}).join("");
+  var pedSel=pedidoId?"":(
+    "<div style='margin-bottom:10px'><label style='font-size:11px;color:var(--text-muted);display:block'>Pedido</label>"
+    +"<select id='mi-pedido' style='width:100%;border:1px solid var(--gray-border);border-radius:var(--radius);padding:5px 8px;font-size:12px;background:var(--card);color:var(--text)'>"
+    +"<option value=''>— selecione —</option>"
+    +Object.values(PEDIDOS_DATA).filter(function(p){return ["cotacao","trabalho"].includes(p.status);})
+      .map(function(p){return "<option value='"+p.id+"'>"+p.num+" "+p.flag+"</option>";}).join("")
+    +"</select></div>"
+    +"<div style='margin-bottom:10px'><label style='font-size:11px;color:var(--text-muted);display:block'>Produto</label>"
+    +"<input id='mi-prod' style='width:100%;border:1px solid var(--gray-border);border-radius:var(--radius);padding:5px 8px;font-size:12px;background:var(--card);color:var(--text)'></div>");
+  body.innerHTML=
+    "<div style='font-size:15px;font-weight:700;margin-bottom:14px'>"
+    +(pedidoId?"📦 Atualizar — "+prodNome:"📦 Atualizar estoque / insumo")+"</div>"
+    +pedSel
+    +"<div style='margin-bottom:10px'><label style='font-size:11px;color:var(--text-muted);display:block'>Status</label>"
+    +"<select id='mi-status' style='width:100%;border:1px solid var(--gray-border);border-radius:var(--radius);padding:5px 8px;font-size:12px;background:var(--card);color:var(--text)'>"+stOpts+"</select></div>"
+    +"<div style='margin-bottom:14px'><label style='font-size:11px;color:var(--text-muted);display:block'>Observação</label>"
+    +"<input id='mi-obs' value='"+(cur&&cur.obs||"")+"' style='width:100%;border:1px solid var(--gray-border);border-radius:var(--radius);padding:5px 8px;font-size:12px;background:var(--card);color:var(--text)'></div>"
+    +"<div style='display:flex;justify-content:flex-end;gap:8px'>"
+    +"<button class='btn btn-sm' onclick='fecharModalEdicao()'>Cancelar</button>"
+    +"<button class='btn btn-sm btn-primary' onclick='salvarStatusInsumo(\""+( pedidoId||"")+"\"," +
+    "\""+( prodNome||"")+"\")'>💾 Salvar</button></div>";
+  modal.style.display="flex";
+}
+
+function salvarStatusInsumo(pedidoId, prodNome){
+  const status = document.getElementById('mi-status')?.value||'';
+  const obs    = document.getElementById('mi-obs')?.value?.trim()||'';
+  const pid    = pedidoId || document.getElementById('mi-pedido')?.value||'';
+  const prod   = prodNome || document.getElementById('mi-prod')?.value?.trim()||'';
+  if(!pid || !prod){ showToast('Pedido e produto obrigatórios','red',2000); return; }
+  saveInsumoStatus(pid, prod, status, obs);
+  addLogEntry('insumos', `${prod} (${pid}): ${status}${obs?' — '+obs:''}`);
+  fecharModalEdicao();
+  renderInsumos();
+  showToast(`✅ ${prod}: status atualizado!`,'green',2500);
+}
+
+
+
+function getBalanco(tbId){
+  try{
+    const all = JSON.parse(localStorage.getItem(BALANCO_KEY)||'{}');
+    return all[tbId] || null;
+  }catch(e){return null;}
+}
+function saveBalanco(tbId, data){
+  try{
+    const all = JSON.parse(localStorage.getItem(BALANCO_KEY)||'{}');
+    all[tbId] = data;
+    localStorage.setItem(BALANCO_KEY, JSON.stringify(all));
+  }catch(e){}
+}
+function aplicarBalancoSalvo(){
+  const all = JSON.parse(localStorage.getItem(BALANCO_KEY)||'{}');
+  if(all['tbl-balanco-003']) {
+    all['tbl-balanco-003'].forEach((saved, i) => {
+      if(balanco003[i]){
+        ['solicitado','enviado','prog003','prog005','obs'].forEach(k=>{
+          if(saved[k] !== undefined) balanco003[i][k] = saved[k];
+        });
+      }
+    });
+  }
+}
+
+function abrirModalEditarBalanco(tbId, rowIdx){
+  const data = tbId==='tbl-balanco-003' ? balanco003 : [];
+  const r = data[rowIdx];
+  if(!r) return;
+  const modal = document.getElementById('modal-edicao-pedido');
+  const body  = document.getElementById('modal-edicao-body');
+  if(!modal||!body) return;
+
+  const fld = (id,lbl,val,type='number') => `
+    <div style="display:flex;flex-direction:column;gap:3px">
+      <label style="font-size:11px;color:var(--text-muted)">${lbl}</label>
+      <input id="eb-${id}" type="${type}" value="${val??''}"
+        style="border:1px solid var(--gray-border);border-radius:var(--radius);padding:5px 8px;font-size:12px;background:var(--card);color:var(--text)">
+    </div>`;
+
+  body.innerHTML = `
+    <div style="font-size:15px;font-weight:700;margin-bottom:4px">✏️ Editar balanço</div>
+    <div style="font-size:12px;color:var(--text-muted);margin-bottom:14px">${r.prod} ${r.apres} — ${r.tipo}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+      ${fld('solicitado','Total solicitado (OC)',r.solicitado)}
+      ${fld('enviado','Já enviado',r.enviado)}
+      ${fld('prog003','Prog. 003.2026',r.prog003)}
+      ${fld('prog005','Prog. 005.2026',r.prog005)}
+      ${fld('ocs','OCs',r.ocs||'','text')}
+      ${fld('obs','Obs',r.obs||'','text')}
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:8px">
+      <button class="btn btn-sm" onclick="fecharModalEdicao()">Cancelar</button>
+      <button class="btn btn-sm btn-primary" onclick="salvarEditarBalanco('${tbId}',${rowIdx})">💾 Salvar</button>
+    </div>`;
+  modal.style.display = 'flex';
+}
+
+function salvarEditarBalanco(tbId, rowIdx){
+  const data = tbId==='tbl-balanco-003' ? balanco003 : [];
+  const r = data[rowIdx]; if(!r) return;
+  const g = id => document.getElementById('eb-'+id)?.value?.trim()||'';
+  r.solicitado = parseInt(g('solicitado'))||0;
+  r.enviado    = parseInt(g('enviado'))||0;
+  r.prog003    = parseInt(g('prog003'))||0;
+  r.prog005    = parseInt(g('prog005'))||0;
+  r.ocs        = g('ocs');
+  r.obs        = g('obs');
+  // Persist
+  saveBalanco(tbId, data.map(x=>({solicitado:x.solicitado,enviado:x.enviado,prog003:x.prog003,prog005:x.prog005,ocs:x.ocs,obs:x.obs})));
+  addLogEntry('auto',`Balanço ${r.prod} ${r.apres}: enviado=${r.enviado}, prog003=${r.prog003}`);
+  fecharModalEdicao();
+  renderBalanco(data, tbId);
+  showToast('✅ Balanço atualizado!','green',2500);
+}
+
+function abrirModalNovaLinhaBalanco(){
+  const modal = document.getElementById('modal-edicao-pedido');
+  const body  = document.getElementById('modal-edicao-body');
+  if(!modal||!body) return;
+  const prodNomes = [...new Set(PRODUTOS.map(p=>p.nome))];
+  body.innerHTML = `
+    <div style="font-size:15px;font-weight:700;margin-bottom:14px">➕ Nova linha — Balanço OC</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+      <div style="display:flex;flex-direction:column;gap:3px">
+        <label style="font-size:11px;color:var(--text-muted)">Produto</label>
+        <select id="nl-prod" style="border:1px solid var(--gray-border);border-radius:var(--radius);padding:5px 8px;font-size:12px;background:var(--card);color:var(--text)">
+          ${prodNomes.map(n=>`<option value="${n}">${n}</option>`).join('')}
+        </select>
+      </div>
+      ${[['nl-apres','Apresentação','ex: 1K','text'],['nl-tipo','Tipo (VIVA/INAT)','VIVA','text'],
+         ['nl-ocs','OCs','ex: 3340','text'],['nl-sol','Total solicitado','0'],
+         ['nl-env','Enviado','0'],['nl-prog003','Prog 003','0'],
+         ['nl-prog005','Prog 005','0']].map(([id,lbl,ph,type='number'])=>`
+        <div style="display:flex;flex-direction:column;gap:3px">
+          <label style="font-size:11px;color:var(--text-muted)">${lbl}</label>
+          <input id="${id}" type="${type}" placeholder="${ph}"
+            style="border:1px solid var(--gray-border);border-radius:var(--radius);padding:5px 8px;font-size:12px;background:var(--card);color:var(--text)">
+        </div>`).join('')}
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:8px">
+      <button class="btn btn-sm" onclick="fecharModalEdicao()">Cancelar</button>
+      <button class="btn btn-sm btn-primary" onclick="salvarNovaLinhaBalanco()">💾 Adicionar</button>
+    </div>`;
+  modal.style.display = 'flex';
+}
+
+function salvarNovaLinhaBalanco(){
+  const g = id => (document.getElementById(id)?.value||'').trim();
+  const nova = {
+    prod:  g('nl-prod'),    apres:  g('nl-apres'),
+    tipo:  g('nl-tipo')||'VIVA', ocs: g('nl-ocs'),
+    subst: false,
+    solicitado: parseInt(g('nl-sol'))||0,
+    enviado:    parseInt(g('nl-env'))||0,
+    prog003:    parseInt(g('nl-prog003'))||0,
+    prog005:    parseInt(g('nl-prog005'))||0,
+    obs: '',
+  };
+  balanco003.push(nova);
+  saveBalanco('tbl-balanco-003', balanco003.map(x=>({solicitado:x.solicitado,enviado:x.enviado,prog003:x.prog003,prog005:x.prog005,ocs:x.ocs,obs:x.obs})));
+  fecharModalEdicao();
+  renderBalanco(balanco003,'tbl-balanco-003');
+  showToast(`✅ ${nova.prod} adicionado ao balanço!`,'green',2500);
+}
+
+function renderPainelPedidos(){
+  var tbody=document.getElementById('painel-pedidos-tbody');
+  if(!tbody)return;
+  var statusMap={
+    cotacao:{label:'* Em cotação',cls:'badge-amber',icon:'💬'},
+    trabalho:{label:'Em preparação',cls:'badge-blue',icon:'⚙️'},
+    expedicao:{label:'Expedição',cls:'badge-purple',icon:'✈️'},
+    concluido:{label:'Concluído',cls:'badge-green',icon:'✅'}
+  };
+  var hoje=new Date(); hoje.setHours(0,0,0,0);
+  var pedidos=Object.values(PEDIDOS_DATA).sort(function(a,b){
+    var dA=a.status==='concluido',dB=b.status==='concluido';
+    if(dA!==dB)return dA?1:-1;
+    var eA=a.etd?new Date(a.etd.split('/').reverse().join('-')):new Date('9999');
+    var eB=b.etd?new Date(b.etd.split('/').reverse().join('-')):new Date('9999');
+    return eA-eB;
+  });
+
+  // Build rows with no inline event handlers — use id-based click handler
+  var rowsHtml = pedidos.map(function(p){
+    var sc=statusMap[p.status]||statusMap.cotacao;
+    var etdDate=p.etd?new Date(p.etd.split('/').reverse().join('-')):null;
+    var dias=etdDate?Math.ceil((etdDate-hoje)/86400000):null;
+    var etdStyle=dias!==null&&dias<=14&&p.status!=='concluido'
+      ?'font-weight:700;color:var(--teal)':'color:var(--text-muted);font-size:11px';
+    var prods=(p.produtos||[]).filter(function(pr){return !pr.loteExtra;})
+      .map(function(pr){
+        var n=(pr.prod||'').split(' ')[0];
+        var q=pr.qtdLote||pr.qtd;
+        return q?n+'('+q+')':n;
+      });
+    var cipStr=p.cip?' · CIP $'+p.cip.toLocaleString('en',{minimumFractionDigits:2}):'';
+    var prodsStr=prods.length>0
+      ?prods.slice(0,5).join(', ')+(prods.length>5?'…':'')+cipStr
+      :(p.cip?'CIP $'+p.cip.toLocaleString('en',{minimumFractionDigits:2}):'—');
+    var rc=p.status==='concluido'?'tr-ok':dias!==null&&dias<=7?'tr-danger':'tr-warn';
+    var paisColors={peru:'#dbeafe',bolivia:'#d1fae5',equador:'#fef3c7',
+      dominicana:'#fce7f3',emirados:'#e0e7ff'};
+    var pk=(p.pais||'').toLowerCase().replace(/[^a-z]/g,'').substring(0,7);
+    var bg=paisColors[pk]||'#f3f4f6';
+    // Use id attr (no hyphens in value, no quotes in onclick)
+    var trId='pprow-'+p.id;
+    return '<tr id="'+trId+'" class="'+rc+'" style="cursor:pointer" title="Clique para abrir em Envios">'+
+      '<td><span style="font-size:13px">'+p.flag+'</span> '+
+      '<span style="font-size:10px;font-weight:600;background:'+bg+
+      ';color:#1e40af;padding:1px 5px;border-radius:6px">'+
+      (p.pais||'').substring(0,3).toUpperCase()+'</span></td>'+
+      '<td><strong>'+p.num+'</strong></td>'+
+      '<td style="color:var(--text-muted);font-size:11px">'+(p.sislaudo||'—')+'</td>'+
+      '<td style="font-size:11px">'+(p.oc||'em cotação')+'</td>'+
+      '<td style="'+etdStyle+'">'+(p.etd||'A definir')+'</td>'+
+      '<td style="font-size:11px">'+prodsStr+'</td>'+
+      '<td><span class="badge '+sc.cls+'">'+sc.icon+' '+sc.label+'</span></td>'+
+    '</tr>';
+  }).join('');
+
+  tbody.innerHTML = rowsHtml;
+
+  // Attach click handlers via JS (no inline onclick)
+  pedidos.forEach(function(p){
+    var tr = document.getElementById('pprow-'+p.id);
+    if(tr) tr.addEventListener('click', (function(pid){
+      return function(){
+        nav('envio', document.querySelector('[onclick*="envio"]'));
+        setTimeout(function(){ setEnvioAba(pid); }, 60);
+      };
+    })(p.id));
+  });
+}
+
+function toISO(s){
+  if(!s)return null;
+  var p=s.split('/');
+  return p.length===3?p[2]+'-'+p[1]+'-'+p[0]:null;
+}
 async function doLogin() {
   const user = document.getElementById('login-user').value.trim().toLowerCase();
   const pass = document.getElementById('login-pass').value;
